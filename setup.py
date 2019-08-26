@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
   name = 'tamago',
   packages = ['tamago'],
-  version = '0.0.1',
+  version = '0.0.2',
   license='MIT',
   description = 'Toolkit for performing anomaly detection algorithm on time series.',
   author = 'tao-lin',
