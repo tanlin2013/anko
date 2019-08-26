@@ -40,7 +40,7 @@ def normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray
     """
     return a * np.exp(-(x-x0)**2/(2*sigma**2))
 
-def gaussian_fit(x: np.ndarray, lmbda: float=1, sort_histo: bool=False, maxfev: int=2000, bounds=[0,1e+6]):
+def gaussian_fit(x: np.ndarray, lmbda: float=1, sort_histo: bool=False, half: str=None, maxfev: int=2000, bounds=[0,1e+6]):
     """
     Fitting the Gaussian (normal) distribution for input data x.
     
@@ -61,11 +61,16 @@ def gaussian_fit(x: np.ndarray, lmbda: float=1, sort_histo: bool=False, maxfev: 
     a_sg = max(vals) * 0.2
     m_sg = np.median(x)
     std_sg = (max(keys)-min(keys))/4
-    popt, pcov = curve_fit(normal_distr,keys,vals,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
+    if half == 'left':
+        popt, pcov = curve_fit(left_half_normal_distr,keys,vals,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
+    elif half == 'right':
+        popt, pcov = curve_fit(right_half_normal_distr,keys,vals,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
+    else:
+        popt, pcov = curve_fit(normal_distr,keys,vals,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
     perr = np.sqrt(np.diag(pcov))
     return popt, perr
 
-def half_normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray:
+def left_half_normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray:
     """
     Calculate left-side half normal distribution of input array x.
     
@@ -74,11 +79,24 @@ def half_normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.nd
         a (float): Overall normalization constant.
         x0 (float): Mean.
         sigma (float): Standard deviation.
-            
     Returns:
         out (numpy.ndarray): Output array. 
     """
     return a * np.multiply(np.exp(-(x-x0)**2/(2*sigma**2)), -1*np.heaviside(x-x0, 0.5))
+
+def right_half_normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray:
+    """
+    Calculate right-side half normal distribution of input array x.
+    
+    Args:
+        x (numpy.ndarray): Input values.
+        a (float): Overall normalization constant.
+        x0 (float): Mean.
+        sigma (float): Standard deviation.
+    Returns:
+        out (numpy.ndarray): Output array. 
+    """
+    return a * np.multiply(np.exp(-(x-x0)**2/(2*sigma**2)), np.heaviside(x-x0, 0.5))
 
 def flat_histogram(x: np.ndarray):
     """
