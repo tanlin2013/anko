@@ -4,7 +4,7 @@ from scipy.stats import boxcox, linregress, skew, normaltest
 from scipy.optimize import curve_fit
 # TODO: handle typing for returning tuple
 
-def get_hostogram(x, sort_histo: bool=False):
+def get_histogram(x, sort_histo: bool=False):
     """
     Return the corresponding histogram of the data x.
     
@@ -56,7 +56,7 @@ def gaussian_fit(x: np.ndarray, lmbda: float=1, sort_histo: bool=False, maxfev: 
         popt (numpy.ndarray): Estimate value of a, x0 and sigma of Gaussian distribution.
         perr (numpy.ndarray): Error of popt. Defined by the square of diagonal element of covariance matrix.
     """
-    keys, vals = get_hostogram(x, sort_histo)
+    keys, vals = get_histogram(x, sort_histo)
     if lmbda != 1: keys = boxcox(keys, lmbda)
     a_sg = max(vals) * 0.2
     m_sg = np.median(x)

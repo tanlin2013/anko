@@ -3,13 +3,13 @@ from distutils.core import setup
 setup(
   name = 'anko',
   packages = ['anko'],
-  version = '0.0.2',
+  version = '0.0.3',
   license='MIT',
   description = 'Toolkit for performing anomaly detection algorithm on time series.',
   author = 'tao-lin',
   author_email = 'tanlin2013@gmail.com', 
   url = 'https://github.com/tanlin2013/anko',
-  download_url = 'https://github.com/tanlin2013/anko/archive/v0.0.2.tar.gz',
+  download_url = 'https://github.com/tanlin2013/anko/archive/v0.0.3.tar.gz',
   keywords = ['statistics', 'time series', 'anomaly detection'],
   install_requires=[
           'numpy==1.16.4',
