@@ -146,9 +146,9 @@ def linear_regression(x: np.ndarray, y: np.ndarray, lmbda: float=1):
     r_sq = r_value**2
     return r_sq, intercept, slope, p_value, std_err
 
-def data_is_flat(x: np.ndarray, y: np.ndarray, std_err_th: float=1e-2) -> bool:
+def data_is_linear(x: np.ndarray, y: np.ndarray, std_err_th: float=1e-2) -> bool:
     """
-    Check whether the data (x, y) is flat under the given tolerance. \
+    Check whether the data (x, y) is linear under the given tolerance. \
     This will perform a linear regression fitting.
     
     Args:
