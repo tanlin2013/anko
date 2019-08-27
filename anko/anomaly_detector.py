@@ -1,5 +1,5 @@
 import numpy as np
-import stats_util
+from anko import stats_util
 import copy
 # TODO: remove tmp comment block
 
@@ -42,7 +42,8 @@ class AnomalyDetector:
                 "-5": "ConvergenceError: Linear ansatz fitting may not converge, perr > perr_th.",
                 "-6": "Warning: Rawdata might be oscillating, data flips sign repeatedly over mean.",
                 "-7": "Info: build_statsdata is using boxcox method.",
-                "-8": "Info: build_statsdata is using z normalization." 
+                "-8": "Info: build_statsdata is using z normalization.",
+                "-9": "Info: There are more than %d discontinuous points detected."
         }
     
     def _build_stats_model(self):
@@ -91,8 +92,8 @@ class AnomalyDetector:
 #                 self.using_boxcox = False
 # =============================================================================
             try:
-                erf_popt, erf_perr = stats_util.general_erf_fit(self.t_idx, self.series)
-                erf_y_pred = stats_util.general_erf(self.t_idx, *erf_popt.tolist())
+                erf_popt, erf_perr = stats_util.general_erf_fit(self.t_scaleless, self.series)
+                erf_y_pred = stats_util.general_erf(self.t_scaleless, *erf_popt.tolist())
             except RuntimeError:
                 erf_popt = erf_perr = np.inf * np.ones(3)
                 erf_y_pred = np.inf * np.ones(len(self.series))
@@ -103,14 +104,14 @@ class AnomalyDetector:
 # =============================================================================
             
             try:
-                exp_popt, exp_perr = stats_util.exp_decay_fit(self.t_idx, self.series)
-                exp_y_pred = stats_util.exp_decay(self.t_idx, *exp_popt.tolist())
+                exp_popt, exp_perr = stats_util.exp_decay_fit(self.t_scaleless, self.series)
+                exp_y_pred = stats_util.exp_decay(self.t_scaleless, *exp_popt.tolist())
             except RuntimeError:
                 exp_popt = exp_perr = np.inf * np.ones(2)
                 exp_y_pred = np.inf * np.ones(len(self.series))
             
-            r_sq, intercept, slope, p_value, std_err = stats_util.linear_regression(self.t_idx, self.series)
-            linregress_y_pred = np.polyval([slope,intercept], self.t_idx)
+            r_sq, intercept, slope, p_value, std_err = stats_util.linear_regression(self.t_scaleless, self.series)
+            linregress_y_pred = np.polyval([slope,intercept], self.t_scaleless)
             
             if self.info_criterion == 'AIC':
                 IC_score["step_func"] = stats_util.AIC_score(self.series, erf_y_pred, len(erf_popt))
@@ -118,17 +119,17 @@ class AnomalyDetector:
 #                 IC_score["three_stair"] = stats_util.AIC_score(series, ThrS_y_pred, len(ThrS_popt))
 # =============================================================================
                 IC_score["exp_decay"] = stats_util.AIC_score(self.series, exp_y_pred, len(exp_popt))
-                IC_score["flat_series"] = stats_util.AIC_score(self.series, linregress_y_pred, 2)
+                IC_score["linear_regression"] = stats_util.AIC_score(self.series, linregress_y_pred, 2)
             elif self.info_criterion == 'BIC':
                 IC_score["step_func"] = stats_util.BIC_score(self.series, erf_y_pred, len(erf_popt))
 # =============================================================================
 #                 IC_score["three_stair"] = stats_util.BIC_score(series, ThrS_y_pred, len(ThrS_popt))
 # =============================================================================
                 IC_score["exp_decay"] = stats_util.BIC_score(self.series, exp_y_pred, len(exp_popt))
-                IC_score["flat_series"] = stats_util.BIC_score(self.series, linregress_y_pred, 2)
+                IC_score["linear_regression"] = stats_util.BIC_score(self.series, linregress_y_pred, 2)
             best_model = min(IC_score.items(), key=lambda x: x[1])
-            if np.isclose(best_model[1],IC_score["flat_series"],rtol=1e-2):
-                best_model = "flat_series"
+            if np.isclose(best_model[1],IC_score["linear_regression"],rtol=1e-2):
+                best_model = "linear_regression"
             else:
                 best_model = best_model[0]
             if best_model == 'step_func':
@@ -146,11 +147,11 @@ class AnomalyDetector:
 # =============================================================================
             elif best_model == 'exp_decay':
                 ref["popt"], ref["perr"] = exp_popt, exp_perr
-            elif best_model == 'flat_series':
+            elif best_model == 'linear_regression':
                 ref["popt"], ref["perr"] = [intercept, slope], std_err    
         return ref
     
-    def check_data(self):
+    def check(self):
         statsdata = self._build_stats_model()
         model_id = statsdata["model"]
         anomalous_data = "None"; msgs = []
@@ -180,7 +181,7 @@ class AnomalyDetector:
             err_score = np.sum(np.square(statsdata["perr"]))
             if err_score > self.thres_params["step_func_err"]:
                 msgs.append(self.error_code["-3"]) 
-            res = stats_util.fitting_residual(self.t_idx, self.series, stats_util.general_erf, statsdata["popt"],
+            res = stats_util.fitting_residual(self.t_scaleless, self.series, stats_util.general_erf, statsdata["popt"],
                                               mask_as_zero=True, min_res=self.thres_params["min_res"])
             anomalous_t = self.t[res > self.thres_params["step_func_res"]]
             anomalous_data = self.clone_series[res > self.thres_params["step_func_res"]]                                      
@@ -188,13 +189,13 @@ class AnomalyDetector:
         elif model_id == "decrease_step_func":
             err_score = np.sum(np.square(statsdata["perr"]))
             if err_score > self.thres_params["step_func_err"]:    
-                res = stats_util.fitting_residual(self.t_idx, self.series, stats_util.general_erf, statsdata["popt"],
+                res = stats_util.fitting_residual(self.t_scaleless, self.series, stats_util.general_erf, statsdata["popt"],
                                                   mask_as_zero=True, min_res=self.thres_params["min_res"])
                 anomalous_t = self.t[res > self.thres_params["step_func_res"]]
                 anomalous_data = self.series[res > self.thres_params["step_func_res"]]
                 msgs.append(self.error_code["-3"])
             else:   
-                anomalous_idx = np.where(self.t_idx > statsdata["popt"][2])[0]
+                anomalous_idx = np.where(self.t_scaleless > statsdata["popt"][2])[0]
                 if len(anomalous_idx) != 0 and (statsdata["popt"][0] - statsdata["popt"][1]) > self.thres_params["min_res"]: 
                     anomalous_t = self.t[anomalous_idx]
                     anomalous_data = self.clone_series[anomalous_idx]
@@ -214,16 +215,16 @@ class AnomalyDetector:
             err_score = statsdata["perr"][1]
             if err_score > self.thres_params["exp_decay_err"]:
                 msgs.append(self.error_code["-4"])
-            res = stats_util.fitting_residual(self.t_idx, self.series, stats_util.exp_decay, statsdata["popt"],
+            res = stats_util.fitting_residual(self.t_scaleless, self.series, stats_util.exp_decay, statsdata["popt"],
                                               mask_as_zero=True, min_res=self.thres_params["min_res"])
             anomalous_t = self.t[res > self.thres_params["exp_decay_res"]]
             anomalous_data = self.clone_series[res > self.thres_params["exp_decay_res"]]                   
              
-        elif model_id == 'flat_series':
+        elif model_id == 'linear_regression':
             if statsdata["perr"] > self.thres_params["linregress_std_err"]:
                 msgs.append(self.error_code["-5"])
             func = lambda x, a, b: a + b*x 
-            res = stats_util.fitting_residual(self.t_idx, self.series, func, statsdata["popt"],
+            res = stats_util.fitting_residual(self.t_scaleless, self.series, func, statsdata["popt"],
                                               mask_as_zero=True, min_res=self.thres_params["min_res"])
             anomalous_t = self.t[res > self.thres_params["linregress_res"]]
             anomalous_data = self.clone_series[res > self.thres_params["linregress_res"]]                  
@@ -232,12 +233,12 @@ class AnomalyDetector:
         if stats_util.is_oscillating(self.series): 
             msgs.append(self.error_code["-6"])
         if self.using_boxcox: 
-            msgs.append("build_statsdata is using boxcox method.")
+            msgs.append(self.error_code["-7"])
         if self.using_z_normalization:
-            msgs.append("build_statsdata is using z normalization.")    
+            msgs.append(self.error_code["-8"])    
         discontinuity = len(stats_util.discontinuous_idx(self.series))
         if discontinuity > 0:
-            msgs.append("There are more than %d discontinuous points detected." %discontinuity)
+            msgs.append(self.error_code["-9"] %discontinuity)
                 
         if anomalous_data == "None" or anomalous_data.size == 0: 
             self.check_failed = False
