@@ -2,6 +2,7 @@ import numpy as np
 from anko import stats_util
 import copy
 # TODO: remove tmp comment block
+# TODO: add params and returns type in func entry
 
 class AnomalyDetector:
     
@@ -44,6 +45,14 @@ class AnomalyDetector:
                 "-7": "Info: build_statsdata is using boxcox method.",
                 "-8": "Info: build_statsdata is using z normalization.",
                 "-9": "Info: There are more than %d discontinuous points detected."
+        }
+        self.model_launcher = {
+                "gaussian": True, 
+                "half_gaussian": True, 
+                "linear_regression": True, 
+                "increase_step_func": True, 
+                "decrease_step_func": True, 
+                "exp_decay": True
         }
     
     def _build_stats_model(self):
@@ -127,6 +136,8 @@ class AnomalyDetector:
 # =============================================================================
                 IC_score["exp_decay"] = stats_util.BIC_score(self.series, exp_y_pred, len(exp_popt))
                 IC_score["linear_regression"] = stats_util.BIC_score(self.series, linregress_y_pred, 2)
+            else:
+                raise ValueError("Information criterion can only be 'AIC' or 'BIC'.")
             best_model = min(IC_score.items(), key=lambda x: x[1])
             if np.isclose(best_model[1],IC_score["linear_regression"],rtol=1e-2):
                 best_model = "linear_regression"
