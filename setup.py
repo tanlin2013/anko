@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-ver = input("New version number: ")
+ver = '0.1.3'
 
 setup(
   name = 'anko',
