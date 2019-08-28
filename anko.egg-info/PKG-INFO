@@ -1,0 +1,20 @@
+Metadata-Version: 1.1
+Name: anko
+Version: 0.0.9
+Summary: Toolkit for performing anomaly detection algorithm on time series.
+Home-page: https://github.com/tanlin2013/anko
+Author: tao-lin
+Author-email: tanlin2013@gmail.com
+License: MIT
+Download-URL: https://github.com/tanlin2013/anko/archive/v0.0.9.tar.gz
+Description: UNKNOWN
+Keywords: statistics,time series,anomaly detection
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6

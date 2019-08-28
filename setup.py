@@ -1,8 +1,6 @@
 from distutils.core import setup
-import sys
 
-ver = sys.argv[2]
-sys.argv.pop(2)
+ver = input("New version number: ")
 
 setup(
   name = 'anko',

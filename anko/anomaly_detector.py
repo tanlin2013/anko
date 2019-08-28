@@ -165,7 +165,7 @@ class AnomalyDetector:
     def check(self):
         statsdata = self._build_stats_model()
         model_id = statsdata["model"]
-        anomalous_data = "None"; msgs = []
+        anomalous_t, anomalous_data, msgs = [], [], []
             
         if model_id == 'gaussian' or model_id == 'flat_histo': 
             histo_x, histo_y = stats_util.get_histogram(self.clone_series)
@@ -251,10 +251,11 @@ class AnomalyDetector:
         if discontinuity > 0:
             msgs.append(self.error_code["-9"] %discontinuity)
                 
-        if anomalous_data == "None" or anomalous_data.size == 0: 
+        if len(anomalous_data) == 0: 
             self.check_failed = False
             msgs.append(self.error_code["0"])
-        
-        statsdata["anomalous_data"] = list(zip(anomalous_t, anomalous_data))
+            statsdata["anomalous_data"] = []
+        else:
+            statsdata["anomalous_data"] = list(zip(anomalous_t, anomalous_data))
         statsdata["extra_info"] = msgs
         return statsdata
