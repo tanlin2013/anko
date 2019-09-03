@@ -126,7 +126,7 @@ class AnomalyDetector:
                 IC_score = stats_util.AIC_score(self.series, linregress_y_pred, 2)
             elif self.info_criterion == 'BIC':
                 IC_score = stats_util.BIC_score(self.series, linregress_y_pred, 2)
-            popt, perr = [intercept, slope], std_err
+            popt, perr = np.array([intercept, slope]), std_err
         
         elif model_id == 'step_func':
             try:

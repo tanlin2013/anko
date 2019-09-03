@@ -222,7 +222,7 @@ def exp_decay_fit(x: np.ndarray, y: np.ndarray, mode='log-linregress', maxfev: i
     """
     if mode == 'log-linregress':
         r_sq, intercept, slope, p_value, std_err = linear_regression(x, np.log(y))
-        popt, perr = [np.exp(intercept), -1*slope], std_err
+        popt, perr = np.array([np.exp(intercept), -1*slope]), std_err
     else:
         popt, pcov = curve_fit(exp_decay,x,y,maxfev=maxfev,bounds=bounds)
         perr = np.sqrt(np.diag(pcov))
