@@ -121,7 +121,7 @@ def flat_histogram(x: np.ndarray):
     perr = np.array([0, 0, 0])
     return popt, perr
 
-def linear_regression(x: np.ndarray, y: np.ndarray, lmbda: float=1):
+def linear_regression(x: np.ndarray, y: np.ndarray):
     """
     Fitting linear ansatz for input data (x, y). 
     
@@ -130,9 +130,7 @@ def linear_regression(x: np.ndarray, y: np.ndarray, lmbda: float=1):
     Args:
         x (numpy.ndarray): x coordinate of input data points. 
         y (numpy.ndarray): y coordinate of input data points.
-        lmbda (float, optional): If not equal to 1, \
-            perform BoxCox transformation with parameter lmbda to input y. \
-            This is useful to lower and rescale the magnitude of data. 
+      
     Returns:
         r_sq (float): Coefficient of determination.
         intercept (float): Intercept of the regression line.
@@ -141,7 +139,6 @@ def linear_regression(x: np.ndarray, y: np.ndarray, lmbda: float=1):
             using Wald Test with t-distribution of the test statistic.
         std_err (float): Standard error of the estimated gradient.
     """
-    if lmbda != 1: y = boxcox(y, lmbda)
     slope, intercept, r_value, p_value, std_err = linregress(x, y)
     r_sq = r_value**2
     return r_sq, intercept, slope, p_value, std_err
@@ -180,19 +177,18 @@ def general_erf(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
     Returns:
         out (numpy.ndarray): Output array.
     """
-    return (abs(b-a)/2) * np.sign(x-x0) + (a+b)/2
+    return (b-a)/2 * np.sign(x-x0) + (a+b)/2
 
 def three_stair_erf(x, c0, c1, c2, x1, x2):
     return c0*np.sign(x-x1) + c1*np.sign(x-x2) + c2
     
-def general_erf_fit(x, y, lmbda=1, three_stair=False, maxfev=2000, bounds=[0,1e+6]):
+def general_erf_fit(x, y, three_stair=False, maxfev=2000, bounds=[0,1e+6]):
     """
     Fitting generalize error function for input data (x, y).
     
     Args:
         x (numpy.ndarray):
         y (numpy.ndarray):
-        lmbda (float):
         three_stair (bool):
         maxfev (int):
         bounds (list[float]):
@@ -200,7 +196,6 @@ def general_erf_fit(x, y, lmbda=1, three_stair=False, maxfev=2000, bounds=[0,1e+
         popt (numpy.ndarray):
         perr (numpy.ndarray):
     """
-    if lmbda != 1: y = boxcox(y, lmbda)
     if three_stair:
         a_sg = y[0]; b_sg = y[int(len(y)/2)]; c_sg = y[-1]
         c0_sg = (b_sg-a_sg)/2; c1_sg = (c_sg-b_sg)/2; c2_sg = (a_sg + c_sg)/2
@@ -219,9 +214,8 @@ def exp_decay(x, a, alpha):
         raise ValueError("Domain of exp(-x) is restricted in x > 0.")
     return a * np.exp(-alpha*x)
     
-def exp_decay_fit(x, y, lmbda=1, maxfev=2000):
-    if lmbda != 1: y = boxcox(y, lmbda)
-    popt, pcov = curve_fit(exp_decay,x,y,maxfev=maxfev)
+def exp_decay_fit(x, y, maxfev=2000, bounds=[-1e-6,1e+6]):
+    popt, pcov = curve_fit(exp_decay,x,y,maxfev=maxfev,bounds=bounds)
     perr = np.sqrt(np.diag(pcov))
     return popt, perr    
 
@@ -247,12 +241,10 @@ def is_oscillating(x, osci_freq_th=0.3):
     else:
         return False
    
-def fitting_residual(x, y, func, args, standardized=True, mask_as_zero=False, min_res=10):
+def fitting_residual(x, y, func, args, standardized=True):
     y_predict = func(x, *args)
     res = np.subtract(y, y_predict)
     norm = np.std(res)
-    if mask_as_zero:
-        res[np.where(abs(res) < min_res)] = 0
     if standardized and norm != 0:
         res /= norm
     return abs(res)

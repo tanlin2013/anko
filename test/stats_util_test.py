@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-import stats_util
+from anko import stats_util
 
 class TestStatsUtil(unittest.TestCase):
 
@@ -58,7 +58,10 @@ class TestStatsUtil(unittest.TestCase):
         self.assertListEqual(popt, [])
         self.assertListEqual(perr, [])
         
+    def test_z_normalization(self):
+        x = [189, 188, 196, 196, 196, 193, 206, 203, 203, 214, 217, 217, 218, 218, 248, 247, 247, 252, 252, 253, 259, 259, 254, 252, 252, 252, 252, 247, 247, 247, 249, 249, 246, 243, 243, 242, 248, 255, 253, 251, 247, 251, 253, 253, 256, 260, 257, 258, 260, 260, 259, 258, 253, 249, 248, 251, 253, 253, 242, 286, 287, 292, 293, 293, 297, 296, 296, 288, 286, 286, 285, 285, 285, 283, 283, 283, 283, 283, 283, 283, 282, 282, 282, 282, 282, 282, 282, 278, 278, 278, 278, 274, 278, 276, 276, 276, 242, 276, 276, 276]
         
+    
 if __name__ == '__main__':
     unittest.main()
     
