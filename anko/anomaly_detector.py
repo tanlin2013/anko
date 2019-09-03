@@ -218,8 +218,7 @@ class AnomalyDetector:
 # =============================================================================
             
         elif model_id == 'exp_decay':
-            #err_score = np.sum(np.square(statsdata[key]["perr"]))
-            err_score = statsdata["perr"][1]
+            err_score = np.sum(np.square(statsdata["perr"]))
             if err_score > self.thres_params["exp_decay_err"]:
                 msgs.append(self.error_code["-4"])
             res = stats_util.fitting_residual(self.t_scaleless, self.series, stats_util.exp_decay, statsdata["popt"],
