@@ -4,17 +4,15 @@ from scipy.stats import boxcox, linregress, skew, normaltest
 from scipy.optimize import curve_fit
 # TODO: handle typing for returning tuple
 
-def get_histogram(x, sort_histo: bool=False):
-    """
+def get_histogram(x: np.ndarray, sort_histo: bool=False):
+    """!
     Return the corresponding histogram of the data x.
     
-    Args:
-        x (numpy.ndarray): One-dimensional array of data.
-        sort_histo (bool, optional): If True return the sorted histogram.
+    @param x (numpy.ndarray): One-dimensional array of data.
+    @param sort_histo (bool, optional): If True return the sorted histogram.
         
-    Returns:
-        keys: Set of data x (no duplicate).
-        vals: Number of appearance for each key in keys. 
+    @returns keys: Set of data x (no duplicate).
+    @returns vals: Number of appearance for each key in keys. 
     """
     counter = collections.Counter(x)
     keys = np.fromiter(counter.keys(), dtype=float)
@@ -26,41 +24,37 @@ def get_histogram(x, sort_histo: bool=False):
     return keys, vals
     
 def normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray:
-    """
+    """!
     Calculate normal distribution of input array x.
     
-    Args:
-        x (numpy.ndarray): Input values.
-        a (float): Overall normalization constant.
-        x0 (float): Mean.
-        sigma (float): Standard deviation.
+    @param x (numpy.ndarray): Input values.
+    @param a (float): Overall normalization constant.
+    @param x0 (float): Mean.
+    @param sigma (float): Standard deviation.
             
-    Returns:
-        out (numpy.ndarray): Output array. 
+    @returns out (numpy.ndarray): Output array. 
     """
     return a * np.exp(-(x-x0)**2/(2*sigma**2))
 
 def gaussian_fit(x: np.ndarray, lmbda: float=1, sort_histo: bool=False, half: str=None, maxfev: int=2000, bounds=[0,1e+6]):
-    """
+    """!
     Fitting the Gaussian (normal) distribution for input data x.
     
-    Args:
-        x (numpy.ndarray): Input values.    
-        lmbda (float, optional): If not equal to 1, \
-            perform BoxCox transformation with parameter lmbda to input x. \
+    @param x (numpy.ndarray): Input values.    
+    @param lmbda (float, optional): If not equal to 1, \n
+            perform BoxCox transformation with parameter lmbda to input x. \n
             This is useful to make the data more normal-distribution-like. 
-        sort_histo (bool, optional): If True use the sorted histogram.
-        maxfev (int, optional): Maximum step of fitting iteration.
+    @param sort_histo (bool, optional): If True use the sorted histogram.
+    @param maxfev (int, optional): Maximum step of fitting iteration.
     
-    Returns:
-        popt (numpy.ndarray): Estimate value of a, x0 and sigma of Gaussian distribution.
-        perr (numpy.ndarray): Error of popt. Defined by the square of diagonal element of covariance matrix.
+    @returns popt (numpy.ndarray): Estimate value of a, x0 and sigma of Gaussian distribution.
+    @returns perr (numpy.ndarray): Error of popt. Defined by the square of diagonal element of covariance matrix.
     """
     keys, vals = get_histogram(x, sort_histo)
     if lmbda != 1: keys = boxcox(keys, lmbda)
     a_sg = max(vals) * 0.2
-    m_sg = np.median(x)
-    std_sg = (max(keys)-min(keys))/4
+    m_sg = np.mean(x)
+    std_sg = np.std(x)
     if half == 'left':
         popt, pcov = curve_fit(left_half_normal_distr,keys,vals,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
     elif half == 'right':
@@ -71,37 +65,35 @@ def gaussian_fit(x: np.ndarray, lmbda: float=1, sort_histo: bool=False, half: st
     return popt, perr
 
 def left_half_normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray:
-    """
+    """!
     Calculate left-side half normal distribution of input array x.
     
-    Args:
-        x (numpy.ndarray): Input values.
-        a (float): Overall normalization constant.
-        x0 (float): Mean.
-        sigma (float): Standard deviation.
-    Returns:
-        out (numpy.ndarray): Output array. 
+    @param x (numpy.ndarray): Input values.
+    @param a (float): Overall normalization constant.
+    @param x0 (float): Mean.
+    @param sigma (float): Standard deviation.
+    
+    @returns out (numpy.ndarray): Output array. 
     """
     return a * np.multiply(np.exp(-(x-x0)**2/(2*sigma**2)), -1*np.heaviside(x-x0, 0.5))
 
 def right_half_normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray:
-    """
+    """!
     Calculate right-side half normal distribution of input array x.
     
-    Args:
-        x (numpy.ndarray): Input values.
-        a (float): Overall normalization constant.
-        x0 (float): Mean.
-        sigma (float): Standard deviation.
-    Returns:
-        out (numpy.ndarray): Output array. 
+    @param x (numpy.ndarray): Input values.
+    @param a (float): Overall normalization constant.
+    @param x0 (float): Mean.
+    @param sigma (float): Standard deviation.
+    
+    @returns out (numpy.ndarray): Output array. 
     """
     return a * np.multiply(np.exp(-(x-x0)**2/(2*sigma**2)), np.heaviside(x-x0, 0.5))
 
 def flat_histogram(x: np.ndarray):
-    """
-    Manually assign parameters of Gaussian distrinution if the given histogram is too flat. \
-    In this senario the histogram of data is regarded as a local segment of a larger normal-distribution-like histogram, \
+    """!
+    Manually assign parameters of Gaussian distrinution if the given histogram is too flat. \n
+    In this senario the histogram of data is regarded as a local segment of a larger normal-distribution-like histogram, \n
     with standard deviation which exceeds the current consideration of domain. 
     
     Parameters of Gaussian distribution are assigned as following:
@@ -109,11 +101,10 @@ def flat_histogram(x: np.ndarray):
         2. Mode of data x as mean, x0. 
         3. Standard deviation is set to infinity (numpy.inf).
     
-    Args:
-        x (numpy.ndarray): Input values.
-    Returns:
-        popt (numpy.ndarray): Assigned values for Gaussian distribution. 
-        perr (numpy.ndarray): Errors are set to zero.
+    @param x (numpy.ndarray): Input values.
+    
+    @returns popt (numpy.ndarray): Assigned values for Gaussian distribution. 
+    @returns perr (numpy.ndarray): Errors are set to zero.
     """
     counter = collections.Counter(x)
     mode = counter.most_common()
@@ -122,38 +113,35 @@ def flat_histogram(x: np.ndarray):
     return popt, perr
 
 def linear_regression(x: np.ndarray, y: np.ndarray):
-    """
+    """!
     Fitting linear ansatz for input data (x, y). 
     
     y = intercept + slope * x.
     
-    Args:
-        x (numpy.ndarray): x coordinate of input data points. 
-        y (numpy.ndarray): y coordinate of input data points.
+    @param x (numpy.ndarray): x coordinate of input data points. 
+    @param y (numpy.ndarray): y coordinate of input data points.
       
-    Returns:
-        r_sq (float): Coefficient of determination.
-        intercept (float): Intercept of the regression line.
-        slope (float): Slope of the regression line.
-        p_value (float): Two-sided p-value for a hypothesis test whose null hypothesis is that the slope is zero, \
+    @returns r_sq (float): Coefficient of determination.
+    @returns intercept (float): Intercept of the regression line.
+    @returns slope (float): Slope of the regression line.
+    @returns p_value (float): Two-sided p-value for a hypothesis test whose null hypothesis is that the slope is zero, \n
             using Wald Test with t-distribution of the test statistic.
-        std_err (float): Standard error of the estimated gradient.
+    @returns std_err (float): Standard error of the estimated gradient.
     """
     slope, intercept, r_value, p_value, std_err = linregress(x, y)
     r_sq = r_value**2
     return r_sq, intercept, slope, p_value, std_err
 
 def data_is_linear(x: np.ndarray, y: np.ndarray, std_err_th: float=1e-2) -> bool:
-    """
-    Check whether the data (x, y) is linear under the given tolerance. \
+    """!
+    Check whether the data (x, y) is linear under the given tolerance. \n
     This will perform a linear regression fitting.
     
-    Args:
-        x (numpy.ndarray): x coordinate of input data points. 
-        y (numpy.ndarray): y coordinate of input data points.
-        std_err_th (float, optional): Threshold value of std_err.
-    Returns:
-        out (bool): Return Ture if data is flat, else return False.
+    @param x (numpy.ndarray): x coordinate of input data points. 
+    @param y (numpy.ndarray): y coordinate of input data points.
+    @param std_err_th (float, optional): Threshold value of std_err.
+    
+    @returns out (bool): Return Ture if data is flat, else return False.
     """
     r_sq, intercept, slope, p_value, std_err = linear_regression(x, y)
     if p_value == 1 or std_err < std_err_th:
@@ -162,39 +150,37 @@ def data_is_linear(x: np.ndarray, y: np.ndarray, std_err_th: float=1e-2) -> bool
         return False
 
 def general_erf(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
-    """
+    """!
     Calculate the generalize error function of input array x.
     
     f(x) = a; x < x0,
            (a+b)/2; x = x0,
            b; x > x0
     
-    Args:
-        x (numpy.ndarray): Input values.
-        a (float): Value of first stair. 
-        b (float): Value of second stair.
-        x0 (float): Location of the cliff.
-    Returns:
-        out (numpy.ndarray): Output array.
+    @param x (numpy.ndarray): Input values.
+    @param a (float): Value of first stair. 
+    @param b (float): Value of second stair.
+    @param x0 (float): Location of the cliff.
+    
+    @returns out (numpy.ndarray): Output array.
     """
     return (b-a)/2 * np.sign(x-x0) + (a+b)/2
 
 def three_stair_erf(x, c0, c1, c2, x1, x2):
     return c0*np.sign(x-x1) + c1*np.sign(x-x2) + c2
     
-def general_erf_fit(x, y, three_stair=False, maxfev=2000, bounds=[0,1e+6]):
-    """
+def general_erf_fit(x: np.ndarray, y: np.ndarray, three_stair: bool=False, maxfev: int=2000, bounds=[0,1e+6]):
+    """!
     Fitting generalize error function for input data (x, y).
     
-    Args:
-        x (numpy.ndarray):
-        y (numpy.ndarray):
-        three_stair (bool):
-        maxfev (int):
-        bounds (list[float]):
-    Returns:
-        popt (numpy.ndarray):
-        perr (numpy.ndarray):
+    @param x (numpy.ndarray):
+    @param y (numpy.ndarray):
+    @param three_stair (bool):
+    @param maxfev (int):
+    @param bounds (list[float]):
+    
+    @returns popt (numpy.ndarray):
+    @returns perr (numpy.ndarray):
     """
     if three_stair:
         a_sg = y[0]; b_sg = y[int(len(y)/2)]; c_sg = y[-1]
@@ -208,30 +194,74 @@ def general_erf_fit(x, y, three_stair=False, maxfev=2000, bounds=[0,1e+6]):
         perr = np.sqrt(np.diag(pcov))
     return popt, perr    
 
-def exp_decay(x, a, alpha):
-    # Domain: x >= 0
+def exp_decay(x: np.ndarray, a: float, alpha: float) -> np.ndarray:
+    """!
+    Calculate the exponential function of input array x. Note that Domain of x >= 0.
+    
+    @param x (numpy.ndarray):
+    @param a (float):
+    @param alpha (float):
+        
+    @returns out: 
+    """
     if len(np.where(np.array(x) < 0)[0]) != 0:
         raise ValueError("Domain of exp(-x) is restricted in x > 0.")
     return a * np.exp(-alpha*x)
     
-def exp_decay_fit(x, y, maxfev=2000, bounds=[-1e-6,1e+6]):
-    popt, pcov = curve_fit(exp_decay,x,y,maxfev=maxfev,bounds=bounds)
-    perr = np.sqrt(np.diag(pcov))
+def exp_decay_fit(x: np.ndarray, y: np.ndarray, mode='log-linregress', maxfev: int=2000, bounds=[-1e-6,1e+6]):
+    """!
+    
+    @param x (numpy.ndarray):
+    @param y (numpy.ndarray):
+    @param mode (str):
+    @param maxfev (int):    
+    @param bounds (list[float,float]):
+        
+    @returns popt (numpy.ndarray):
+    @returns perr (numpy.ndarray):
+    """
+    if mode == 'log-linregress':
+        r_sq, intercept, slope, p_value, std_err = linear_regression(x, np.log(y))
+        popt, perr = [np.exp(intercept), -1*slope], std_err
+    else:
+        popt, pcov = curve_fit(exp_decay,x,y,maxfev=maxfev,bounds=bounds)
+        perr = np.sqrt(np.diag(pcov))
     return popt, perr    
 
-def smoothness(x, normalize=False):
+def smoothness(x: np.ndarray, normalize: bool=False):
+    """!
+    
+    @param x (numpy.ndarray):
+    @param normalize (bool):
+        
+    @returns sm (numpy.ndarray):
+    """
     # TODO: this definition is not good
     dx = np.diff(x)
     sm = np.std(dx)
     if normalize: sm /= abs(np.mean(dx))
     return sm
     
-def discontinuous_idx(x, std_width=1):
+def discontinuous_idx(x: np.ndarray, std_width: int=1):
+    """!
+    
+    @param x (numpy.ndarray):
+    @param std_width (int):
+        
+    @returns idx (numpy.ndarray):
+    """
     dx = np.diff(x)
     idx = np.where(abs(dx-np.mean(dx)) > std_width*np.std(x))
     return idx[0]
 
-def is_oscillating(x, osci_freq_th=0.3):
+def is_oscillating(x: np.ndarray, osci_freq_th: float=0.3) -> bool:
+    """!
+    
+    @param x (numpy.ndarray):
+    @param osci_freq_th (float):
+        
+    @returns out (bool):
+    """
     mu = np.mean(x)
     y = x - mu
     ocsi_times = len(list(itertools.groupby(y, lambda y: y>0)))
@@ -241,7 +271,17 @@ def is_oscillating(x, osci_freq_th=0.3):
     else:
         return False
    
-def fitting_residual(x, y, func, args, standardized=True):
+def fitting_residual(x, y, func, args, standardized=False):
+    """!
+    
+    @param x (numpy.ndarray):
+    @param y (numpy.ndarray):
+    @param func (function):
+    @param args (numpy.ndarray):
+    @param standardized (bool):
+        
+    @returns res (numpy.ndarray)
+    """
     y_predict = func(x, *args)
     res = np.subtract(y, y_predict)
     norm = np.std(res)

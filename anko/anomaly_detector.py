@@ -14,9 +14,9 @@ class AnomalyDetector:
         self.clone_series = copy.deepcopy(series)
         self.apply_boxcox = False
         self.apply_z_normalization = False
-        self.check_failed = True
         self.info_criterion = 'AIC'
         self.min_sample_size = 10
+        self.check_failed = True
         self.thres_params = {
             "p_normality": 1e-3,
             "skewness": 20,
@@ -116,7 +116,7 @@ class AnomalyDetector:
                     statsdata["model"] = "decrease_step_func"
             else:
                 statsdata["model"] = best_model
-        return statsdata
+        return statsdata     
         
     def _fitting_model(self, model_id):
         if model_id == 'linear_regression':
@@ -154,7 +154,11 @@ class AnomalyDetector:
                 
         return IC_score, popt, perr   
     
-    def check(self):
+    def check(self) -> dict:
+        """!
+        
+        @returns statsdata (dict): 
+        """
         statsdata = self._build_stats_data()
         model_id = statsdata["model"]
         anomalous_t, anomalous_data, msgs = [], [], []
@@ -235,9 +239,9 @@ class AnomalyDetector:
         # Extra info
         if stats_util.is_oscillating(self.series): 
             msgs.append(self.error_code["-6"])
-        if self.using_boxcox: 
+        if self.apply_boxcox: 
             msgs.append(self.error_code["-7"])
-        if self.using_z_normalization:
+        if self.apply_z_normalization:
             msgs.append(self.error_code["-8"])    
         discontinuity = len(stats_util.discontinuous_idx(self.series))
         if discontinuity > 0:
