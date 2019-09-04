@@ -1,7 +1,7 @@
 import numpy as np
 import collections, itertools
 from scipy.stats import boxcox, linregress, skew, normaltest
-from scipy.optimize import curve_fit
+from scipy.optimize import curve_fit, differential_evolution
 # TODO: handle typing for returning tuple
 
 def get_histogram(x: np.ndarray, sort_histo: bool=False):
@@ -36,14 +36,11 @@ def normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray
     """
     return a * np.exp(-(x-x0)**2/(2*sigma**2))
 
-def gaussian_fit(x: np.ndarray, lmbda: float=1, sort_histo: bool=False, half: str=None, maxfev: int=2000, bounds=[0,1e+6]):
+def gaussian_fit(x: np.ndarray, sort_histo: bool=False, half: str=None, maxfev: int=2000, bounds=[0,1e+6]):
     """!
     Fitting the Gaussian (normal) distribution for input data x.
     
     @param x (numpy.ndarray): Input values.    
-    @param lmbda (float, optional): If not equal to 1, \n
-            perform BoxCox transformation with parameter lmbda to input x. \n
-            This is useful to make the data more normal-distribution-like. 
     @param sort_histo (bool, optional): If True use the sorted histogram.
     @param maxfev (int, optional): Maximum step of fitting iteration.
     
@@ -51,7 +48,6 @@ def gaussian_fit(x: np.ndarray, lmbda: float=1, sort_histo: bool=False, half: st
     @returns perr (numpy.ndarray): Error of popt. Defined by the square of diagonal element of covariance matrix.
     """
     keys, vals = get_histogram(x, sort_histo)
-    if lmbda != 1: keys = boxcox(keys, lmbda)
     a_sg = max(vals) * 0.2
     m_sg = np.mean(x)
     std_sg = np.std(x)
@@ -192,6 +188,13 @@ def general_erf_fit(x: np.ndarray, y: np.ndarray, three_stair: bool=False, maxfe
         a_sg = y[0]; b_sg = y[-1]; x0_sg = x[np.argmax(np.diff(y))]
         popt, pcov = curve_fit(general_erf,x,y,p0=[a_sg,b_sg,x0_sg],maxfev=maxfev,bounds=bounds)
         perr = np.sqrt(np.diag(pcov))
+# =============================================================================
+#         a_sg = y[0]; b_sg = y[-1]; x0_sg = x[np.argmax(np.diff(y))]
+#         width = (max(y)-min(y))/10
+#         optimize_result = differential_evolution(lambda p: np.sum((general_erf(x, *p) - y)**2), [[a_sg-width,a_sg+width], [b_sg-width,b_sg+width], [x0_sg-5,x0_sg+5]], tol=1e-6)
+#         popt, perr = optimize_result.x, optimize_result.fun
+#         print(optimize_result.x, optimize_result.fun)
+# =============================================================================
     return popt, perr    
 
 def exp_decay(x: np.ndarray, a: float, alpha: float) -> np.ndarray:
@@ -280,7 +283,7 @@ def fitting_residual(x, y, func, args, standardized=False):
     @param args (numpy.ndarray):
     @param standardized (bool):
         
-    @returns res (numpy.ndarray)
+    @returns res (numpy.ndarray):
     """
     y_predict = func(x, *args)
     res = np.subtract(y, y_predict)
@@ -290,6 +293,14 @@ def fitting_residual(x, y, func, args, standardized=False):
     return abs(res)
     
 def AIC_score(y, y_predict, p):
+    """!
+    
+    @param y (numpy.ndarray):
+    @param y_predict (numpy.ndarray):
+    @param p (int):
+  
+    @returns aic_score (float):
+    """
     n = len(y)
     res = np.subtract(y, y_predict)
     rss = np.sum(np.power(res, 2))
@@ -297,6 +308,14 @@ def AIC_score(y, y_predict, p):
     return aic_score    
 
 def BIC_score(y, y_predict, p):
+    """!
+    
+    @param y (numpy.ndarray):
+    @param y_predict (numpy.ndarray):
+    @param p (int):
+  
+    @returns bic_score (float):
+    """
     n = len(y)
     res = np.subtract(y, y_predict)
     rss = np.sum(np.power(res, 2))
@@ -304,5 +323,11 @@ def BIC_score(y, y_predict, p):
     return bic_score   
 
 def z_normalization(x):
+    """!
+    
+    @param x (numpy.ndarray):
+        
+    @returns normalized_x (numpy.ndarray):
+    """
     return (x-np.mean(x))/np.std(x)
 

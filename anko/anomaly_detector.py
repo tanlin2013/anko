@@ -1,37 +1,43 @@
 import numpy as np
-from anko import stats_util
+import stats_util
 import copy
 # TODO: add params and returns type in func entry
 
 class AnomalyDetector:
     
     def __init__(self, t, series):
+        self.apply_policies = {
+                "scaleless_t": True,
+                "boxcox": False,
+                "z_normalization": True,
+                "info_criterion": 'AIC',
+                "min_sample_size": 10
+        }
         if isinstance(t, list): t = np.array(t)
         if isinstance(series, list): series = np.array(series)
-        self.t = t
-        self.t_scaleless = np.arange(1, len(series)+1)
+        if t is None: self.apply_policies["scaleless_t"] = True
+        if self.apply_policies["scaleless_t"]: 
+            self.t = np.arange(1, len(series)+1)
+        else:
+            self.t = t
         self.series = series
-        self.clone_series = copy.deepcopy(series)
-        self.apply_boxcox = False
-        self.apply_z_normalization = False
-        self.info_criterion = 'AIC'
-        self.min_sample_size = 10
-        self.check_failed = True
+        self._clone_series = copy.deepcopy(series)
+        self.check_failed = True       
         self.thres_params = {
-            "p_normality": 1e-3,
-            "skewness": 20,
-            "normal_std_width": 3,
-            "normal_std_err": 1,
-            "normal_err": 1e+1,
-            "linregress_slope": 0.1,
-            "linregress_std_err": 1e+1,
-            "linregress_res": 1,
-            "step_func_err": 1e+1,
-            "step_func_res": 3,
-            "exp_decay_err": 1e+1,
-            "exp_decay_res": 2,
-            "linearity": 1e-2,
-            "min_res": 10
+                "p_normality": 1e-3,
+                "skewness": 20,
+                "normal_std_width": 3,
+                "normal_std_err": 1,
+                "normal_err": 1e+1,
+                "linregress_slope": 0.1,
+                "linregress_std_err": 1e+1,
+                "linregress_res": 1,
+                "step_func_err": 1e+1,
+                "step_func_res": 3,
+                "exp_decay_err": 1e+1,
+                "exp_decay_res": 2,
+                "linearity": 1e-2,
+                "min_res": 10
         }
         self.error_code = {
                 "0": "Check passed.",
@@ -52,30 +58,32 @@ class AnomalyDetector:
                 "step_func": True, 
                 "exp_decay": True
         }
-        if len(series) < self.min_sample_size: raise ValueError("number of samples are less than AnomalyDetector.min_sample_size[%d]" %self.min_sample_size)
-        if len(t) != len(series): raise ValueError("shape %d does not match with shape %d." %len(t) %len(series))
-        if self.info_criterion not in ["AIC", "BIC"]: raise ValueError("Information criterion can only be 'AIC' or 'BIC'.")
+        if len(series) < self.apply_policies["min_sample_size"]: 
+            raise ValueError("number of samples are less than apply_policies['min_sample_size'] = %d" %self.min_sample_size)
+        if len(t) != len(series): 
+            raise ValueError("shape %d does not match with shape %d." %len(t) %len(series))
+        if self.apply_policies["info_criterion"] not in ["AIC", "BIC"]: 
+            raise ValueError("Information criterion can only be 'AIC' or 'BIC'.")
     
     def _build_stats_data(self):
-        statsdata, ref, IC_score = {}, {}, {}; lmbda = 1; proceed = False           
+        statsdata, ref, IC_score = {}, {}, {}; proceed = False           
         histo_x, histo_y = stats_util.get_histogram(self.series)
+        
+        if self.apply_policies["boxcox"]: 
+            histo_y = stats_util.boxcox(histo_y, lmbda=0)
         
         try:    
             normality = stats_util.normaltest(histo_y)
         except ValueError:
             normality = [np.inf, np.inf]     
         
-        if normality[1] >= self.thres_params["p_normality"] and np.isfinite(normality[1]):   
-# =============================================================================
-#             # Check the magnitude of input data is not too large, else use log-boxcox transformation.
-#             if np.mean(self.series) > self.thres_params["max_mag"]: 
-#                 lmbda = 0; self.using_boxcox = True               
-# =============================================================================
+        if normality[1] >= self.thres_params["p_normality"] and np.isfinite(normality[1]):
             try:
                 # Perform a Gaussian fit analysis, where y(x) is the histogram built from series
                 statsdata["model"] = 'gaussian'
-                statsdata["popt"], statsdata["perr"] = stats_util.gaussian_fit(self.series, lmbda)
+                statsdata["popt"], statsdata["perr"] = stats_util.gaussian_fit(self.series)
             except TypeError:
+                # TODO: check this is working
                 # Caused by the lake of minimum samples 
                 # Treat as flat histogram, appending mode as mean and np.inf as std. All perrs are set to be 0.
                 if stats_util.data_is_linear(histo_x, histo_y, self.thres_params["linearity"]):
@@ -102,7 +110,7 @@ class AnomalyDetector:
             
             best_model = min(IC_score.items(), key=lambda x: x[1])
             if "linear_regression" in IC_score.keys():
-                if np.isclose(best_model[1],IC_score["linear_regression"],rtol=1e-2):
+                if np.isclose(best_model[1],IC_score["linear_regression"],atol=10,rtol=1e-2):
                     best_model = "linear_regression"
                 else:
                     best_model = best_model[0]
@@ -120,36 +128,36 @@ class AnomalyDetector:
         
     def _fitting_model(self, model_id):
         if model_id == 'linear_regression':
-            r_sq, intercept, slope, p_value, std_err = stats_util.linear_regression(self.t_scaleless, self.series)
-            linregress_y_pred = np.polyval([slope,intercept], self.t_scaleless)
-            if self.info_criterion == 'AIC':
+            r_sq, intercept, slope, p_value, std_err = stats_util.linear_regression(self.t, self.series)
+            linregress_y_pred = np.polyval([slope,intercept], self.t)
+            if self.apply_policies["info_criterion"] == 'AIC':
                 IC_score = stats_util.AIC_score(self.series, linregress_y_pred, 2)
-            elif self.info_criterion == 'BIC':
+            elif self.apply_policies["info_criterion"] == 'BIC':
                 IC_score = stats_util.BIC_score(self.series, linregress_y_pred, 2)
             popt, perr = np.array([intercept, slope]), std_err
         
         elif model_id == 'step_func':
             try:
-                popt, perr = stats_util.general_erf_fit(self.t_scaleless, self.series)
-                y_pred = stats_util.general_erf(self.t_scaleless, *popt.tolist())
+                popt, perr = stats_util.general_erf_fit(self.t, self.series)
+                y_pred = stats_util.general_erf(self.t, *popt.tolist())
             except RuntimeError:
                 popt = perr = np.inf * np.ones(3)
                 y_pred = np.inf * np.ones(len(self.series))
-            if self.info_criterion == 'AIC':
+            if self.apply_policies["info_criterion"] == 'AIC':
                 IC_score = stats_util.AIC_score(self.series, y_pred, len(popt))
-            elif self.info_criterion == 'BIC':
+            elif self.apply_policies["info_criterion"] == 'BIC':
                 IC_score = stats_util.BIC_score(self.series, y_pred, len(popt))    
     
         elif model_id == 'exp_decay':
             try:
-                popt, perr = stats_util.exp_decay_fit(self.t_scaleless, self.series)
-                y_pred = stats_util.exp_decay(self.t_scaleless, *popt.tolist())
+                popt, perr = stats_util.exp_decay_fit(self.t, self.series)
+                y_pred = stats_util.exp_decay(self.t, *popt.tolist())
             except RuntimeError:
                 popt = perr = np.inf * np.ones(2)
                 y_pred = np.inf * np.ones(len(self.series))
-            if self.info_criterion == 'AIC':
+            if self.apply_policies["info_criterion"] == 'AIC':
                 IC_score = stats_util.AIC_score(self.series, y_pred, len(popt))
-            elif self.info_criterion == 'BIC':
+            elif self.apply_policies["info_criterion"] == 'BIC':
                 IC_score = stats_util.BIC_score(self.series, y_pred, len(popt))  
                 
         return IC_score, popt, perr   
@@ -164,11 +172,11 @@ class AnomalyDetector:
         anomalous_t, anomalous_data, msgs = [], [], []
             
         if model_id == 'gaussian' or model_id == 'flat_histo': 
-            histo_x, histo_y = stats_util.get_histogram(self.series)
+            histo_x, histo_y = stats_util.get_histogram(self._clone_series)
             if statsdata["perr"][2] > self.thres_params["normal_std_err"]:
                 msgs.append(self.error_code["-1"])
-            if self.using_boxcox: 
-                histo_x = stats_util.boxcox(histo_x, lmbda=0)
+            if self.apply_policies["boxcox"]: 
+                histo_y = stats_util.boxcox(histo_y, lmbda=0)
             # Large error exception: if caused by extremely flat histogram  
             if stats_util.data_is_linear(histo_x, histo_y, self.thres_params["linearity"]):
                 self.check_failed = False
@@ -188,24 +196,24 @@ class AnomalyDetector:
             err_score = np.sum(np.square(statsdata["perr"]))
             if err_score > self.thres_params["step_func_err"]:
                 msgs.append(self.error_code["-3"]) 
-            res = stats_util.fitting_residual(self.t_scaleless, self.series, stats_util.general_erf, statsdata["popt"],
-                                              standardized=self.apply_z_normalization)
+            res = stats_util.fitting_residual(self.t, self.series, stats_util.general_erf, statsdata["popt"],
+                                              standardized=self.apply_policies["z_normalization"])
             anomalous_t = self.t[res > self.thres_params["step_func_res"]]
-            anomalous_data = self.clone_series[res > self.thres_params["step_func_res"]]                                      
+            anomalous_data = self._clone_series[res > self.thres_params["step_func_res"]]                                      
           
         elif model_id == "decrease_step_func":
             err_score = np.sum(np.square(statsdata["perr"]))
             if err_score > self.thres_params["step_func_err"]:    
-                res = stats_util.fitting_residual(self.t_scaleless, self.series, stats_util.general_erf, statsdata["popt"],
-                                                  standardized=self.apply_z_normalization)
+                res = stats_util.fitting_residual(self.t, self.series, stats_util.general_erf, statsdata["popt"],
+                                                  standardized=self.apply_policies["z_normalization"])
                 anomalous_t = self.t[res > self.thres_params["step_func_res"]]
-                anomalous_data = self.clone_series[res > self.thres_params["step_func_res"]]
+                anomalous_data = self._clone_series[res > self.thres_params["step_func_res"]]
                 msgs.append(self.error_code["-3"])
             else:   
-                anomalous_idx = np.where(self.t_scaleless > statsdata["popt"][2])[0]
+                anomalous_idx = np.where(self.t > statsdata["popt"][2])[0]
                 if len(anomalous_idx) != 0: 
                     anomalous_t = self.t[anomalous_idx]
-                    anomalous_data = self.clone_series[anomalous_idx]
+                    anomalous_data = self._clone_series[anomalous_idx]
             
 # =============================================================================
 #         elif model_id == 'three_stair':
@@ -221,26 +229,26 @@ class AnomalyDetector:
             err_score = np.sum(np.square(statsdata["perr"]))
             if err_score > self.thres_params["exp_decay_err"]:
                 msgs.append(self.error_code["-4"])
-            res = stats_util.fitting_residual(self.t_scaleless, self.series, stats_util.exp_decay, statsdata["popt"],
-                                              standardized=self.apply_z_normalization)
+            res = stats_util.fitting_residual(self.t, self.series, stats_util.exp_decay, statsdata["popt"],
+                                              standardized=self.apply_policies["z_normalization"])
             anomalous_t = self.t[res > self.thres_params["exp_decay_res"]]
-            anomalous_data = self.clone_series[res > self.thres_params["exp_decay_res"]]                   
+            anomalous_data = self._clone_series[res > self.thres_params["exp_decay_res"]]                   
              
         elif model_id == 'linear_regression':
             if statsdata["perr"] > self.thres_params["linregress_std_err"]:
                 msgs.append(self.error_code["-5"])
             func = lambda x, a, b: a + b*x 
-            res = stats_util.fitting_residual(self.t_scaleless, self.series, func, statsdata["popt"],
-                                              standardized=self.apply_z_normalization)
+            res = stats_util.fitting_residual(self.t, self.series, func, statsdata["popt"],
+                                              standardized=self.apply_policies["z_normalization"])
             anomalous_t = self.t[res > self.thres_params["linregress_res"]]
-            anomalous_data = self.clone_series[res > self.thres_params["linregress_res"]]                  
+            anomalous_data = self._clone_series[res > self.thres_params["linregress_res"]]                  
                 
         # Extra info
         if stats_util.is_oscillating(self.series): 
             msgs.append(self.error_code["-6"])
-        if self.apply_boxcox: 
+        if self.apply_policies["boxcox"]: 
             msgs.append(self.error_code["-7"])
-        if self.apply_z_normalization:
+        if self.apply_policies["z_normalization"]:
             msgs.append(self.error_code["-8"])    
         discontinuity = len(stats_util.discontinuous_idx(self.series))
         if discontinuity > 0:
@@ -254,3 +262,25 @@ class AnomalyDetector:
             statsdata["anomalous_data"] = list(zip(anomalous_t, anomalous_data))
         statsdata["extra_info"] = msgs
         return statsdata
+
+class CheckResult(dict):
+    
+    def __getattr__(self, name):
+        try:
+            return self[name]
+        except KeyError:
+            raise AttributeError(name)
+
+    __setattr__ = dict.__setitem__
+    __delattr__ = dict.__delitem__
+
+    def __repr__(self):
+        if self.keys():
+            m = max(map(len, list(self.keys()))) + 1
+            return '\n'.join([k.rjust(m) + ': ' + repr(v)
+                              for k, v in sorted(self.items())])
+        else:
+            return self.__class__.__name__ + "()"
+
+    def __dir__(self):
+        return list(self.keys())
