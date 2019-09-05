@@ -1,5 +1,5 @@
 import numpy as np
-import stats_util
+from . import stats_util
 import copy
 # TODO: add params and returns type in func entry
 
