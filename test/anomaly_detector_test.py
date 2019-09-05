@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import unittest
-import sys
-sys.path.append('../anko')
-from anomaly_detector import AnomalyDetector
-#from anko.anomaly_detector import AnomalyDetector
+from anko.anomaly_detector import AnomalyDetector
 
 class TestAnomalyDetector(unittest.TestCase):
     
@@ -55,7 +52,6 @@ class TestAnomalyDetector(unittest.TestCase):
                 agent.apply_policies["z_normalization"] = True
                 statsdata = agent.check()
                 statsdata["series"] = series[i]
-                print(statsdata)
             except ValueError:
                 pass
       

@@ -1,9 +1,6 @@
 import unittest
 import numpy as np
-import sys
-sys.path.append('../anko')
-import stats_util
-#from anko import stats_util
+from anko import stats_util
 
 class TestStatsUtil(unittest.TestCase):
 
