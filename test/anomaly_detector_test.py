@@ -49,12 +49,15 @@ class TestAnomalyDetector(unittest.TestCase):
         sample_idx = np.random.randint(1, 100, size=10)
         series = self.__class__.read_from_file()[sample_idx]
         for i in range(10):
-            t = np.arange(1, len(series[i])+1)
-            agent = AnomalyDetector(t, series[i])
-            agent.apply_policies["z_normalization"] = True
-            statsdata = agent.check()
-            statsdata["series"] = series[i]
-            print(statsdata)
+            try:
+                t = np.arange(1, len(series[i])+1)
+                agent = AnomalyDetector(t, series[i])
+                agent.apply_policies["z_normalization"] = True
+                statsdata = agent.check()
+                statsdata["series"] = series[i]
+                print(statsdata)
+            except ValueError:
+                pass
       
 if __name__ == '__main__':
     unittest.main()

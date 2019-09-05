@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['series_89',['series',['../classanko_1_1anomaly__detector_1_1_anomaly_detector.html#ac5fd8b681c1a662614281bbd76d5e037',1,'anko::anomaly_detector::AnomalyDetector']]]
+  ['t_89',['t',['../classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a8285533720b1371f7791765c69117bdb',1,'anko::anomaly_detector::AnomalyDetector']]],
+  ['thres_5fparams_90',['thres_params',['../classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59',1,'anko::anomaly_detector::AnomalyDetector']]]
 ];

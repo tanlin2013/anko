@@ -5,26 +5,16 @@
 \item 
 def \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a45d0fc5da16e4ef8c9404e17399387c9}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a8285533720b1371f7791765c69117bdb}{t}}, \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}{series}})
 \item 
-dict \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_aa5c39eb2a0e3ee0945c55995fa93fbcf}{check}} (self)
+object \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a01428bba9e8dae6b4d7d51a07d5ef233}{check}} (self)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_af58531e67a2d33977a1bdc142b3f0561}{apply\+\_\+policies}}
+\begin{DoxyCompactList}\small\item\em Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}} to follow. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a8285533720b1371f7791765c69117bdb}{t}}
 \item 
-\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_aba462472b01da95a1f989c810bdf5ca2}{t\+\_\+scaleless}}
-\item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}{series}}
-\item 
-\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a9a40f6d698bef5be38d18ba16b194f37}{clone\+\_\+series}}
-\item 
-\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_ae78a4b81bc0bdb436e97c5ff4c28e2ff}{apply\+\_\+boxcox}}
-\item 
-\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_aec38a2de7dd0df8c86fca2ace82c5db5}{apply\+\_\+z\+\_\+normalization}}
-\item 
-\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a5e48a6f7c6933e206c4f444894993f84}{info\+\_\+criterion}}
-\item 
-\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_ab810c86db668cce018fdbb29306f0d5a}{min\+\_\+sample\+\_\+size}}
 \item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a6387e571cbc3139be0c81c9e450bee1e}{check\+\_\+failed}}
 \item 
@@ -34,6 +24,16 @@ dict \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_aa5c39
 \item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a019359334795d2f05a730ab00085e5e9}{models}}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & (array\+\_\+like)\+: \\
+\hline
+{\em series} & (array\+\_\+like)\+: \\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
@@ -46,11 +46,11 @@ dict \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_aa5c39
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_aa5c39eb2a0e3ee0945c55995fa93fbcf}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_aa5c39eb2a0e3ee0945c55995fa93fbcf}} 
+\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_a01428bba9e8dae6b4d7d51a07d5ef233}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_a01428bba9e8dae6b4d7d51a07d5ef233}} 
 \index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!check@{check}}
 \index{check@{check}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
 \doxysubsubsection{\texorpdfstring{check()}{check()}}
-{\footnotesize\ttfamily  dict anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+check (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily  object anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+check (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
 statsdata (dict)\+: 
@@ -58,17 +58,15 @@ statsdata (dict)\+:
 
 
 \doxysubsection{Member Data Documentation}
-\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_ae78a4b81bc0bdb436e97c5ff4c28e2ff}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_ae78a4b81bc0bdb436e97c5ff4c28e2ff}} 
-\index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!apply\_boxcox@{apply\_boxcox}}
-\index{apply\_boxcox@{apply\_boxcox}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
-\doxysubsubsection{\texorpdfstring{apply\_boxcox}{apply\_boxcox}}
-{\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+apply\+\_\+boxcox}
+\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_af58531e67a2d33977a1bdc142b3f0561}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_af58531e67a2d33977a1bdc142b3f0561}} 
+\index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!apply\_policies@{apply\_policies}}
+\index{apply\_policies@{apply\_policies}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{apply\_policies}{apply\_policies}}
+{\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+apply\+\_\+policies}
 
-\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_aec38a2de7dd0df8c86fca2ace82c5db5}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_aec38a2de7dd0df8c86fca2ace82c5db5}} 
-\index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!apply\_z\_normalization@{apply\_z\_normalization}}
-\index{apply\_z\_normalization@{apply\_z\_normalization}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
-\doxysubsubsection{\texorpdfstring{apply\_z\_normalization}{apply\_z\_normalization}}
-{\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+apply\+\_\+z\+\_\+normalization}
+
+
+Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}} to follow. 
 
 \mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_a6387e571cbc3139be0c81c9e450bee1e}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_a6387e571cbc3139be0c81c9e450bee1e}} 
 \index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!check\_failed@{check\_failed}}
@@ -76,29 +74,11 @@ statsdata (dict)\+:
 \doxysubsubsection{\texorpdfstring{check\_failed}{check\_failed}}
 {\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+check\+\_\+failed}
 
-\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_a9a40f6d698bef5be38d18ba16b194f37}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_a9a40f6d698bef5be38d18ba16b194f37}} 
-\index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!clone\_series@{clone\_series}}
-\index{clone\_series@{clone\_series}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
-\doxysubsubsection{\texorpdfstring{clone\_series}{clone\_series}}
-{\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+clone\+\_\+series}
-
 \mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_a3ebb5963fc7bf1eeb1425e195473922e}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_a3ebb5963fc7bf1eeb1425e195473922e}} 
 \index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!error\_code@{error\_code}}
 \index{error\_code@{error\_code}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
 \doxysubsubsection{\texorpdfstring{error\_code}{error\_code}}
 {\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+error\+\_\+code}
-
-\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_a5e48a6f7c6933e206c4f444894993f84}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_a5e48a6f7c6933e206c4f444894993f84}} 
-\index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!info\_criterion@{info\_criterion}}
-\index{info\_criterion@{info\_criterion}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
-\doxysubsubsection{\texorpdfstring{info\_criterion}{info\_criterion}}
-{\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+info\+\_\+criterion}
-
-\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_ab810c86db668cce018fdbb29306f0d5a}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_ab810c86db668cce018fdbb29306f0d5a}} 
-\index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!min\_sample\_size@{min\_sample\_size}}
-\index{min\_sample\_size@{min\_sample\_size}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
-\doxysubsubsection{\texorpdfstring{min\_sample\_size}{min\_sample\_size}}
-{\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+min\+\_\+sample\+\_\+size}
 
 \mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_a019359334795d2f05a730ab00085e5e9}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_a019359334795d2f05a730ab00085e5e9}} 
 \index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!models@{models}}
@@ -117,12 +97,6 @@ statsdata (dict)\+:
 \index{t@{t}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
 \doxysubsubsection{\texorpdfstring{t}{t}}
 {\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+t}
-
-\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_aba462472b01da95a1f989c810bdf5ca2}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_aba462472b01da95a1f989c810bdf5ca2}} 
-\index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!t\_scaleless@{t\_scaleless}}
-\index{t\_scaleless@{t\_scaleless}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
-\doxysubsubsection{\texorpdfstring{t\_scaleless}{t\_scaleless}}
-{\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+t\+\_\+scaleless}
 
 \mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_af31bfbbef59010642ad8a33785504c59}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_af31bfbbef59010642ad8a33785504c59}} 
 \index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!thres\_params@{thres\_params}}

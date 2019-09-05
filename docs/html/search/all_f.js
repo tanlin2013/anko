@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['z_5fnormalization_46',['z_normalization',['../namespaceanko_1_1stats__util.html#a51a9f0713d1d2f63b3485586bf746aee',1,'anko::stats_util']]]
+  ['z_5fnormalization_45',['z_normalization',['../namespaceanko_1_1stats__util.html#a9b2e2041bcd620bb46b85e933fe45697',1,'anko::stats_util']]]
 ];

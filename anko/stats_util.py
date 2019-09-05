@@ -163,6 +163,17 @@ def general_erf(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
     return (b-a)/2 * np.sign(x-x0) + (a+b)/2
 
 def three_stair_erf(x, c0, c1, c2, x1, x2):
+    """!
+    
+    @param x (numpy.ndarray): Input values.
+    @param c0 (float): 
+    @param c1 (float): 
+    @param c2 (float): 
+    @param x1 (float): 
+    @param x2 (float): 
+    
+    @returns out (numpy.ndarray): Output array.
+    """
     return c0*np.sign(x-x1) + c1*np.sign(x-x2) + c2
     
 def general_erf_fit(x: np.ndarray, y: np.ndarray, three_stair: bool=False, maxfev: int=2000, bounds=[0,1e+6]):
@@ -259,6 +270,7 @@ def discontinuous_idx(x: np.ndarray, std_width: int=1):
 
 def is_oscillating(x: np.ndarray, osci_freq_th: float=0.3) -> bool:
     """!
+    Determine whether the input array x is oscillating over its mean with frequency larger than osci_freq_th.
     
     @param x (numpy.ndarray):
     @param osci_freq_th (float):
@@ -274,8 +286,9 @@ def is_oscillating(x: np.ndarray, osci_freq_th: float=0.3) -> bool:
     else:
         return False
    
-def fitting_residual(x, y, func, args, standardized=False):
+def fitting_residual(x: np.ndarray, y: np.ndarray, func, args, mask_min: float=None, absolute_value: bool=True, standardized: bool=False) -> np.ndarray:
     """!
+    Compute the fitting residual.
     
     @param x (numpy.ndarray):
     @param y (numpy.ndarray):
@@ -287,17 +300,22 @@ def fitting_residual(x, y, func, args, standardized=False):
     """
     y_predict = func(x, *args)
     res = np.subtract(y, y_predict)
+    if mask_min is not None:
+        res[np.where(abs(res) < mask_min)] = 0
     norm = np.std(res)
     if standardized and norm != 0:
         res /= norm
-    return abs(res)
+    if absolute_value:
+        res = abs(res)
+    return res
     
-def AIC_score(y, y_predict, p):
+def AIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:
     """!
+    Compute Akaike information criterion for model selection.
     
-    @param y (numpy.ndarray):
-    @param y_predict (numpy.ndarray):
-    @param p (int):
+    @param y (numpy.ndarray): data samples.
+    @param y_predict (numpy.ndarray): prediction by fitting.
+    @param p (int): fitting degrees of freedom, i.e. the number of parameters to fit with.
   
     @returns aic_score (float):
     """
@@ -307,12 +325,13 @@ def AIC_score(y, y_predict, p):
     aic_score = n*np.log(rss/n) + 2*p
     return aic_score    
 
-def BIC_score(y, y_predict, p):
+def BIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:
     """!
+    Compute Bayesian information criterion for model selection.
     
-    @param y (numpy.ndarray):
-    @param y_predict (numpy.ndarray):
-    @param p (int):
+    @param y (numpy.ndarray): data samples.
+    @param y_predict (numpy.ndarray): prediction by fitting.
+    @param p (int): fitting degrees of freedom, i.e. the number of parameters to fit with.
   
     @returns bic_score (float):
     """
@@ -322,8 +341,9 @@ def BIC_score(y, y_predict, p):
     bic_score = n*np.log(rss/n) + p*np.log(n)
     return bic_score   
 
-def z_normalization(x):
+def z_normalization(x: np.ndarray) -> np.ndarray:
     """!
+    Perform z-score normalizaion on input array x. 
     
     @param x (numpy.ndarray):
         

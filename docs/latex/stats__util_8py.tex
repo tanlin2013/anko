@@ -12,7 +12,7 @@ def \mbox{\hyperlink{namespaceanko_1_1stats__util_ae5da820a4ff2ba172cc895f7aed1a
 \begin{DoxyCompactList}\small\item\em Return the corresponding histogram of the data x. \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a043c3334f258dda9e528ab8a51ea053b}{anko.\+stats\+\_\+util.\+normal\+\_\+distr}} (np.\+ndarray x, float a, float x0, float sigma)
 \begin{DoxyCompactList}\small\item\em Calculate normal distribution of input array x. \end{DoxyCompactList}\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_a85c527df43eda799d1f913bda369f451}{anko.\+stats\+\_\+util.\+gaussian\+\_\+fit}} (np.\+ndarray x, float lmbda=1, bool sort\+\_\+histo=False, str half=None, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
+def \mbox{\hyperlink{namespaceanko_1_1stats__util_aa482297a54c4bcc67af00b259c3b03ce}{anko.\+stats\+\_\+util.\+gaussian\+\_\+fit}} (np.\+ndarray x, bool sort\+\_\+histo=False, str half=None, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
 \begin{DoxyCompactList}\small\item\em Fitting the Gaussian (normal) distribution for input data x. \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_afe9294ceb5073c65f77b6c7894349ef7}{anko.\+stats\+\_\+util.\+left\+\_\+half\+\_\+normal\+\_\+distr}} (np.\+ndarray x, float a, float x0, float sigma)
 \begin{DoxyCompactList}\small\item\em Calculate left-\/side half normal distribution of input array x. \end{DoxyCompactList}\item 
@@ -31,20 +31,20 @@ def \mbox{\hyperlink{namespaceanko_1_1stats__util_a8c334494be52ff57a126c86997d05
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a4f434d24322b90d1d03cf689847ea76a}{anko.\+stats\+\_\+util.\+general\+\_\+erf\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, bool three\+\_\+stair=False, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
 \begin{DoxyCompactList}\small\item\em Fitting generalize error function for input data (x, y). \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_aa196811391f6401b6fec78c1fd7054ed}{anko.\+stats\+\_\+util.\+exp\+\_\+decay}} (np.\+ndarray x, float a, float alpha)
-\begin{DoxyCompactList}\small\item\em Calculate the expoential function of input array x. \end{DoxyCompactList}\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_afd84e2d66600e9eeab239d106c794f9a}{anko.\+stats\+\_\+util.\+exp\+\_\+decay\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, int maxfev=2000, bounds=\mbox{[}-\/1e-\/6, 1e+6\mbox{]})
+\begin{DoxyCompactList}\small\item\em Calculate the exponential function of input array x. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceanko_1_1stats__util_a1d8a8e8561c1d96066a9493d900a1346}{anko.\+stats\+\_\+util.\+exp\+\_\+decay\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, mode=\textquotesingle{}log-\/linregress\textquotesingle{}, int maxfev=2000, bounds=\mbox{[}-\/1e-\/6, 1e+6\mbox{]})
 \item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a1467292292fb037a7b879c3a66700499}{anko.\+stats\+\_\+util.\+smoothness}} (np.\+ndarray x, bool normalize=False)
 \item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_aebff1af496b1545f67e9b7a9253f2226}{anko.\+stats\+\_\+util.\+discontinuous\+\_\+idx}} (np.\+ndarray x, int std\+\_\+width=1)
 \item 
 bool \mbox{\hyperlink{namespaceanko_1_1stats__util_a0f75e0a66974df60bf657d244f516619}{anko.\+stats\+\_\+util.\+is\+\_\+oscillating}} (np.\+ndarray x, float osci\+\_\+freq\+\_\+th=0.\+3)
-\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_af9df68416c7766322770eb22c8a32054}{anko.\+stats\+\_\+util.\+fitting\+\_\+residual}} (x, y, func, args, standardized=True)
-\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_aed70c6ec1a740d5dc444057d142b5c43}{anko.\+stats\+\_\+util.\+A\+I\+C\+\_\+score}} (y, y\+\_\+predict, p)
-\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_a6b489bf680609a9b3c23afe062e313f6}{anko.\+stats\+\_\+util.\+B\+I\+C\+\_\+score}} (y, y\+\_\+predict, p)
-\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_a51a9f0713d1d2f63b3485586bf746aee}{anko.\+stats\+\_\+util.\+z\+\_\+normalization}} (x)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Determine whether the input array x is oscillating over its mean with frequency larger than osci\+\_\+freq\+\_\+th. \end{DoxyCompactList}\item 
+np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a6f905598561c0f8c6e31dfb0b0e2d5e5}{anko.\+stats\+\_\+util.\+fitting\+\_\+residual}} (np.\+ndarray x, np.\+ndarray y, func, args, float mask\+\_\+min=None, bool absolute\+\_\+value=True, bool standardized=False)
+\begin{DoxyCompactList}\small\item\em Compute the fitting residual. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{namespaceanko_1_1stats__util_a722a7df4e57d07d0db0536c8d77492e5}{anko.\+stats\+\_\+util.\+A\+I\+C\+\_\+score}} (np.\+ndarray y, np.\+ndarray y\+\_\+predict, int p)
+\begin{DoxyCompactList}\small\item\em Compute Akaike information criterion for model selection. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{namespaceanko_1_1stats__util_a8c9c7a4adfcf1719ffa5a445cac7c7c7}{anko.\+stats\+\_\+util.\+B\+I\+C\+\_\+score}} (np.\+ndarray y, np.\+ndarray y\+\_\+predict, int p)
+\begin{DoxyCompactList}\small\item\em Compute Bayesian information criterion for model selection. \end{DoxyCompactList}\item 
+np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a9b2e2041bcd620bb46b85e933fe45697}{anko.\+stats\+\_\+util.\+z\+\_\+normalization}} (np.\+ndarray x)
+\begin{DoxyCompactList}\small\item\em Perform z-\/score normalizaion on input array x. \end{DoxyCompactList}\end{DoxyCompactItemize}

@@ -82,9 +82,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a043c3334f258dda9e528ab8a51ea053b"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a043c3334f258dda9e528ab8a51ea053b">normal_distr</a> (np.ndarray x, float a, float x0, float sigma)</td></tr>
 <tr class="memdesc:a043c3334f258dda9e528ab8a51ea053b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate normal distribution of input array x.  <a href="namespaceanko_1_1stats__util.html#a043c3334f258dda9e528ab8a51ea053b">More...</a><br /></td></tr>
 <tr class="separator:a043c3334f258dda9e528ab8a51ea053b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85c527df43eda799d1f913bda369f451"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a85c527df43eda799d1f913bda369f451">gaussian_fit</a> (np.ndarray x, float lmbda=1, bool sort_histo=False, str half=None, int maxfev=2000, bounds=[0, 1e+6])</td></tr>
-<tr class="memdesc:a85c527df43eda799d1f913bda369f451"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fitting the Gaussian (normal) distribution for input data x.  <a href="namespaceanko_1_1stats__util.html#a85c527df43eda799d1f913bda369f451">More...</a><br /></td></tr>
-<tr class="separator:a85c527df43eda799d1f913bda369f451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa482297a54c4bcc67af00b259c3b03ce"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#aa482297a54c4bcc67af00b259c3b03ce">gaussian_fit</a> (np.ndarray x, bool sort_histo=False, str half=None, int maxfev=2000, bounds=[0, 1e+6])</td></tr>
+<tr class="memdesc:aa482297a54c4bcc67af00b259c3b03ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fitting the Gaussian (normal) distribution for input data x.  <a href="namespaceanko_1_1stats__util.html#aa482297a54c4bcc67af00b259c3b03ce">More...</a><br /></td></tr>
+<tr class="separator:aa482297a54c4bcc67af00b259c3b03ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe9294ceb5073c65f77b6c7894349ef7"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#afe9294ceb5073c65f77b6c7894349ef7">left_half_normal_distr</a> (np.ndarray x, float a, float x0, float sigma)</td></tr>
 <tr class="memdesc:afe9294ceb5073c65f77b6c7894349ef7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate left-side half normal distribution of input array x.  <a href="namespaceanko_1_1stats__util.html#afe9294ceb5073c65f77b6c7894349ef7">More...</a><br /></td></tr>
 <tr class="separator:afe9294ceb5073c65f77b6c7894349ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,48 +109,53 @@ Functions</h2></td></tr>
 <tr class="memdesc:a4f434d24322b90d1d03cf689847ea76a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fitting generalize error function for input data (x, y).  <a href="namespaceanko_1_1stats__util.html#a4f434d24322b90d1d03cf689847ea76a">More...</a><br /></td></tr>
 <tr class="separator:a4f434d24322b90d1d03cf689847ea76a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa196811391f6401b6fec78c1fd7054ed"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#aa196811391f6401b6fec78c1fd7054ed">exp_decay</a> (np.ndarray x, float a, float alpha)</td></tr>
-<tr class="memdesc:aa196811391f6401b6fec78c1fd7054ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the expoential function of input array x.  <a href="namespaceanko_1_1stats__util.html#aa196811391f6401b6fec78c1fd7054ed">More...</a><br /></td></tr>
+<tr class="memdesc:aa196811391f6401b6fec78c1fd7054ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the exponential function of input array x.  <a href="namespaceanko_1_1stats__util.html#aa196811391f6401b6fec78c1fd7054ed">More...</a><br /></td></tr>
 <tr class="separator:aa196811391f6401b6fec78c1fd7054ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd84e2d66600e9eeab239d106c794f9a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#afd84e2d66600e9eeab239d106c794f9a">exp_decay_fit</a> (np.ndarray x, np.ndarray y, int maxfev=2000, bounds=[-1e-6, 1e+6])</td></tr>
-<tr class="separator:afd84e2d66600e9eeab239d106c794f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d8a8e8561c1d96066a9493d900a1346"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a1d8a8e8561c1d96066a9493d900a1346">exp_decay_fit</a> (np.ndarray x, np.ndarray y, mode='log-linregress', int maxfev=2000, bounds=[-1e-6, 1e+6])</td></tr>
+<tr class="separator:a1d8a8e8561c1d96066a9493d900a1346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1467292292fb037a7b879c3a66700499"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a1467292292fb037a7b879c3a66700499">smoothness</a> (np.ndarray x, bool normalize=False)</td></tr>
 <tr class="separator:a1467292292fb037a7b879c3a66700499"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebff1af496b1545f67e9b7a9253f2226"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#aebff1af496b1545f67e9b7a9253f2226">discontinuous_idx</a> (np.ndarray x, int std_width=1)</td></tr>
 <tr class="separator:aebff1af496b1545f67e9b7a9253f2226"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f75e0a66974df60bf657d244f516619"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a0f75e0a66974df60bf657d244f516619">is_oscillating</a> (np.ndarray x, float osci_freq_th=0.3)</td></tr>
+<tr class="memdesc:a0f75e0a66974df60bf657d244f516619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether the input array x is oscillating over its mean with frequency larger than osci_freq_th.  <a href="namespaceanko_1_1stats__util.html#a0f75e0a66974df60bf657d244f516619">More...</a><br /></td></tr>
 <tr class="separator:a0f75e0a66974df60bf657d244f516619"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9df68416c7766322770eb22c8a32054"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#af9df68416c7766322770eb22c8a32054">fitting_residual</a> (x, y, func, args, standardized=True)</td></tr>
-<tr class="separator:af9df68416c7766322770eb22c8a32054"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed70c6ec1a740d5dc444057d142b5c43"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#aed70c6ec1a740d5dc444057d142b5c43">AIC_score</a> (y, y_predict, p)</td></tr>
-<tr class="separator:aed70c6ec1a740d5dc444057d142b5c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b489bf680609a9b3c23afe062e313f6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a6b489bf680609a9b3c23afe062e313f6">BIC_score</a> (y, y_predict, p)</td></tr>
-<tr class="separator:a6b489bf680609a9b3c23afe062e313f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51a9f0713d1d2f63b3485586bf746aee"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a51a9f0713d1d2f63b3485586bf746aee">z_normalization</a> (x)</td></tr>
-<tr class="separator:a51a9f0713d1d2f63b3485586bf746aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f905598561c0f8c6e31dfb0b0e2d5e5"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a6f905598561c0f8c6e31dfb0b0e2d5e5">fitting_residual</a> (np.ndarray x, np.ndarray y, func, args, float mask_min=None, bool absolute_value=True, bool standardized=False)</td></tr>
+<tr class="memdesc:a6f905598561c0f8c6e31dfb0b0e2d5e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the fitting residual.  <a href="namespaceanko_1_1stats__util.html#a6f905598561c0f8c6e31dfb0b0e2d5e5">More...</a><br /></td></tr>
+<tr class="separator:a6f905598561c0f8c6e31dfb0b0e2d5e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a722a7df4e57d07d0db0536c8d77492e5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a722a7df4e57d07d0db0536c8d77492e5">AIC_score</a> (np.ndarray y, np.ndarray y_predict, int p)</td></tr>
+<tr class="memdesc:a722a7df4e57d07d0db0536c8d77492e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute Akaike information criterion for model selection.  <a href="namespaceanko_1_1stats__util.html#a722a7df4e57d07d0db0536c8d77492e5">More...</a><br /></td></tr>
+<tr class="separator:a722a7df4e57d07d0db0536c8d77492e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c9c7a4adfcf1719ffa5a445cac7c7c7"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a8c9c7a4adfcf1719ffa5a445cac7c7c7">BIC_score</a> (np.ndarray y, np.ndarray y_predict, int p)</td></tr>
+<tr class="memdesc:a8c9c7a4adfcf1719ffa5a445cac7c7c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute Bayesian information criterion for model selection.  <a href="namespaceanko_1_1stats__util.html#a8c9c7a4adfcf1719ffa5a445cac7c7c7">More...</a><br /></td></tr>
+<tr class="separator:a8c9c7a4adfcf1719ffa5a445cac7c7c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b2e2041bcd620bb46b85e933fe45697"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a9b2e2041bcd620bb46b85e933fe45697">z_normalization</a> (np.ndarray x)</td></tr>
+<tr class="memdesc:a9b2e2041bcd620bb46b85e933fe45697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform z-score normalizaion on input array x.  <a href="namespaceanko_1_1stats__util.html#a9b2e2041bcd620bb46b85e933fe45697">More...</a><br /></td></tr>
+<tr class="separator:a9b2e2041bcd620bb46b85e933fe45697"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aed70c6ec1a740d5dc444057d142b5c43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed70c6ec1a740d5dc444057d142b5c43">&#9670;&nbsp;</a></span>AIC_score()</h2>
+<a id="a722a7df4e57d07d0db0536c8d77492e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a722a7df4e57d07d0db0536c8d77492e5">&#9670;&nbsp;</a></span>AIC_score()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def anko.stats_util.AIC_score </td>
+          <td class="memname"> float anko.stats_util.AIC_score </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>y</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>y_predict</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>p</em>&#160;</td>
         </tr>
         <tr>
@@ -161,30 +166,41 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Compute Akaike information criterion for model selection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">y</td><td>(numpy.ndarray): data samples. </td></tr>
+    <tr><td class="paramname">y_predict</td><td>(numpy.ndarray): prediction by fitting. </td></tr>
+    <tr><td class="paramname">p</td><td>(int): fitting degrees of freedom, i.e. the number of parameters to fit with.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>aic_score (float): </dd></dl>
+
 </div>
 </div>
-<a id="a6b489bf680609a9b3c23afe062e313f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b489bf680609a9b3c23afe062e313f6">&#9670;&nbsp;</a></span>BIC_score()</h2>
+<a id="a8c9c7a4adfcf1719ffa5a445cac7c7c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c9c7a4adfcf1719ffa5a445cac7c7c7">&#9670;&nbsp;</a></span>BIC_score()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def anko.stats_util.BIC_score </td>
+          <td class="memname"> float anko.stats_util.BIC_score </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>y</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>y_predict</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>p</em>&#160;</td>
         </tr>
         <tr>
@@ -194,6 +210,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Compute Bayesian information criterion for model selection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">y</td><td>(numpy.ndarray): data samples. </td></tr>
+    <tr><td class="paramname">y_predict</td><td>(numpy.ndarray): prediction by fitting. </td></tr>
+    <tr><td class="paramname">p</td><td>(int): fitting degrees of freedom, i.e. the number of parameters to fit with.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bic_score (float): </dd></dl>
 
 </div>
 </div>
@@ -312,7 +339,7 @@ This will perform a linear regression fitting.</p>
       </table>
 </div><div class="memdoc">
 
-<p>Calculate the expoential function of input array x. </p>
+<p>Calculate the exponential function of input array x. </p>
 <p>Note that Domain of x &gt;= 0.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -326,8 +353,8 @@ This will perform a linear regression fitting.</p>
 
 </div>
 </div>
-<a id="afd84e2d66600e9eeab239d106c794f9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd84e2d66600e9eeab239d106c794f9a">&#9670;&nbsp;</a></span>exp_decay_fit()</h2>
+<a id="a1d8a8e8561c1d96066a9493d900a1346"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d8a8e8561c1d96066a9493d900a1346">&#9670;&nbsp;</a></span>exp_decay_fit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -343,6 +370,12 @@ This will perform a linear regression fitting.</p>
           <td></td>
           <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>'log-linregress'</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -367,6 +400,7 @@ This will perform a linear regression fitting.</p>
   <table class="params">
     <tr><td class="paramname">x</td><td>(numpy.ndarray): </td></tr>
     <tr><td class="paramname">y</td><td>(numpy.ndarray): </td></tr>
+    <tr><td class="paramname">mode</td><td>(str): </td></tr>
     <tr><td class="paramname">maxfev</td><td>(int): <br  />
  </td></tr>
     <tr><td class="paramname">bounds</td><td>(list[float,float]):</td></tr>
@@ -379,22 +413,22 @@ perr (numpy.ndarray): </dd></dl>
 
 </div>
 </div>
-<a id="af9df68416c7766322770eb22c8a32054"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9df68416c7766322770eb22c8a32054">&#9670;&nbsp;</a></span>fitting_residual()</h2>
+<a id="a6f905598561c0f8c6e31dfb0b0e2d5e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f905598561c0f8c6e31dfb0b0e2d5e5">&#9670;&nbsp;</a></span>fitting_residual()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def anko.stats_util.fitting_residual </td>
+          <td class="memname"> np.ndarray anko.stats_util.fitting_residual </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>y</em>, </td>
         </tr>
         <tr>
@@ -412,8 +446,20 @@ perr (numpy.ndarray): </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>standardized</em> = <code>True</code>&#160;</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>mask_min</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>absolute_value</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>standardized</em> = <code>False</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -422,6 +468,8 @@ perr (numpy.ndarray): </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Compute the fitting residual. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>(numpy.ndarray): </td></tr>
@@ -432,7 +480,7 @@ perr (numpy.ndarray): </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>res (numpy.ndarray) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>res (numpy.ndarray): </dd></dl>
 
 </div>
 </div>
@@ -473,8 +521,8 @@ perr (numpy.ndarray): Errors are set to zero. </dd></dl>
 
 </div>
 </div>
-<a id="a85c527df43eda799d1f913bda369f451"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85c527df43eda799d1f913bda369f451">&#9670;&nbsp;</a></span>gaussian_fit()</h2>
+<a id="aa482297a54c4bcc67af00b259c3b03ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa482297a54c4bcc67af00b259c3b03ce">&#9670;&nbsp;</a></span>gaussian_fit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -484,12 +532,6 @@ perr (numpy.ndarray): Errors are set to zero. </dd></dl>
           <td>(</td>
           <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>lmbda</em> = <code>1</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -528,9 +570,6 @@ perr (numpy.ndarray): Errors are set to zero. </dd></dl>
   <table class="params">
     <tr><td class="paramname">x</td><td>(numpy.ndarray): Input values. <br  />
  </td></tr>
-    <tr><td class="paramname">lmbda</td><td>(float, optional): If not equal to 1, <br  />
- perform BoxCox transformation with parameter lmbda to input x. <br  />
- This is useful to make the data more normal-distribution-like. </td></tr>
     <tr><td class="paramname">sort_histo</td><td>(bool, optional): If True use the sorted histogram. </td></tr>
     <tr><td class="paramname">maxfev</td><td>(int, optional): Maximum step of fitting iteration.</td></tr>
   </table>
@@ -721,6 +760,8 @@ vals: Number of appearance for each key in keys. </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Determine whether the input array x is oscillating over its mean with frequency larger than osci_freq_th. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>(numpy.ndarray): </td></tr>
@@ -1021,24 +1062,45 @@ std_err (float): Standard error of the estimated gradient. </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>(numpy.ndarray): Input values. </td></tr>
+    <tr><td class="paramname">c0</td><td>(float): </td></tr>
+    <tr><td class="paramname">c1</td><td>(float): </td></tr>
+    <tr><td class="paramname">c2</td><td>(float): </td></tr>
+    <tr><td class="paramname">x1</td><td>(float): </td></tr>
+    <tr><td class="paramname">x2</td><td>(float):</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>out (numpy.ndarray): Output array. </dd></dl>
 
 </div>
 </div>
-<a id="a51a9f0713d1d2f63b3485586bf746aee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51a9f0713d1d2f63b3485586bf746aee">&#9670;&nbsp;</a></span>z_normalization()</h2>
+<a id="a9b2e2041bcd620bb46b85e933fe45697"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b2e2041bcd620bb46b85e933fe45697">&#9670;&nbsp;</a></span>z_normalization()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def anko.stats_util.z_normalization </td>
+          <td class="memname"> np.ndarray anko.stats_util.z_normalization </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>x</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Perform z-score normalizaion on input array x. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>(numpy.ndarray):</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>normalized_x (numpy.ndarray): </dd></dl>
 
 </div>
 </div>

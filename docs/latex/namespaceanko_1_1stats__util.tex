@@ -7,7 +7,7 @@ def \mbox{\hyperlink{namespaceanko_1_1stats__util_ae5da820a4ff2ba172cc895f7aed1a
 \begin{DoxyCompactList}\small\item\em Return the corresponding histogram of the data x. \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a043c3334f258dda9e528ab8a51ea053b}{normal\+\_\+distr}} (np.\+ndarray x, float a, float x0, float sigma)
 \begin{DoxyCompactList}\small\item\em Calculate normal distribution of input array x. \end{DoxyCompactList}\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_a85c527df43eda799d1f913bda369f451}{gaussian\+\_\+fit}} (np.\+ndarray x, float lmbda=1, bool sort\+\_\+histo=False, str half=None, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
+def \mbox{\hyperlink{namespaceanko_1_1stats__util_aa482297a54c4bcc67af00b259c3b03ce}{gaussian\+\_\+fit}} (np.\+ndarray x, bool sort\+\_\+histo=False, str half=None, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
 \begin{DoxyCompactList}\small\item\em Fitting the Gaussian (normal) distribution for input data x. \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_afe9294ceb5073c65f77b6c7894349ef7}{left\+\_\+half\+\_\+normal\+\_\+distr}} (np.\+ndarray x, float a, float x0, float sigma)
 \begin{DoxyCompactList}\small\item\em Calculate left-\/side half normal distribution of input array x. \end{DoxyCompactList}\item 
@@ -26,38 +26,70 @@ def \mbox{\hyperlink{namespaceanko_1_1stats__util_a8c334494be52ff57a126c86997d05
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a4f434d24322b90d1d03cf689847ea76a}{general\+\_\+erf\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, bool three\+\_\+stair=False, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
 \begin{DoxyCompactList}\small\item\em Fitting generalize error function for input data (x, y). \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_aa196811391f6401b6fec78c1fd7054ed}{exp\+\_\+decay}} (np.\+ndarray x, float a, float alpha)
-\begin{DoxyCompactList}\small\item\em Calculate the expoential function of input array x. \end{DoxyCompactList}\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_afd84e2d66600e9eeab239d106c794f9a}{exp\+\_\+decay\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, int maxfev=2000, bounds=\mbox{[}-\/1e-\/6, 1e+6\mbox{]})
+\begin{DoxyCompactList}\small\item\em Calculate the exponential function of input array x. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceanko_1_1stats__util_a1d8a8e8561c1d96066a9493d900a1346}{exp\+\_\+decay\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, mode=\textquotesingle{}log-\/linregress\textquotesingle{}, int maxfev=2000, bounds=\mbox{[}-\/1e-\/6, 1e+6\mbox{]})
 \item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a1467292292fb037a7b879c3a66700499}{smoothness}} (np.\+ndarray x, bool normalize=False)
 \item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_aebff1af496b1545f67e9b7a9253f2226}{discontinuous\+\_\+idx}} (np.\+ndarray x, int std\+\_\+width=1)
 \item 
 bool \mbox{\hyperlink{namespaceanko_1_1stats__util_a0f75e0a66974df60bf657d244f516619}{is\+\_\+oscillating}} (np.\+ndarray x, float osci\+\_\+freq\+\_\+th=0.\+3)
-\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_af9df68416c7766322770eb22c8a32054}{fitting\+\_\+residual}} (x, y, func, args, standardized=True)
-\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_aed70c6ec1a740d5dc444057d142b5c43}{A\+I\+C\+\_\+score}} (y, y\+\_\+predict, p)
-\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_a6b489bf680609a9b3c23afe062e313f6}{B\+I\+C\+\_\+score}} (y, y\+\_\+predict, p)
-\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_a51a9f0713d1d2f63b3485586bf746aee}{z\+\_\+normalization}} (x)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Determine whether the input array x is oscillating over its mean with frequency larger than osci\+\_\+freq\+\_\+th. \end{DoxyCompactList}\item 
+np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a6f905598561c0f8c6e31dfb0b0e2d5e5}{fitting\+\_\+residual}} (np.\+ndarray x, np.\+ndarray y, func, args, float mask\+\_\+min=None, bool absolute\+\_\+value=True, bool standardized=False)
+\begin{DoxyCompactList}\small\item\em Compute the fitting residual. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{namespaceanko_1_1stats__util_a722a7df4e57d07d0db0536c8d77492e5}{A\+I\+C\+\_\+score}} (np.\+ndarray y, np.\+ndarray y\+\_\+predict, int p)
+\begin{DoxyCompactList}\small\item\em Compute Akaike information criterion for model selection. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{namespaceanko_1_1stats__util_a8c9c7a4adfcf1719ffa5a445cac7c7c7}{B\+I\+C\+\_\+score}} (np.\+ndarray y, np.\+ndarray y\+\_\+predict, int p)
+\begin{DoxyCompactList}\small\item\em Compute Bayesian information criterion for model selection. \end{DoxyCompactList}\item 
+np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a9b2e2041bcd620bb46b85e933fe45697}{z\+\_\+normalization}} (np.\+ndarray x)
+\begin{DoxyCompactList}\small\item\em Perform z-\/score normalizaion on input array x. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_aed70c6ec1a740d5dc444057d142b5c43}\label{namespaceanko_1_1stats__util_aed70c6ec1a740d5dc444057d142b5c43}} 
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_a722a7df4e57d07d0db0536c8d77492e5}\label{namespaceanko_1_1stats__util_a722a7df4e57d07d0db0536c8d77492e5}} 
 \index{anko.stats\_util@{anko.stats\_util}!AIC\_score@{AIC\_score}}
 \index{AIC\_score@{AIC\_score}!anko.stats\_util@{anko.stats\_util}}
 \doxysubsubsection{\texorpdfstring{AIC\_score()}{AIC\_score()}}
-{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+A\+I\+C\+\_\+score (\begin{DoxyParamCaption}\item[{}]{y,  }\item[{}]{y\+\_\+predict,  }\item[{}]{p }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily  float anko.\+stats\+\_\+util.\+A\+I\+C\+\_\+score (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{y,  }\item[{np.\+ndarray}]{y\+\_\+predict,  }\item[{int}]{p }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_a6b489bf680609a9b3c23afe062e313f6}\label{namespaceanko_1_1stats__util_a6b489bf680609a9b3c23afe062e313f6}} 
+
+
+Compute Akaike information criterion for model selection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em y} & (numpy.\+ndarray)\+: data samples. \\
+\hline
+{\em y\+\_\+predict} & (numpy.\+ndarray)\+: prediction by fitting. \\
+\hline
+{\em p} & (int)\+: fitting degrees of freedom, i.\+e. the number of parameters to fit with.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+aic\+\_\+score (float)\+: 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_a8c9c7a4adfcf1719ffa5a445cac7c7c7}\label{namespaceanko_1_1stats__util_a8c9c7a4adfcf1719ffa5a445cac7c7c7}} 
 \index{anko.stats\_util@{anko.stats\_util}!BIC\_score@{BIC\_score}}
 \index{BIC\_score@{BIC\_score}!anko.stats\_util@{anko.stats\_util}}
 \doxysubsubsection{\texorpdfstring{BIC\_score()}{BIC\_score()}}
-{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+B\+I\+C\+\_\+score (\begin{DoxyParamCaption}\item[{}]{y,  }\item[{}]{y\+\_\+predict,  }\item[{}]{p }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily  float anko.\+stats\+\_\+util.\+B\+I\+C\+\_\+score (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{y,  }\item[{np.\+ndarray}]{y\+\_\+predict,  }\item[{int}]{p }\end{DoxyParamCaption})}
 
+
+
+Compute Bayesian information criterion for model selection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em y} & (numpy.\+ndarray)\+: data samples. \\
+\hline
+{\em y\+\_\+predict} & (numpy.\+ndarray)\+: prediction by fitting. \\
+\hline
+{\em p} & (int)\+: fitting degrees of freedom, i.\+e. the number of parameters to fit with.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bic\+\_\+score (float)\+: 
+\end{DoxyReturn}
 \mbox{\Hypertarget{namespaceanko_1_1stats__util_ad350eac604ebf2d6d3c42f4753d882de}\label{namespaceanko_1_1stats__util_ad350eac604ebf2d6d3c42f4753d882de}} 
 \index{anko.stats\_util@{anko.stats\_util}!data\_is\_linear@{data\_is\_linear}}
 \index{data\_is\_linear@{data\_is\_linear}!anko.stats\_util@{anko.stats\_util}}
@@ -107,7 +139,7 @@ idx (numpy.\+ndarray)\+:
 
 
 
-Calculate the expoential function of input array x. 
+Calculate the exponential function of input array x. 
 
 Note that Domain of x $>$= 0.
 
@@ -123,17 +155,19 @@ Note that Domain of x $>$= 0.
 \begin{DoxyReturn}{Returns}
 out\+: 
 \end{DoxyReturn}
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_afd84e2d66600e9eeab239d106c794f9a}\label{namespaceanko_1_1stats__util_afd84e2d66600e9eeab239d106c794f9a}} 
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_a1d8a8e8561c1d96066a9493d900a1346}\label{namespaceanko_1_1stats__util_a1d8a8e8561c1d96066a9493d900a1346}} 
 \index{anko.stats\_util@{anko.stats\_util}!exp\_decay\_fit@{exp\_decay\_fit}}
 \index{exp\_decay\_fit@{exp\_decay\_fit}!anko.stats\_util@{anko.stats\_util}}
 \doxysubsubsection{\texorpdfstring{exp\_decay\_fit()}{exp\_decay\_fit()}}
-{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+exp\+\_\+decay\+\_\+fit (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{np.\+ndarray}]{y,  }\item[{int}]{maxfev = {\ttfamily 2000},  }\item[{}]{bounds = {\ttfamily \mbox{[}-\/1e-\/6,1e+6\mbox{]}} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+exp\+\_\+decay\+\_\+fit (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{np.\+ndarray}]{y,  }\item[{}]{mode = {\ttfamily \textquotesingle{}log-\/linregress\textquotesingle{}},  }\item[{int}]{maxfev = {\ttfamily 2000},  }\item[{}]{bounds = {\ttfamily \mbox{[}-\/1e-\/6,1e+6\mbox{]}} }\end{DoxyParamCaption})}
 
 
 \begin{DoxyParams}{Parameters}
 {\em x} & (numpy.\+ndarray)\+: \\
 \hline
 {\em y} & (numpy.\+ndarray)\+: \\
+\hline
+{\em mode} & (str)\+: \\
 \hline
 {\em maxfev} & (int)\+: ~\newline
  \\
@@ -146,11 +180,15 @@ popt (numpy.\+ndarray)\+:
 
 perr (numpy.\+ndarray)\+: 
 \end{DoxyReturn}
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_af9df68416c7766322770eb22c8a32054}\label{namespaceanko_1_1stats__util_af9df68416c7766322770eb22c8a32054}} 
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_a6f905598561c0f8c6e31dfb0b0e2d5e5}\label{namespaceanko_1_1stats__util_a6f905598561c0f8c6e31dfb0b0e2d5e5}} 
 \index{anko.stats\_util@{anko.stats\_util}!fitting\_residual@{fitting\_residual}}
 \index{fitting\_residual@{fitting\_residual}!anko.stats\_util@{anko.stats\_util}}
 \doxysubsubsection{\texorpdfstring{fitting\_residual()}{fitting\_residual()}}
-{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+fitting\+\_\+residual (\begin{DoxyParamCaption}\item[{}]{x,  }\item[{}]{y,  }\item[{}]{func,  }\item[{}]{args,  }\item[{}]{standardized = {\ttfamily True} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily  np.\+ndarray anko.\+stats\+\_\+util.\+fitting\+\_\+residual (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{np.\+ndarray}]{y,  }\item[{}]{func,  }\item[{}]{args,  }\item[{float}]{mask\+\_\+min = {\ttfamily None},  }\item[{bool}]{absolute\+\_\+value = {\ttfamily True},  }\item[{bool}]{standardized = {\ttfamily False} }\end{DoxyParamCaption})}
+
+
+
+Compute the fitting residual. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -166,7 +204,7 @@ perr (numpy.\+ndarray)\+:
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-res (numpy.\+ndarray) 
+res (numpy.\+ndarray)\+: 
 \end{DoxyReturn}
 \mbox{\Hypertarget{namespaceanko_1_1stats__util_a592ce686a07fad2982a1e051b8e751da}\label{namespaceanko_1_1stats__util_a592ce686a07fad2982a1e051b8e751da}} 
 \index{anko.stats\_util@{anko.stats\_util}!flat\_histogram@{flat\_histogram}}
@@ -199,11 +237,11 @@ popt (numpy.\+ndarray)\+: Assigned values for Gaussian distribution.
 
 perr (numpy.\+ndarray)\+: Errors are set to zero. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_a85c527df43eda799d1f913bda369f451}\label{namespaceanko_1_1stats__util_a85c527df43eda799d1f913bda369f451}} 
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_aa482297a54c4bcc67af00b259c3b03ce}\label{namespaceanko_1_1stats__util_aa482297a54c4bcc67af00b259c3b03ce}} 
 \index{anko.stats\_util@{anko.stats\_util}!gaussian\_fit@{gaussian\_fit}}
 \index{gaussian\_fit@{gaussian\_fit}!anko.stats\_util@{anko.stats\_util}}
 \doxysubsubsection{\texorpdfstring{gaussian\_fit()}{gaussian\_fit()}}
-{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+gaussian\+\_\+fit (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{float}]{lmbda = {\ttfamily 1},  }\item[{bool}]{sort\+\_\+histo = {\ttfamily False},  }\item[{str}]{half = {\ttfamily None},  }\item[{int}]{maxfev = {\ttfamily 2000},  }\item[{}]{bounds = {\ttfamily \mbox{[}0,1e+6\mbox{]}} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+gaussian\+\_\+fit (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{bool}]{sort\+\_\+histo = {\ttfamily False},  }\item[{str}]{half = {\ttfamily None},  }\item[{int}]{maxfev = {\ttfamily 2000},  }\item[{}]{bounds = {\ttfamily \mbox{[}0,1e+6\mbox{]}} }\end{DoxyParamCaption})}
 
 
 
@@ -213,10 +251,6 @@ Fitting the Gaussian (normal) distribution for input data x.
 \begin{DoxyParams}{Parameters}
 {\em x} & (numpy.\+ndarray)\+: Input values. ~\newline
  \\
-\hline
-{\em lmbda} & (float, optional)\+: If not equal to 1, ~\newline
- perform Box\+Cox transformation with parameter lmbda to input x. ~\newline
- This is useful to make the data more normal-\/distribution-\/like. \\
 \hline
 {\em sort\+\_\+histo} & (bool, optional)\+: If True use the sorted histogram. \\
 \hline
@@ -309,6 +343,10 @@ vals\+: Number of appearance for each key in keys.
 \index{is\_oscillating@{is\_oscillating}!anko.stats\_util@{anko.stats\_util}}
 \doxysubsubsection{\texorpdfstring{is\_oscillating()}{is\_oscillating()}}
 {\footnotesize\ttfamily  bool anko.\+stats\+\_\+util.\+is\+\_\+oscillating (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{float}]{osci\+\_\+freq\+\_\+th = {\ttfamily 0.3} }\end{DoxyParamCaption})}
+
+
+
+Determine whether the input array x is oscillating over its mean with frequency larger than osci\+\_\+freq\+\_\+th. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -445,9 +483,39 @@ sm (numpy.\+ndarray)\+:
 \doxysubsubsection{\texorpdfstring{three\_stair\_erf()}{three\_stair\_erf()}}
 {\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+three\+\_\+stair\+\_\+erf (\begin{DoxyParamCaption}\item[{}]{x,  }\item[{}]{c0,  }\item[{}]{c1,  }\item[{}]{c2,  }\item[{}]{x1,  }\item[{}]{x2 }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_a51a9f0713d1d2f63b3485586bf746aee}\label{namespaceanko_1_1stats__util_a51a9f0713d1d2f63b3485586bf746aee}} 
+
+\begin{DoxyParams}{Parameters}
+{\em x} & (numpy.\+ndarray)\+: Input values. \\
+\hline
+{\em c0} & (float)\+: \\
+\hline
+{\em c1} & (float)\+: \\
+\hline
+{\em c2} & (float)\+: \\
+\hline
+{\em x1} & (float)\+: \\
+\hline
+{\em x2} & (float)\+:\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+out (numpy.\+ndarray)\+: Output array. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_a9b2e2041bcd620bb46b85e933fe45697}\label{namespaceanko_1_1stats__util_a9b2e2041bcd620bb46b85e933fe45697}} 
 \index{anko.stats\_util@{anko.stats\_util}!z\_normalization@{z\_normalization}}
 \index{z\_normalization@{z\_normalization}!anko.stats\_util@{anko.stats\_util}}
 \doxysubsubsection{\texorpdfstring{z\_normalization()}{z\_normalization()}}
-{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+z\+\_\+normalization (\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily  np.\+ndarray anko.\+stats\+\_\+util.\+z\+\_\+normalization (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x }\end{DoxyParamCaption})}
 
+
+
+Perform z-\/score normalizaion on input array x. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & (numpy.\+ndarray)\+:\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+normalized\+\_\+x (numpy.\+ndarray)\+: 
+\end{DoxyReturn}
