@@ -14,7 +14,6 @@ class TestAnomalyDetector(unittest.TestCase):
         series = 20*(np.sign(t-20)+2)
         
         agent = AnomalyDetector(t, series)
-        agent.apply_policies["z_normalization"] = True
         statsdata = agent.check()
         
         self.assertEqual(statsdata['model'], 'increase_step_func')
@@ -27,14 +26,22 @@ class TestAnomalyDetector(unittest.TestCase):
         series = 10 * np.exp(-3*t)
         
         agent = AnomalyDetector(t, series)
-        agent.apply_policies["z_normalization"] = True
         statsdata = agent.check()
         
         self.assertEqual(statsdata['model'], 'exp_decay')
         np.testing.assert_allclose(statsdata['popt'], [10, 3], atol=1, rtol=1e-1)
         np.testing.assert_allclose(statsdata['perr'], 0, atol=1, rtol=1e-1)
         np.testing.assert_allclose(statsdata['anomalous_data'], [])
-       
+    
+    def test_check_on_gaussian(self):
+        mean = 100; std = 20
+        t = np.arange(1, 100+1)
+        series = np.random.normal(mean, std, size=100).astype(int)
+        agent = AnomalyDetector(t, series)
+        statsdata = agent.check()
+        statsdata["series"] = series
+        #print(statsdata)
+    
     @staticmethod
     def read_from_file():
         npzfile = np.load('./test_series.npz')
@@ -43,15 +50,18 @@ class TestAnomalyDetector(unittest.TestCase):
         return np.array(series_data)
     
     def test_check_from_file(self):
-        sample_idx = np.random.randint(1, 100, size=10)
-        series = self.__class__.read_from_file()[sample_idx]
-        for i in range(10):
+        sample_idx = np.random.randint(1, 100, size=240)
+        series = self.__class__.read_from_file()#[sample_idx]
+        for i in range(240):
             try:
                 t = np.arange(1, len(series[i])+1)
                 agent = AnomalyDetector(t, series[i])
-                agent.apply_policies["z_normalization"] = True
+                agent.thres_params["step_func_res"] = 1.5
+                agent.thres_params["exp_dacay_res"] = 1.5
                 statsdata = agent.check()
                 statsdata["series"] = series[i]
+                if statsdata.model != "linear_regression" and statsdata.residual:
+                    print(statsdata)
             except ValueError:
                 pass
       

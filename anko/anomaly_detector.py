@@ -25,6 +25,7 @@ class AnomalyDetector:
         else:
             self.t = t
         self.series = series
+        self._clone_t = copy.deepcopy(t)
         self._clone_series = copy.deepcopy(series)
         self.check_failed = True       
         self.thres_params = {
@@ -176,8 +177,10 @@ class AnomalyDetector:
             allowed_domain = (statsdata["popt"][1]-std_th, statsdata["popt"][1]+std_th)
             anomalous_idx = np.where(np.logical_or(histo_x<=allowed_domain[0], histo_x>=allowed_domain[1]))[0] 
             if len(anomalous_idx) != 0: 
+                if self.apply_policies["boxcox"]:
+                    histo_x, histo_y = stats_util.get_histogram(self._clone_series)
                 anomalous_data = histo_x[anomalous_idx]
-                anomalous_t = self.t[np.where(np.in1d(anomalous_data, self.series))]
+                anomalous_t = self._clone_t[np.where(np.in1d(anomalous_data, self.series))]
                 res = abs(anomalous_data-statsdata["popt"][1])
                 if self.apply_policies["z_normalization"]: res /= statsdata["popt"][2]
             if abs(stats_util.skew(histo_y)) > self.thres_params["skewness"]:
@@ -190,7 +193,7 @@ class AnomalyDetector:
             res = stats_util.fitting_residual(self.t, self.series, stats_util.general_erf, statsdata["popt"],
                                               mask_min=self.thres_params["min_res"],
                                               standardized=self.apply_policies["z_normalization"])
-            anomalous_t = self.t[res > self.thres_params["step_func_res"]]
+            anomalous_t = self._clone_t[res > self.thres_params["step_func_res"]]
             anomalous_data = self.series[res > self.thres_params["step_func_res"]]                                      
             res = res[res > self.thres_params["step_func_res"]]
             
@@ -200,16 +203,16 @@ class AnomalyDetector:
                 res = stats_util.fitting_residual(self.t, self.series, stats_util.general_erf, statsdata["popt"],
                                                   mask_min=self.thres_params["min_res"],
                                                   standardized=self.apply_policies["z_normalization"])
-                anomalous_t = self.t[res > self.thres_params["step_func_res"]]
+                anomalous_t = self._clone_t[res > self.thres_params["step_func_res"]]
                 anomalous_data = self.series[res > self.thres_params["step_func_res"]]
                 res = res[res > self.thres_params["step_func_res"]]
                 msgs.append(self.error_code["-3"])
             else:   
                 anomalous_idx = np.where(self.t > statsdata["popt"][2])[0]
                 if len(anomalous_idx) != 0: 
-                    anomalous_t = self.t[anomalous_idx]
+                    anomalous_t = self._clone_t[anomalous_idx]
                     anomalous_data = self.series[anomalous_idx]
-                    res = np.inf * np.ones(len(anomalous_idx))
+                    res = (statsdata["popt"][0]-statsdata["popt"][1]) * np.ones(len(anomalous_idx))
 # =============================================================================
 #         elif model_id == 'three_stair':
 #             err_score = np.sum(np.square(statsdata[key]["perr"]))
@@ -227,7 +230,7 @@ class AnomalyDetector:
             res = stats_util.fitting_residual(self.t, self.series, stats_util.exp_decay, statsdata["popt"],
                                               mask_min=self.thres_params["min_res"],
                                               standardized=self.apply_policies["z_normalization"])
-            anomalous_t = self.t[res > self.thres_params["exp_decay_res"]]
+            anomalous_t = self._clone_t[res > self.thres_params["exp_decay_res"]]
             anomalous_data = self.series[res > self.thres_params["exp_decay_res"]] 
             res = res[res > self.thres_params["exp_decay_res"]]                   
              
@@ -238,7 +241,7 @@ class AnomalyDetector:
             res = stats_util.fitting_residual(self.t, self.series, func, statsdata["popt"],
                                               mask_min=self.thres_params["min_res"],
                                               standardized=self.apply_policies["z_normalization"])
-            anomalous_t = self.t[res > self.thres_params["linregress_res"]]
+            anomalous_t = self._clone_t[res > self.thres_params["linregress_res"]]
             anomalous_data = self.series[res > self.thres_params["linregress_res"]]
             res = res[res > self.thres_params["linregress_res"]]                    
                 
@@ -288,3 +291,7 @@ class CheckResult(dict):
 
     def __dir__(self):
         return list(self.keys())
+
+class AnomalousData(CheckResult):
+    def __init__(self):
+        super(AnomalousData, self).__init__()
