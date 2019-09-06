@@ -47,7 +47,7 @@ class AnomalyDetector:
                 "step_func_err": 1e+1,
                 "step_func_res": 3,
                 "exp_decay_err": 1e+1,
-                "exp_decay_res": 2,
+                "exp_decay_res": 3,
                 "linearity": 1e-2,
                 "min_res": 10
         }

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>anko: Main Page</title>
+<title>anko: anko</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,11 +62,50 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">anko Documentation</div>  </div>
+<div class="title">anko </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p>Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.</p>
+<h1><a class="anchor" id="autotoc_md0"></a>
+Requirements:</h1>
+<ul>
+<li>numpy &gt;= 1.16.4</li>
+<li>scipy &gt;= 1.2.1</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Installation:</h1>
+<div class="fragment"><div class="line">pip install anko</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
+Documentation:</h1>
+<p><a href="https://tanlin2013.github.io/anko/html/index.html">anko</a></p>
+<h1><a class="anchor" id="autotoc_md3"></a>
+Jupyter Notebook Tutorial (in dev):</h1>
+<p><a href="https://mybinder.org/v2/gh/tanlin2013/anko/master?filepath=anko_tutorial.ipynb">host on mybinder</a></p>
+<h1><a class="anchor" id="autotoc_md4"></a>
+Basic Usage:</h1>
+<ul>
+<li>First step: Call AnomalyDetector <div class="fragment"><div class="line">from anko.anomaly_detector import AnomalyDetector</div>
+<div class="line">agent = AnomalyDetector(t, series)</div>
+</div><!-- fragment --></li>
+<li>Second step: Define policies and threshold values (optional) <div class="fragment"><div class="line">agent.thres_params[&quot;linregress_res&quot;] = 1.5</div>
+<div class="line">agent.apply_policies[&quot;z_normalization&quot;] = True</div>
+<div class="line">agent.apply_policies[&quot;info_criterion&quot;] = &#39;AIC&#39;</div>
+</div><!-- fragment --></li>
+<li>Third step: Run check <div class="fragment"><div class="line">check_result = agent.check()</div>
+</div><!-- fragment --> The type of output <b>check_result</b> is <b><a class="el" href="classanko_1_1anomaly__detector_1_1_check_result.html">anko.anomaly_detector.CheckResult</a></b>, which is basically a dictionary. <div class="fragment"><div class="line">model: &#39;increase_step_func&#39;</div>
+<div class="line">popt: [220.3243250055105, 249.03846355234577, 74.00000107457113]</div>
+<div class="line">perr: [0.4247789247961187, 0.7166253174634686, 0.0]</div>
+<div class="line">anomalous_data: [(59, 209)]</div>
+<div class="line">residual: [10.050378152592119]</div>
+<div class="line">extra_info: [&#39;Info: AnomalyDetector is using z normalization.&#39;, &#39;Info: There are more than 1 discontinuous points detected.&#39;]        </div>
+</div><!-- fragment --></li>
+</ul>
+<h1><a class="anchor" id="autotoc_md5"></a>
+Run Test (in dev):</h1>
+<div class="fragment"><div class="line">python -m unittest discover -s test -p &#39;*_test.py&#39;</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

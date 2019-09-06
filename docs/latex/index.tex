@@ -1,1 +1,48 @@
-Toolkit for performing anomaly detection algorithm on time series based on numpy, scipy. 
+Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.\hypertarget{index_autotoc_md0}{}\doxysection{Requirements\+:}\label{index_autotoc_md0}
+
+\begin{DoxyItemize}
+\item numpy $>$= 1.\+16.\+4
+\item scipy $>$= 1.\+2.\+1
+\end{DoxyItemize}\hypertarget{index_autotoc_md1}{}\doxysection{Installation\+:}\label{index_autotoc_md1}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pip install anko}
+\end{DoxyCode}
+\hypertarget{index_autotoc_md2}{}\doxysection{Documentation\+:}\label{index_autotoc_md2}
+\href{https://tanlin2013.github.io/anko/html/index.html}{\texttt{ anko}}\hypertarget{index_autotoc_md3}{}\doxysection{Jupyter Notebook Tutorial (in dev)\+:}\label{index_autotoc_md3}
+\href{https://mybinder.org/v2/gh/tanlin2013/anko/master?filepath=anko_tutorial.ipynb}{\texttt{ host on mybinder}}\hypertarget{index_autotoc_md4}{}\doxysection{Basic Usage\+:}\label{index_autotoc_md4}
+
+\begin{DoxyItemize}
+\item First step\+: Call Anomaly\+Detector 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from anko.anomaly\_detector import AnomalyDetector}
+\DoxyCodeLine{agent = AnomalyDetector(t, series)}
+\end{DoxyCode}
+
+\item Second step\+: Define policies and threshold values (optional) 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{agent.thres\_params["linregress\_res"] = 1.5}
+\DoxyCodeLine{agent.apply\_policies["z\_normalization"] = True}
+\DoxyCodeLine{agent.apply\_policies["info\_criterion"] = 'AIC'}
+\end{DoxyCode}
+
+\item Third step\+: Run check 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{check\_result = agent.check()}
+\end{DoxyCode}
+ The type of output {\bfseries{check\+\_\+result}} is {\bfseries{\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_check_result}{anko.\+anomaly\+\_\+detector.\+Check\+Result}}}}, which is basically a dictionary. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{model: 'increase\_step\_func'}
+\DoxyCodeLine{popt: [220.3243250055105, 249.03846355234577, 74.00000107457113]}
+\DoxyCodeLine{perr: [0.4247789247961187, 0.7166253174634686, 0.0]}
+\DoxyCodeLine{anomalous\_data: [(59, 209)]}
+\DoxyCodeLine{residual: [10.050378152592119]}
+\DoxyCodeLine{extra\_info: ['Info: AnomalyDetector is using z normalization.', 'Info: There are more than 1 discontinuous points detected.']        }
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{index_autotoc_md5}{}\doxysection{Run Test (in dev)\+:}\label{index_autotoc_md5}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python -\/m unittest discover -\/s test -\/p '*\_test.py'}
+\end{DoxyCode}
+ 

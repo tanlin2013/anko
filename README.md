@@ -1,4 +1,4 @@
-# anko
+# anko {#mainpage}
 Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.
 
 ## Requirements:
@@ -18,24 +18,24 @@ pip install anko
 
 ## Basic Usage:
 * First step: 
-    call AnomalyDetector
+    Call AnomalyDetector
 ```
 from anko.anomaly_detector import AnomalyDetector
 agent = AnomalyDetector(t, series)
 ```
 * Second step: 
-    define policies and threshold values (optional)
+    Define policies and threshold values (optional)
 ```
 agent.thres_params["linregress_res"] = 1.5
 agent.apply_policies["z_normalization"] = True
 agent.apply_policies["info_criterion"] = 'AIC'
 ```
 * Third step: 
-    run check
+    Run check
 ```
 check_result = agent.check()
 ```
-the type of output **check_result** is **anko.anomaly_detector.CheckResult**, which is basically a dictionary.
+The type of output **check_result** is **anko.anomaly_detector.CheckResult**, which is basically a dictionary.
 ```
 model: 'increase_step_func'
 popt: [220.3243250055105, 249.03846355234577, 74.00000107457113]
