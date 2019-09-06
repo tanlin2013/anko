@@ -1,6 +1,10 @@
 # anko
 Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.
 
+## Requirements:
+* numpy >= 1.16.4
+* scipy >= 1.2.1
+
 ## Installation:
 ```
 pip install anko
@@ -9,7 +13,10 @@ pip install anko
 ## Documentation:
 [anko](https://tanlin2013.github.io/anko/html/index.html)
 
-## How to use:
+# Jupyter Notebook Tutorial:
+[host on mybinder](https://mybinder.org/v2/gh/tanlin2013/anko/master?filepath=anko_tutorial.ipynb)
+
+## Basic Usage:
 * First step: 
     call AnomalyDetector
 ```
@@ -38,7 +45,7 @@ residual: [10.050378152592119]
 extra_info: ['Info: AnomalyDetector is using z normalization.', 'Info: There are more than 1 discontinuous points detected.']        
 ``` 
 
-## Run test (in dev):
+## Run Test (in dev):
 ```
 python -m unittest discover -s test -p '*_test.py'
 ```
