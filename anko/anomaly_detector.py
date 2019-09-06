@@ -9,7 +9,12 @@ class AnomalyDetector:
     @param series (array_like):
     """
     def __init__(self, t, series):
-        ## Policies for AnomalyDetector to follow.
+        ## Policies for AnomalyDetector to follow with. 
+        ## @param scaleless_t (bool):
+        ## @param boxcox (bool):
+        ## @param z_normalization (bool):
+        ## @param info_criterion (str):
+        ## @param min_sample_size (int):
         self.apply_policies = {
                 "scaleless_t": True,
                 "boxcox": False,
@@ -27,7 +32,9 @@ class AnomalyDetector:
         self.series = series
         self._clone_t = copy.deepcopy(t)
         self._clone_series = copy.deepcopy(series)
-        self.check_failed = True       
+        self.check_failed = True   
+        ## Threshold values for selecting anomalous data.
+        ## @param 
         self.thres_params = {
                 "p_normality": 1e-3,
                 "skewness": 20,
@@ -56,6 +63,12 @@ class AnomalyDetector:
                 "-8": "Info: AnomalyDetector is using z normalization.",
                 "-9": "Info: There are more than %d discontinuous points detected."
         }
+        ## Models that can be considered by AnomalyDetector.
+        ## @param gaussian (bool):
+        ## @param half_gaussian (bool):
+        ## @param linear_regression (bool):
+        ## @param step_func (bool):
+        ## @param exp_decay (bool):
         self.models = {
                 "gaussian": True, 
                 "half_gaussian": True, 
@@ -123,7 +136,7 @@ class AnomalyDetector:
                 statsdata["model"] = best_model
         return statsdata     
         
-    def _fitting_model(self, model_id):
+    def _fitting_model(self, model_id: str):
         if model_id == 'linear_regression':
             r_sq, intercept, slope, p_value, std_err = stats_util.linear_regression(self.t, self.series)
             linregress_y_pred = np.polyval([slope,intercept], self.t)

@@ -86,7 +86,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:af58531e67a2d33977a1bdc142b3f0561"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af58531e67a2d33977a1bdc142b3f0561">apply_policies</a></td></tr>
-<tr class="memdesc:af58531e67a2d33977a1bdc142b3f0561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Policies for <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a> to follow.  <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af58531e67a2d33977a1bdc142b3f0561">More...</a><br /></td></tr>
+<tr class="memdesc:af58531e67a2d33977a1bdc142b3f0561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Policies for <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a> to follow with.  <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af58531e67a2d33977a1bdc142b3f0561">More...</a><br /></td></tr>
 <tr class="separator:af58531e67a2d33977a1bdc142b3f0561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8285533720b1371f7791765c69117bdb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a8285533720b1371f7791765c69117bdb">t</a></td></tr>
 <tr class="separator:a8285533720b1371f7791765c69117bdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -95,10 +95,12 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a6387e571cbc3139be0c81c9e450bee1e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a6387e571cbc3139be0c81c9e450bee1e">check_failed</a></td></tr>
 <tr class="separator:a6387e571cbc3139be0c81c9e450bee1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af31bfbbef59010642ad8a33785504c59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59">thres_params</a></td></tr>
+<tr class="memdesc:af31bfbbef59010642ad8a33785504c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Threshold values for selecting anomalous data.  <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59">More...</a><br /></td></tr>
 <tr class="separator:af31bfbbef59010642ad8a33785504c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ebb5963fc7bf1eeb1425e195473922e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a3ebb5963fc7bf1eeb1425e195473922e">error_code</a></td></tr>
 <tr class="separator:a3ebb5963fc7bf1eeb1425e195473922e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a019359334795d2f05a730ab00085e5e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a019359334795d2f05a730ab00085e5e9">models</a></td></tr>
+<tr class="memdesc:a019359334795d2f05a730ab00085e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models that can be considered by <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a>.  <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a019359334795d2f05a730ab00085e5e9">More...</a><br /></td></tr>
 <tr class="separator:a019359334795d2f05a730ab00085e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -177,7 +179,17 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Policies for <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a> to follow. </p>
+<p>Policies for <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a> to follow with. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scaleless_t</td><td>(bool): </td></tr>
+    <tr><td class="paramname">boxcox</td><td>(bool): </td></tr>
+    <tr><td class="paramname">z_normalization</td><td>(bool): </td></tr>
+    <tr><td class="paramname">info_criterion</td><td>(str): </td></tr>
+    <tr><td class="paramname">min_sample_size</td><td>(int): </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -221,6 +233,18 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Models that can be considered by <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gaussian</td><td>(bool): </td></tr>
+    <tr><td class="paramname">half_gaussian</td><td>(bool): </td></tr>
+    <tr><td class="paramname">linear_regression</td><td>(bool): </td></tr>
+    <tr><td class="paramname">step_func</td><td>(bool): </td></tr>
+    <tr><td class="paramname">exp_decay</td><td>(bool): </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ac5fd8b681c1a662614281bbd76d5e037"></a>
@@ -262,6 +286,14 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Threshold values for selecting anomalous data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

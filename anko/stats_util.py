@@ -162,7 +162,7 @@ def general_erf(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
     """
     return (b-a)/2 * np.sign(x-x0) + (a+b)/2
 
-def three_stair_erf(x, c0, c1, c2, x1, x2):
+def three_stair_erf(x: np.ndarray, c0: float, c1: float, c2: float, x1: float, x2: float) -> np.ndarray:
     """!
     
     @param x (numpy.ndarray): Input values.
@@ -222,7 +222,7 @@ def exp_decay(x: np.ndarray, a: float, alpha: float) -> np.ndarray:
         raise ValueError("Domain of exp(-x) is restricted in x > 0.")
     return a * np.exp(-alpha*x)
     
-def exp_decay_fit(x: np.ndarray, y: np.ndarray, mode='log-linregress', maxfev: int=2000, bounds=[-1e-6,1e+6]):
+def exp_decay_fit(x: np.ndarray, y: np.ndarray, mode: str='log-linregress', maxfev: int=2000, bounds=[-1e-6,1e+6]):
     """!
     
     @param x (numpy.ndarray):
@@ -290,13 +290,15 @@ def fitting_residual(x: np.ndarray, y: np.ndarray, func, args, mask_min: float=N
     """!
     Compute the fitting residual.
     
-    @param x (numpy.ndarray):
-    @param y (numpy.ndarray):
-    @param func (function):
-    @param args (numpy.ndarray):
-    @param standardized (bool):
+    @param x (numpy.ndarray): x coordinate of input data points. 
+    @param y (numpy.ndarray): y coordinate of input data points. 
+    @param func (callable): Fitting function.
+    @param args (numpy.ndarray): Best estimated arguments of fitting function. 
+    @param mask_min (float, optional): If not None, mask resuduals that are smaller than mask_min to zero. This is always performed before standardization.
+    @param absolute_value (bool, optional): If True, return absolute value of residual.
+    @param standardized (bool, optional): Standardize residual to z-score formalism.
         
-    @returns res (numpy.ndarray):
+    @returns res (numpy.ndarray): Residual of each corresponding data points (x, y).
     """
     y_predict = func(x, *args)
     res = np.subtract(y, y_predict)
@@ -313,9 +315,9 @@ def AIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:
     """!
     Compute Akaike information criterion for model selection.
     
-    @param y (numpy.ndarray): data samples.
-    @param y_predict (numpy.ndarray): prediction by fitting.
-    @param p (int): fitting degrees of freedom, i.e. the number of parameters to fit with.
+    @param y (numpy.ndarray): Data samples.
+    @param y_predict (numpy.ndarray): Prediction by fitting.
+    @param p (int): Fitting degrees of freedom, i.e. the number of parameters to fit with.
   
     @returns aic_score (float):
     """
@@ -329,9 +331,9 @@ def BIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:
     """!
     Compute Bayesian information criterion for model selection.
     
-    @param y (numpy.ndarray): data samples.
-    @param y_predict (numpy.ndarray): prediction by fitting.
-    @param p (int): fitting degrees of freedom, i.e. the number of parameters to fit with.
+    @param y (numpy.ndarray): Data samples.
+    @param y_predict (numpy.ndarray): Prediction by fitting.
+    @param p (int): Fitting degrees of freedom, i.e. the number of parameters to fit with.
   
     @returns bic_score (float):
     """
@@ -345,7 +347,7 @@ def z_normalization(x: np.ndarray) -> np.ndarray:
     """!
     Perform z-score normalizaion on input array x. 
     
-    @param x (numpy.ndarray):
+    @param x (numpy.ndarray): Input values.
         
     @returns normalized_x (numpy.ndarray):
     """

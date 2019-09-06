@@ -1,5 +1,10 @@
-Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Documentation\+:}\label{md__r_e_a_d_m_e_autotoc_md1}
-\href{https://tanlin2013.github.io/anko/html/index.html}{\texttt{ anko}}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{How to use\+:}\label{md__r_e_a_d_m_e_autotoc_md2}
+Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Installation\+:}\label{md__r_e_a_d_m_e_autotoc_md1}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pip install anko}
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{Documentation\+:}\label{md__r_e_a_d_m_e_autotoc_md2}
+\href{https://tanlin2013.github.io/anko/html/index.html}{\texttt{ anko}}\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{How to use\+:}\label{md__r_e_a_d_m_e_autotoc_md3}
 
 \begin{DoxyItemize}
 \item First step\+: call Anomaly\+Detector 
@@ -19,5 +24,19 @@ Toolkit for performing anomaly detection algorithm on 1D time series based on nu
 \begin{DoxyCode}{0}
 \DoxyCodeLine{check\_result = agent.check()}
 \end{DoxyCode}
+ the type of output {\bfseries{check\+\_\+result}} is {\bfseries{\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_check_result}{anko.\+anomaly\+\_\+detector.\+Check\+Result}}}}, which is basically a dictionary. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{model: 'increase\_step\_func'}
+\DoxyCodeLine{popt: [220.3243250055105, 249.03846355234577, 74.00000107457113]}
+\DoxyCodeLine{perr: [0.4247789247961187, 0.7166253174634686, 0.0]}
+\DoxyCodeLine{anomalous\_data: [(59, 209)]}
+\DoxyCodeLine{residual: [10.050378152592119]}
+\DoxyCodeLine{extra\_info: ['Info: AnomalyDetector is using z normalization.', 'Info: There are more than 1 discontinuous points detected.']        }
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{Run test (in dev)\+:}\label{md__r_e_a_d_m_e_autotoc_md4}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python -\/m unittest discover -\/s test -\/p '*\_test.py'}
+\end{DoxyCode}
  
-\end{DoxyItemize}

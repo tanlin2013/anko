@@ -11,7 +11,7 @@ object \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a014
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_af58531e67a2d33977a1bdc142b3f0561}{apply\+\_\+policies}}
-\begin{DoxyCompactList}\small\item\em Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}} to follow. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}} to follow with. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a8285533720b1371f7791765c69117bdb}{t}}
 \item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}{series}}
@@ -19,11 +19,11 @@ object \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a014
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a6387e571cbc3139be0c81c9e450bee1e}{check\+\_\+failed}}
 \item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_af31bfbbef59010642ad8a33785504c59}{thres\+\_\+params}}
-\item 
+\begin{DoxyCompactList}\small\item\em Threshold values for selecting anomalous data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a3ebb5963fc7bf1eeb1425e195473922e}{error\+\_\+code}}
 \item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a019359334795d2f05a730ab00085e5e9}{models}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Models that can be considered by \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -66,8 +66,21 @@ statsdata (dict)\+:
 
 
 
-Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}} to follow. 
+Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}} to follow with. 
 
+
+\begin{DoxyParams}{Parameters}
+{\em scaleless\+\_\+t} & (bool)\+: \\
+\hline
+{\em boxcox} & (bool)\+: \\
+\hline
+{\em z\+\_\+normalization} & (bool)\+: \\
+\hline
+{\em info\+\_\+criterion} & (str)\+: \\
+\hline
+{\em min\+\_\+sample\+\_\+size} & (int)\+: \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_a6387e571cbc3139be0c81c9e450bee1e}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_a6387e571cbc3139be0c81c9e450bee1e}} 
 \index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!check\_failed@{check\_failed}}
 \index{check\_failed@{check\_failed}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
@@ -86,6 +99,23 @@ Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detecto
 \doxysubsubsection{\texorpdfstring{models}{models}}
 {\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+models}
 
+
+
+Models that can be considered by \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gaussian} & (bool)\+: \\
+\hline
+{\em half\+\_\+gaussian} & (bool)\+: \\
+\hline
+{\em linear\+\_\+regression} & (bool)\+: \\
+\hline
+{\em step\+\_\+func} & (bool)\+: \\
+\hline
+{\em exp\+\_\+decay} & (bool)\+: \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}} 
 \index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!series@{series}}
 \index{series@{series}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
@@ -104,6 +134,15 @@ Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detecto
 \doxysubsubsection{\texorpdfstring{thres\_params}{thres\_params}}
 {\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+thres\+\_\+params}
 
+
+
+Threshold values for selecting anomalous data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

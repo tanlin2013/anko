@@ -21,13 +21,13 @@ bool \mbox{\hyperlink{namespaceanko_1_1stats__util_ad350eac604ebf2d6d3c42f4753d8
 \begin{DoxyCompactList}\small\item\em Check whether the data (x, y) is linear under the given tolerance. \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a9e0f971311c5d1013a90795d2427091c}{general\+\_\+erf}} (np.\+ndarray x, float a, float b, float x0)
 \begin{DoxyCompactList}\small\item\em Calculate the generalize error function of input array x. \end{DoxyCompactList}\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_a8c334494be52ff57a126c86997d05056}{three\+\_\+stair\+\_\+erf}} (x, c0, c1, c2, x1, x2)
+np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a2efdfc173ad6b38025bfd48da53f160a}{three\+\_\+stair\+\_\+erf}} (np.\+ndarray x, float c0, float c1, float c2, float x1, float x2)
 \item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a4f434d24322b90d1d03cf689847ea76a}{general\+\_\+erf\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, bool three\+\_\+stair=False, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
 \begin{DoxyCompactList}\small\item\em Fitting generalize error function for input data (x, y). \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_aa196811391f6401b6fec78c1fd7054ed}{exp\+\_\+decay}} (np.\+ndarray x, float a, float alpha)
 \begin{DoxyCompactList}\small\item\em Calculate the exponential function of input array x. \end{DoxyCompactList}\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_a1d8a8e8561c1d96066a9493d900a1346}{exp\+\_\+decay\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, mode=\textquotesingle{}log-\/linregress\textquotesingle{}, int maxfev=2000, bounds=\mbox{[}-\/1e-\/6, 1e+6\mbox{]})
+def \mbox{\hyperlink{namespaceanko_1_1stats__util_a4ae884cfdb74b45070f1c07b2f9527b1}{exp\+\_\+decay\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, str mode=\textquotesingle{}log-\/linregress\textquotesingle{}, int maxfev=2000, bounds=\mbox{[}-\/1e-\/6, 1e+6\mbox{]})
 \item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a1467292292fb037a7b879c3a66700499}{smoothness}} (np.\+ndarray x, bool normalize=False)
 \item 
@@ -58,11 +58,11 @@ Compute Akaike information criterion for model selection.
 
 
 \begin{DoxyParams}{Parameters}
-{\em y} & (numpy.\+ndarray)\+: data samples. \\
+{\em y} & (numpy.\+ndarray)\+: Data samples. \\
 \hline
-{\em y\+\_\+predict} & (numpy.\+ndarray)\+: prediction by fitting. \\
+{\em y\+\_\+predict} & (numpy.\+ndarray)\+: Prediction by fitting. \\
 \hline
-{\em p} & (int)\+: fitting degrees of freedom, i.\+e. the number of parameters to fit with.\\
+{\em p} & (int)\+: Fitting degrees of freedom, i.\+e. the number of parameters to fit with.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -80,11 +80,11 @@ Compute Bayesian information criterion for model selection.
 
 
 \begin{DoxyParams}{Parameters}
-{\em y} & (numpy.\+ndarray)\+: data samples. \\
+{\em y} & (numpy.\+ndarray)\+: Data samples. \\
 \hline
-{\em y\+\_\+predict} & (numpy.\+ndarray)\+: prediction by fitting. \\
+{\em y\+\_\+predict} & (numpy.\+ndarray)\+: Prediction by fitting. \\
 \hline
-{\em p} & (int)\+: fitting degrees of freedom, i.\+e. the number of parameters to fit with.\\
+{\em p} & (int)\+: Fitting degrees of freedom, i.\+e. the number of parameters to fit with.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -155,11 +155,11 @@ Note that Domain of x $>$= 0.
 \begin{DoxyReturn}{Returns}
 out\+: 
 \end{DoxyReturn}
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_a1d8a8e8561c1d96066a9493d900a1346}\label{namespaceanko_1_1stats__util_a1d8a8e8561c1d96066a9493d900a1346}} 
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_a4ae884cfdb74b45070f1c07b2f9527b1}\label{namespaceanko_1_1stats__util_a4ae884cfdb74b45070f1c07b2f9527b1}} 
 \index{anko.stats\_util@{anko.stats\_util}!exp\_decay\_fit@{exp\_decay\_fit}}
 \index{exp\_decay\_fit@{exp\_decay\_fit}!anko.stats\_util@{anko.stats\_util}}
 \doxysubsubsection{\texorpdfstring{exp\_decay\_fit()}{exp\_decay\_fit()}}
-{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+exp\+\_\+decay\+\_\+fit (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{np.\+ndarray}]{y,  }\item[{}]{mode = {\ttfamily \textquotesingle{}log-\/linregress\textquotesingle{}},  }\item[{int}]{maxfev = {\ttfamily 2000},  }\item[{}]{bounds = {\ttfamily \mbox{[}-\/1e-\/6,1e+6\mbox{]}} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+exp\+\_\+decay\+\_\+fit (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{np.\+ndarray}]{y,  }\item[{str}]{mode = {\ttfamily \textquotesingle{}log-\/linregress\textquotesingle{}},  }\item[{int}]{maxfev = {\ttfamily 2000},  }\item[{}]{bounds = {\ttfamily \mbox{[}-\/1e-\/6,1e+6\mbox{]}} }\end{DoxyParamCaption})}
 
 
 \begin{DoxyParams}{Parameters}
@@ -192,19 +192,23 @@ Compute the fitting residual.
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & (numpy.\+ndarray)\+: \\
+{\em x} & (numpy.\+ndarray)\+: x coordinate of input data points. \\
 \hline
-{\em y} & (numpy.\+ndarray)\+: \\
+{\em y} & (numpy.\+ndarray)\+: y coordinate of input data points. \\
 \hline
-{\em func} & (function)\+: \\
+{\em func} & (callable)\+: Fitting function. \\
 \hline
-{\em args} & (numpy.\+ndarray)\+: \\
+{\em args} & (numpy.\+ndarray)\+: Best estimated arguments of fitting function. \\
 \hline
-{\em standardized} & (bool)\+:\\
+{\em mask\+\_\+min} & (float, optional)\+: If not None, mask resuduals that are smaller than mask\+\_\+min to zero. This is always performed before standardization. \\
+\hline
+{\em absolute\+\_\+value} & (bool, optional)\+: If True, return absolute value of residual. \\
+\hline
+{\em standardized} & (bool, optional)\+: Standardize residual to z-\/score formalism.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-res (numpy.\+ndarray)\+: 
+res (numpy.\+ndarray)\+: Residual of each corresponding data points (x, y). 
 \end{DoxyReturn}
 \mbox{\Hypertarget{namespaceanko_1_1stats__util_a592ce686a07fad2982a1e051b8e751da}\label{namespaceanko_1_1stats__util_a592ce686a07fad2982a1e051b8e751da}} 
 \index{anko.stats\_util@{anko.stats\_util}!flat\_histogram@{flat\_histogram}}
@@ -477,11 +481,11 @@ out (numpy.\+ndarray)\+: Output array.
 \begin{DoxyReturn}{Returns}
 sm (numpy.\+ndarray)\+: 
 \end{DoxyReturn}
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_a8c334494be52ff57a126c86997d05056}\label{namespaceanko_1_1stats__util_a8c334494be52ff57a126c86997d05056}} 
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_a2efdfc173ad6b38025bfd48da53f160a}\label{namespaceanko_1_1stats__util_a2efdfc173ad6b38025bfd48da53f160a}} 
 \index{anko.stats\_util@{anko.stats\_util}!three\_stair\_erf@{three\_stair\_erf}}
 \index{three\_stair\_erf@{three\_stair\_erf}!anko.stats\_util@{anko.stats\_util}}
 \doxysubsubsection{\texorpdfstring{three\_stair\_erf()}{three\_stair\_erf()}}
-{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+three\+\_\+stair\+\_\+erf (\begin{DoxyParamCaption}\item[{}]{x,  }\item[{}]{c0,  }\item[{}]{c1,  }\item[{}]{c2,  }\item[{}]{x1,  }\item[{}]{x2 }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily  np.\+ndarray anko.\+stats\+\_\+util.\+three\+\_\+stair\+\_\+erf (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{float}]{c0,  }\item[{float}]{c1,  }\item[{float}]{c2,  }\item[{float}]{x1,  }\item[{float}]{x2 }\end{DoxyParamCaption})}
 
 
 \begin{DoxyParams}{Parameters}
@@ -513,7 +517,7 @@ Perform z-\/score normalizaion on input array x.
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & (numpy.\+ndarray)\+:\\
+{\em x} & (numpy.\+ndarray)\+: Input values.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
