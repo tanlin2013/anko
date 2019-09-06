@@ -13,7 +13,7 @@ pip install anko
 ## Documentation:
 [anko](https://tanlin2013.github.io/anko/html/index.html)
 
-# Jupyter Notebook Tutorial:
+## Jupyter Notebook Tutorial (in dev):
 [host on mybinder](https://mybinder.org/v2/gh/tanlin2013/anko/master?filepath=anko_tutorial.ipynb)
 
 ## Basic Usage:
