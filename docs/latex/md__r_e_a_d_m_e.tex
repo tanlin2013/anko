@@ -1,1 +1,23 @@
-Toolkit for performing anomaly detection algorithm on time series based on numpy, scipy. 
+Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Documentation\+:}\label{md__r_e_a_d_m_e_autotoc_md1}
+\href{https://tanlin2013.github.io/anko/html/index.html}{\texttt{ anko}}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{How to use\+:}\label{md__r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyItemize}
+\item First step\+: call Anomaly\+Detector 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from anko.anomaly\_detector import AnomalyDetector}
+\DoxyCodeLine{agent = AnomalyDetector(t, series)}
+\end{DoxyCode}
+
+\item Second step\+: define policies and threshold values (optional) 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{agent.thres\_params["linregress\_res"] = 1.5}
+\DoxyCodeLine{agent.apply\_policies["z\_normalization"] = True}
+\DoxyCodeLine{agent.apply\_policies["info\_criterion"] = 'AIC'}
+\end{DoxyCode}
+
+\item Third step\+: run check 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{check\_result = agent.check()}
+\end{DoxyCode}
+ 
+\end{DoxyItemize}

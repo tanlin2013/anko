@@ -23,3 +23,12 @@ agent.apply_policies["info_criterion"] = 'AIC'
 ```
 check_result = agent.check()
 ```
+the type of output **check_result** is **anko.anomaly_detector.CheckResult**, which is basically a dictionary.
+```
+model: 'increase_step_func'
+popt: [220.3243250055105, 249.03846355234577, 74.00000107457113]
+perr: [0.4247789247961187, 0.7166253174634686, 0.0]
+anomalous_data: [(59, 209)]
+residual: [10.050378152592119]
+extra_info: ['Info: AnomalyDetector is using z normalization.', 'Info: There are more than 1 discontinuous points detected.']        
+``` 

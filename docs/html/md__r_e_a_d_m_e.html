@@ -67,7 +67,23 @@ $(function() {
 <div class="title">anko </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Toolkit for performing anomaly detection algorithm on time series based on numpy, scipy. </p>
+<div class="textblock"><p>Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Documentation:</h1>
+<p><a href="https://tanlin2013.github.io/anko/html/index.html">anko</a></p>
+<h1><a class="anchor" id="autotoc_md2"></a>
+How to use:</h1>
+<ul>
+<li>First step: call AnomalyDetector <div class="fragment"><div class="line">from anko.anomaly_detector import AnomalyDetector</div>
+<div class="line">agent = AnomalyDetector(t, series)</div>
+</div><!-- fragment --></li>
+<li>Second step: define policies and threshold values (optional) <div class="fragment"><div class="line">agent.thres_params[&quot;linregress_res&quot;] = 1.5</div>
+<div class="line">agent.apply_policies[&quot;z_normalization&quot;] = True</div>
+<div class="line">agent.apply_policies[&quot;info_criterion&quot;] = &#39;AIC&#39;</div>
+</div><!-- fragment --></li>
+<li>Third step: run check <div class="fragment"><div class="line">check_result = agent.check()</div>
+</div><!-- fragment --> </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
