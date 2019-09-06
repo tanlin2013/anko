@@ -48,7 +48,7 @@ def gaussian_fit(x: np.ndarray, sort_histo: bool=False, half: str=None, maxfev: 
     @returns perr (numpy.ndarray): Error of popt. Defined by the square of diagonal element of covariance matrix.
     """
     keys, vals = get_histogram(x, sort_histo)
-    a_sg = max(vals) * 0.2
+    a_sg = max(vals) * 0.9
     m_sg = np.mean(x)
     std_sg = np.std(x)
     if half == 'left':

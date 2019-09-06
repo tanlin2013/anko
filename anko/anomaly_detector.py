@@ -52,8 +52,8 @@ class AnomalyDetector:
                 "-4": "ConvergenceError: Exponential fitting may not converge, perr > perr_th.",
                 "-5": "ConvergenceError: Linear ansatz fitting may not converge, perr > perr_th.",
                 "-6": "Warning: Rawdata might be oscillating, data flips sign repeatedly over mean.",
-                "-7": "Info: build_statsdata is using boxcox method.",
-                "-8": "Info: build_statsdata is using z normalization.",
+                "-7": "Info: AnomalyDetector is using boxcox method.",
+                "-8": "Info: AnomalyDetector is using z normalization.",
                 "-9": "Info: There are more than %d discontinuous points detected."
         }
         self.models = {
