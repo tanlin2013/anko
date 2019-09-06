@@ -1,4 +1,4 @@
-# anko <!---{#mainpage}-->
+# anko {#mainpage}
 Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.
 
 ## Requirements:
