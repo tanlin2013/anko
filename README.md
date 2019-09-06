@@ -32,3 +32,8 @@ anomalous_data: [(59, 209)]
 residual: [10.050378152592119]
 extra_info: ['Info: AnomalyDetector is using z normalization.', 'Info: There are more than 1 discontinuous points detected.']        
 ``` 
+
+## Run test (in dev)
+```
+python -m unittest discover -s test -p '*_test.py'
+```
