@@ -5,7 +5,7 @@ Toolkit for performing anomaly detection algorithm on 1D time series based on nu
 * numpy >= 1.16.4
 * scipy >= 1.2.1
 
-## Installatio
+## Installation
 > pip install anko
 
 ## Documentation
