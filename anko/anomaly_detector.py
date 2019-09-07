@@ -34,7 +34,20 @@ class AnomalyDetector:
         self._clone_series = copy.deepcopy(series)
         self.check_failed = True   
         ## Threshold values for selecting anomalous data.
-        ## @param 
+        ## @param p_normality (float): default is 1e-3
+        ## @param skewness (float): default is 20
+        ## @param normal_std_width (float): default is 3
+        ## @param normal_std_err (float): default is 1
+        ## @param normal_err (float): default is 1e+1
+        ## @param linregress_slope (float): default is 0.1
+        ## @param linregress_std_err (float): default is 1e+1
+        ## @param linregress_res (float): default is 1
+        ## @param step_func_err (float): default is 1e+1
+        ## @param step_func_res (float): default is 3
+        ## @param exp_decay_err (float): default is 1e+1
+        ## @param exp_decay_res (float): default is 3
+        ## @param linearity (float): default is 1e-2
+        ## @param min_res (float): default is 10
         self.thres_params = {
                 "p_normality": 1e-3,
                 "skewness": 20,
