@@ -76,10 +76,8 @@ Requirements</h1>
 </ul>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Installation</h1>
-<blockquote class="doxtable">
-<p>pip install anko </p>
-</blockquote>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<div class="fragment"><div class="line">pip install anko</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
 Documentation</h1>
 <p><a href="https://tanlin2013.github.io/anko/html/index.html">anko documentation</a></p>
 <h1><a class="anchor" id="autotoc_md4"></a>
@@ -88,34 +86,29 @@ Jupyter Notebook Tutorial (in dev)</h1>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Basic Usage</h1>
 <ol type="1">
-<li>Call AnomalyDetector <blockquote class="doxtable">
-<p>from <a class="el" href="namespaceanko_1_1anomaly__detector.html">anko.anomaly_detector</a> import AnomalyDetector <br  />
- agent = AnomalyDetector(t, series) </p>
-</blockquote>
-</li>
-<li>Define policies and threshold values (optional) <blockquote class="doxtable">
-<p>agent.thres_params["linregress_res"] = 1.5 <br  />
- agent.apply_policies["z_normalization"] = True <br  />
- agent.apply_policies["info_criterion"] = 'AIC' </p>
-</blockquote>
-</li>
-<li>Run check <blockquote class="doxtable">
-<p>check_result = agent.check() </p>
-</blockquote>
-</li>
+<li>Call AnomalyDetector <div class="fragment"><div class="line">from anko.anomaly_detector import AnomalyDetector  </div>
+<div class="line">agent = AnomalyDetector(t, series)</div>
+</div><!-- fragment --></li>
+<li>Define policies and threshold values (optional) <div class="fragment"><div class="line">agent.thres_params[&quot;linregress_res&quot;] = 1.5  </div>
+<div class="line">agent.apply_policies[&quot;z_normalization&quot;] = True  </div>
+<div class="line">agent.apply_policies[&quot;info_criterion&quot;] = &#39;AIC&#39;</div>
+</div><!-- fragment --></li>
+<li>Run check <div class="fragment"><div class="line">check_result = agent.check()</div>
+</div><!-- fragment --></li>
 </ol>
-<p>The type of output <b>check_result</b> is <b><a class="el" href="classanko_1_1anomaly__detector_1_1_check_result.html">anko.anomaly_detector.CheckResult</a></b>, which is basically a dictionary. </p><div class="fragment"><div class="line">model: &#39;increase_step_func&#39;</div>
-<div class="line">popt: [220.3243250055105, 249.03846355234577, 74.00000107457113]</div>
-<div class="line">perr: [0.4247789247961187, 0.7166253174634686, 0.0]</div>
-<div class="line">anomalous_data: [(59, 209)]</div>
-<div class="line">residual: [10.050378152592119]</div>
-<div class="line">extra_info: [&#39;Info: AnomalyDetector is using z normalization.&#39;, &#39;Info: There are more than 1 discontinuous points detected.&#39;]        </div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
-Run Test (in dev)</h1>
-<blockquote class="doxtable">
-<p>python -m unittest discover -s test -p '*_test.py' </p>
+<p>The type of output <b>check_result</b> is <b><a class="el" href="classanko_1_1anomaly__detector_1_1_check_result.html">anko.anomaly_detector.CheckResult</a></b>, which is basically a dictionary. </p><blockquote class="doxtable">
+<p>model: 'increase_step_func' <br  />
+ popt: [220.3243250055105, 249.03846355234577, 74.00000107457113] <br  />
+ perr: [0.4247789247961187, 0.7166253174634686, 0.0] <br  />
+ anomalous_data: [(59, 209)] <br  />
+ residual: [10.050378152592119] <br  />
+ extra_info: ['Info: AnomalyDetector is using z normalization.', 'Info: There are more than 1 discontinuous points detected.'] <br  />
+ </p>
 </blockquote>
-</div></div><!-- PageDoc -->
+<h1><a class="anchor" id="autotoc_md6"></a>
+Run Test (in dev)</h1>
+<div class="fragment"><div class="line">python -m unittest discover -s test -p &#39;*_test.py&#39;</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
