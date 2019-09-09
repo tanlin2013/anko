@@ -135,6 +135,8 @@ class AnomalyDetector:
             if "linear_regression" in IC_score.keys():
                 if np.isclose(best_model[1], IC_score["linear_regression"], atol=10, rtol=1e-2):
                     best_model = "linear_regression"
+                elif best_model[0] == "step_func" and abs(ref[best_model]["popt"][1]-ref[best_model]["popt"][0]) < 10:
+                    best_model = "linear_regression"
                 else:
                     best_model = best_model[0]
             else:

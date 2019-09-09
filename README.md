@@ -2,6 +2,7 @@
 Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.
 
 ## Requirements
+* python >= 3.6.0
 * numpy >= 1.16.4
 * scipy >= 1.2.1
 
