@@ -302,9 +302,9 @@ def fitting_residual(x: np.ndarray, y: np.ndarray, func, args, mask_min: float=N
     """
     y_predict = func(x, *args)
     res = np.subtract(y, y_predict)
+    norm = np.std(res)
     if mask_min is not None:
         res[np.where(abs(res) < mask_min)] = 0
-    norm = np.std(res)
     if standardized and norm != 0:
         res /= norm
     if absolute_value:

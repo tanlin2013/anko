@@ -56,7 +56,7 @@ class AnomalyDetector:
                 "normal_err": 1e+1,
                 "linregress_slope": 0.1,
                 "linregress_std_err": 1e+1,
-                "linregress_res": 1,
+                "linregress_res": 1.5,
                 "step_func_err": 1e+1,
                 "step_func_res": 3,
                 "exp_decay_err": 1e+1,
