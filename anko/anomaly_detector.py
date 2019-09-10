@@ -63,7 +63,7 @@ class AnomalyDetector:
                 "exp_decay_res": 3,
                 "linearity": 1e-2,
                 "min_res": 10
-        }
+        } #TODO: clean un-used items
         self.error_code = {
                 "0": "Check passed.",
                 "-1": "ConvergenceError: Gaussian fitting may not converge, std_err > std_err_th.",
@@ -134,8 +134,6 @@ class AnomalyDetector:
             best_model = min(IC_score.items(), key=lambda x: x[1])
             if "linear_regression" in IC_score.keys():
                 if np.isclose(best_model[1], IC_score["linear_regression"], atol=10, rtol=1e-2):
-                    best_model = "linear_regression"
-                elif best_model[0] == "step_func" and abs(ref[best_model]["popt"][1]-ref[best_model]["popt"][0]) < 10:
                     best_model = "linear_regression"
                 else:
                     best_model = best_model[0]
@@ -237,7 +235,7 @@ class AnomalyDetector:
                 msgs.append(self.error_code["-3"])
             else:   
                 anomalous_idx = np.where(self.t > statsdata["popt"][2])[0]
-                if len(anomalous_idx) != 0: 
+                if len(anomalous_idx) != 0 and (statsdata["popt"][0]-statsdata["popt"][1]) > self.thres_params["min_res"]: 
                     anomalous_t = self._clone_t[anomalous_idx]
                     anomalous_data = self.series[anomalous_idx]
                     res = (statsdata["popt"][0]-statsdata["popt"][1]) * np.ones(len(anomalous_idx))

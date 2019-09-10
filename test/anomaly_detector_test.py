@@ -53,17 +53,15 @@ class TestAnomalyDetector(unittest.TestCase):
         sample_idx = np.random.randint(1, 100, size=240)
         series = self.__class__.read_from_file()#[sample_idx]
         for i in range(240):
-            try:
-                t = np.arange(1, len(series[i])+1)
-                agent = AnomalyDetector(t, series[i])
-                agent.thres_params["step_func_res"] = 1.5
-                agent.thres_params["exp_dacay_res"] = 1.5
-                statsdata = agent.check()
-                statsdata["series"] = series[i]
-                if statsdata.model != "linear_regression" and statsdata.residual:
-                    print(statsdata)
-            except ValueError:
-                pass
+            if len(series[i]) < 10: continue
+            t = np.arange(1, len(series[i])+1)
+            agent = AnomalyDetector(t, series[i])
+            agent.thres_params["step_func_res"] = 1.5
+            agent.thres_params["exp_dacay_res"] = 1.5
+            statsdata = agent.check()
+            statsdata["series"] = series[i]
+            if statsdata.residual:
+                print(statsdata)
       
 if __name__ == '__main__':
     unittest.main()
