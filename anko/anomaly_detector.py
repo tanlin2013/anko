@@ -192,7 +192,7 @@ class AnomalyDetector:
         """
         statsdata = self._build_stats_data()
         model_id = statsdata["model"]
-        anomalous_t, anomalous_data, msgs = [], [], []
+        anomalous_t, anomalous_data, res, msgs = [], [], [], []
             
         if model_id == 'gaussian' or model_id == 'flat_histo': 
             histo_x, histo_y = stats_util.get_histogram(self.series)
@@ -285,13 +285,14 @@ class AnomalyDetector:
         if len(anomalous_data) == 0: 
             self.check_failed = False
             msgs.append(self.error_code["0"])
-
+        
+        if isinstance(res, np.ndarray): res = res.tolist()
         check_result = CheckResult(
                 model=statsdata["model"],
                 popt=statsdata["popt"].tolist(),
                 perr=statsdata["perr"].tolist(),
                 anomalous_data=list(zip(anomalous_t, anomalous_data)),
-                residual=res.tolist(),
+                residual=res,
                 extra_info=msgs
         )
         return check_result

@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-ver = '0.2.4'
+ver = '0.2.5'
 
 setup(
   name = 'anko',

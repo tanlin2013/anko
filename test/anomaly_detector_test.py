@@ -3,6 +3,11 @@
 import numpy as np
 import unittest
 from anko.anomaly_detector import AnomalyDetector
+# =============================================================================
+# import sys
+# sys.path.append('../anko')
+# from anomaly_detector import AnomalyDetector
+# =============================================================================
 
 class TestAnomalyDetector(unittest.TestCase):
     
@@ -50,8 +55,7 @@ class TestAnomalyDetector(unittest.TestCase):
         return np.array(series_data)
     
     def test_check_from_file(self):
-        sample_idx = np.random.randint(1, 100, size=240)
-        series = self.__class__.read_from_file()#[sample_idx]
+        series = self.__class__.read_from_file()
         for i in range(240):
             if len(series[i]) < 10: continue
             t = np.arange(1, len(series[i])+1)
@@ -60,7 +64,7 @@ class TestAnomalyDetector(unittest.TestCase):
             agent.thres_params["exp_dacay_res"] = 1.5
             statsdata = agent.check()
             statsdata["series"] = series[i]
-            if statsdata.residual:
+            if not statsdata.residual:
                 print(statsdata)
       
 if __name__ == '__main__':
