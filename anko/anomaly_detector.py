@@ -39,31 +39,27 @@ class AnomalyDetector:
         ## @param normal_std_width (float): default is 3
         ## @param normal_std_err (float): default is 1
         ## @param normal_err (float): default is 1e+1
-        ## @param linregress_slope (float): default is 0.1
         ## @param linregress_std_err (float): default is 1e+1
         ## @param linregress_res (float): default is 1
         ## @param step_func_err (float): default is 1e+1
         ## @param step_func_res (float): default is 3
         ## @param exp_decay_err (float): default is 1e+1
         ## @param exp_decay_res (float): default is 3
-        ## @param linearity (float): default is 1e-2
         ## @param min_res (float): default is 10
         self.thres_params = {
-                "p_normality": 1e-3,
+                "p_normality": 5e-3,
                 "skewness": 20,
-                "normal_std_width": 3,
-                "normal_std_err": 1,
-                "normal_err": 1e+1,
-                "linregress_slope": 0.1,
+                "normal_std_width": 1.5,
+                "normal_std_err": 1e+1,
+                "normal_err": 75,
                 "linregress_std_err": 1e+1,
-                "linregress_res": 1.5,
+                "linregress_res": 2,
                 "step_func_err": 1e+1,
-                "step_func_res": 3,
+                "step_func_res": 2.5,
                 "exp_decay_err": 1e+1,
-                "exp_decay_res": 3,
-                "linearity": 1e-2,
+                "exp_decay_res": 2,
                 "min_res": 10
-        } #TODO: clean un-used items
+        }
         self.error_code = {
                 "0": "Check passed.",
                 "-1": "ConvergenceError: Gaussian fitting may not converge, std_err > std_err_th.",
@@ -98,24 +94,22 @@ class AnomalyDetector:
     
     def _build_stats_data(self):
         statsdata, ref, IC_score = {}, {}, {}; proceed = False 
-        
-        if self.apply_policies["boxcox"]: 
-            self.series = stats_util.boxcox(self.series, lmbda=0)          
-        histo_x, histo_y = stats_util.get_histogram(self.series)
 
         try:    
-            normality = stats_util.normaltest(histo_y)
+            normality = stats_util.normaltest(self.series)
         except ValueError:
             normality = [np.inf, np.inf]     
-       
+
         if normality[1] >= self.thres_params["p_normality"] and np.isfinite(normality[1]) and self.models["gaussian"]:
+            if self.apply_policies["boxcox"]: 
+                self.series = stats_util.boxcox(self.series, lmbda=0)
             try:
                 statsdata["model"] = 'gaussian'
                 statsdata["popt"], statsdata["perr"] = stats_util.gaussian_fit(self.series)
             except:
                 pass
-    
-        if "popt" in ref:
+        
+        if "popt" in statsdata:
             err_score = np.sum(np.square(statsdata["perr"]))
             if err_score > self.thres_params["normal_err"]: 
                 proceed = True
@@ -195,20 +189,19 @@ class AnomalyDetector:
         anomalous_t, anomalous_data, res, msgs = [], [], [], []
             
         if model_id == 'gaussian' or model_id == 'flat_histo': 
-            histo_x, histo_y = stats_util.get_histogram(self.series)
             if statsdata["perr"][2] > self.thres_params["normal_std_err"]:
                 msgs.append(self.error_code["-1"])
             # Get anomalous data
-            std_th = max(self.thres_params["normal_std_width"] * statsdata["popt"][2], self.thres_params["min_res"])
-            allowed_domain = (statsdata["popt"][1]-std_th, statsdata["popt"][1]+std_th)
-            anomalous_idx = np.where(np.logical_or(histo_x<=allowed_domain[0], histo_x>=allowed_domain[1]))[0] 
-            if len(anomalous_idx) != 0: 
-                if self.apply_policies["boxcox"]:
-                    histo_x, histo_y = stats_util.get_histogram(self._clone_series)
-                anomalous_data = histo_x[anomalous_idx]
-                anomalous_t = self._clone_t[np.where(np.in1d(anomalous_data, self.series))]
-                res = abs(anomalous_data-statsdata["popt"][1])
-                if self.apply_policies["z_normalization"]: res /= statsdata["popt"][2]
+            norm = np.std(self.series)
+            mean_centered_series = self.series - np.mean(self.series)
+            mean_centered_series[np.where(abs(mean_centered_series) < self.thres_params["min_res"])] = 0
+            z_normalized_series = mean_centered_series / norm
+            anomalous_idx = abs(z_normalized_series) > self.thres_params["normal_std_width"]
+            if np.count_nonzero(anomalous_idx) > 0:
+                anomalous_data = self.series[anomalous_idx]
+                anomalous_t = self._clone_t[anomalous_idx]
+                res = abs(z_normalized_series)[anomalous_idx]
+            histo_x, histo_y = stats_util.get_histogram(self.series)
             if abs(stats_util.skew(histo_y)) > self.thres_params["skewness"]:
                 msgs.append(self.error_code["-2"])
                     

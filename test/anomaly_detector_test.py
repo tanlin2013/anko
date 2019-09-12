@@ -8,7 +8,6 @@ from anko.anomaly_detector import AnomalyDetector
 # sys.path.append('../anko')
 # from anomaly_detector import AnomalyDetector
 # =============================================================================
-
 class TestAnomalyDetector(unittest.TestCase):
     
     def test_build_statsdata(self):
@@ -43,6 +42,7 @@ class TestAnomalyDetector(unittest.TestCase):
         t = np.arange(1, 100+1)
         series = np.random.normal(mean, std, size=100).astype(int)
         agent = AnomalyDetector(t, series)
+        agent.thres_params["normal_std_width"] = 1.5
         statsdata = agent.check()
         statsdata["series"] = series
         #print(statsdata)
@@ -60,11 +60,12 @@ class TestAnomalyDetector(unittest.TestCase):
             if len(series[i]) < 10: continue
             t = np.arange(1, len(series[i])+1)
             agent = AnomalyDetector(t, series[i])
+            agent.thres_params["normal_std_width"] = 1.5
             agent.thres_params["step_func_res"] = 1.5
             agent.thres_params["exp_dacay_res"] = 1.5
             statsdata = agent.check()
             statsdata["series"] = series[i]
-            if not statsdata.residual:
+            if statsdata.residual and statsdata.model == "gaussian":
                 print(statsdata)
       
 if __name__ == '__main__':
