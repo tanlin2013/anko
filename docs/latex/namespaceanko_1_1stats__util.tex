@@ -14,7 +14,7 @@ np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_afe9294ceb5073c65f77b
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_ad0683a7fc4d68fa7937dbe214d554997}{right\+\_\+half\+\_\+normal\+\_\+distr}} (np.\+ndarray x, float a, float x0, float sigma)
 \begin{DoxyCompactList}\small\item\em Calculate right-\/side half normal distribution of input array x. \end{DoxyCompactList}\item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a592ce686a07fad2982a1e051b8e751da}{flat\+\_\+histogram}} (np.\+ndarray x)
-\begin{DoxyCompactList}\small\item\em Manually assign parameters of Gaussian distrinution if the given histogram is too flat. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Deprecating... \end{DoxyCompactList}\item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a15eb3a4bb50aa7e2825e03c741684c0e}{linear\+\_\+regression}} (np.\+ndarray x, np.\+ndarray y)
 \begin{DoxyCompactList}\small\item\em Fitting linear ansatz for input data (x, y). \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{namespaceanko_1_1stats__util_ad350eac604ebf2d6d3c42f4753d882de}{data\+\_\+is\+\_\+linear}} (np.\+ndarray x, np.\+ndarray y, float std\+\_\+err\+\_\+th=1e-\/2)
@@ -32,7 +32,7 @@ def \mbox{\hyperlink{namespaceanko_1_1stats__util_a4ae884cfdb74b45070f1c07b2f952
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a1467292292fb037a7b879c3a66700499}{smoothness}} (np.\+ndarray x, bool normalize=False)
 \item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_aebff1af496b1545f67e9b7a9253f2226}{discontinuous\+\_\+idx}} (np.\+ndarray x, int std\+\_\+width=1)
-\begin{DoxyCompactList}\small\item\em Compute the number of roots (zeros) for derivative of x. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Compute derivative of input array x, and organize the result into z-\/score standardized formulation. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{namespaceanko_1_1stats__util_a0f75e0a66974df60bf657d244f516619}{is\+\_\+oscillating}} (np.\+ndarray x, float osci\+\_\+freq\+\_\+th=0.\+3)
 \begin{DoxyCompactList}\small\item\em Determine whether the input array x is oscillating over its mean with frequency larger than osci\+\_\+freq\+\_\+th. \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a6f905598561c0f8c6e31dfb0b0e2d5e5}{fitting\+\_\+residual}} (np.\+ndarray x, np.\+ndarray y, func, args, float mask\+\_\+min=None, bool absolute\+\_\+value=True, bool standardized=False)
@@ -127,21 +127,19 @@ out (bool)\+: Return Ture if data is flat, else return False.
 
 
 
-Compute the number of roots (zeros) for derivative of x. 
+Compute derivative of input array x, and organize the result into z-\/score standardized formulation. 
 
-This is equivalent to find the number of solutions of the following equation
-
-\begin{equation*} f(x) = \frac{df}{dx} = 0. \end{equation*} Once this analysis is done,
+Once this analysis is done, normalized results are masked for those magnitudes that are smaller than std\+\_\+width, in order to ignore noises.
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & (numpy.\+ndarray)\+: \\
+{\em x} & (numpy.\+ndarray)\+: Input Values. \\
 \hline
-{\em std\+\_\+width} & (int)\+:\\
+{\em std\+\_\+width} & (int)\+: Threshold values for masking noises.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-idx (numpy.\+ndarray)\+: 
+idx (numpy.\+ndarray)\+: Indices of discontinuous points in input array x. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{namespaceanko_1_1stats__util_aa196811391f6401b6fec78c1fd7054ed}\label{namespaceanko_1_1stats__util_aa196811391f6401b6fec78c1fd7054ed}} 
 \index{anko.stats\_util@{anko.stats\_util}!exp\_decay@{exp\_decay}}
@@ -232,9 +230,10 @@ res (numpy.\+ndarray)\+: Residual of each corresponding data points (x, y).
 
 
 
-Manually assign parameters of Gaussian distrinution if the given histogram is too flat. 
+Deprecating... 
 
 ~\newline
+Manually assign parameters of Gaussian distrinution if the given histogram is too flat. ~\newline
 In this senario the histogram of data is regarded as a local segment of a larger normal-\/distribution-\/like histogram, ~\newline
 with standard deviation which exceeds the current consideration of domain.
 
@@ -370,6 +369,10 @@ vals\+: Number of appearance for each key in keys.
 
 
 Determine whether the input array x is oscillating over its mean with frequency larger than osci\+\_\+freq\+\_\+th. 
+
+This is equivalent to find the number of solutions of the following equation
+
+\begin{equation*} x - \mu = 0. \end{equation*}
 
 
 \begin{DoxyParams}{Parameters}

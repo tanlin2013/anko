@@ -90,6 +90,7 @@ def right_half_normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) ->
 
 def flat_histogram(x: np.ndarray):
     """!
+    Deprecating... \n
     Manually assign parameters of Gaussian distrinution if the given histogram is too flat. \n
     In this senario the histogram of data is regarded as a local segment of a larger normal-distribution-like histogram, \n
     with standard deviation which exceeds the current consideration of domain. 
@@ -286,25 +287,25 @@ def smoothness(x: np.ndarray, normalize: bool=False):
     
 def discontinuous_idx(x: np.ndarray, std_width: int=1):
     """!
-    Compute the number of roots (zeros) for derivative of x. This is equivalent to find the number of solutions of the following equation
+    Compute derivative of input array x, and organize the result into z-score standardized formulation. 
+    Once this analysis is done, normalized results are masked for those magnitudes that are smaller than std_width, in order to ignore noises.
     
-    \f{equation*}{
-           f(x) = \frac{df}{dx} = 0. 
-    \f}
-    Once this analysis is done, 
-    
-    @param x (numpy.ndarray):
-    @param std_width (int):
+    @param x (numpy.ndarray): Input Values.
+    @param std_width (int): Threshold values for masking noises.
         
-    @returns idx (numpy.ndarray):
+    @returns idx (numpy.ndarray): Indices of discontinuous points in input array x. 
     """
     dx = np.diff(x)
-    idx = np.where(abs(dx-np.mean(dx)) > std_width*np.std(x))
+    idx = np.where(abs(z_normalization(dx)) > std_width)
     return idx[0]
 
 def is_oscillating(x: np.ndarray, osci_freq_th: float=0.3) -> bool:
     """!
-    Determine whether the input array x is oscillating over its mean with frequency larger than osci_freq_th.
+    Determine whether the input array x is oscillating over its mean with frequency larger than osci_freq_th. This is equivalent to find the number of solutions of the following equation
+    
+    \f{equation*}{
+           x - \mu = 0. 
+    \f}
     
     @param x (numpy.ndarray):
     @param osci_freq_th (float):

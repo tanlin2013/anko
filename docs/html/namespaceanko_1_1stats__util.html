@@ -122,7 +122,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ad0683a7fc4d68fa7937dbe214d554997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate right-side half normal distribution of input array x.  <a href="namespaceanko_1_1stats__util.html#ad0683a7fc4d68fa7937dbe214d554997">More...</a><br /></td></tr>
 <tr class="separator:ad0683a7fc4d68fa7937dbe214d554997"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a592ce686a07fad2982a1e051b8e751da"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a592ce686a07fad2982a1e051b8e751da">flat_histogram</a> (np.ndarray x)</td></tr>
-<tr class="memdesc:a592ce686a07fad2982a1e051b8e751da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manually assign parameters of Gaussian distrinution if the given histogram is too flat.  <a href="namespaceanko_1_1stats__util.html#a592ce686a07fad2982a1e051b8e751da">More...</a><br /></td></tr>
+<tr class="memdesc:a592ce686a07fad2982a1e051b8e751da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deprecating...  <a href="namespaceanko_1_1stats__util.html#a592ce686a07fad2982a1e051b8e751da">More...</a><br /></td></tr>
 <tr class="separator:a592ce686a07fad2982a1e051b8e751da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15eb3a4bb50aa7e2825e03c741684c0e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a15eb3a4bb50aa7e2825e03c741684c0e">linear_regression</a> (np.ndarray x, np.ndarray y)</td></tr>
 <tr class="memdesc:a15eb3a4bb50aa7e2825e03c741684c0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fitting linear ansatz for input data (x, y).  <a href="namespaceanko_1_1stats__util.html#a15eb3a4bb50aa7e2825e03c741684c0e">More...</a><br /></td></tr>
@@ -147,7 +147,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a1467292292fb037a7b879c3a66700499"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a1467292292fb037a7b879c3a66700499">smoothness</a> (np.ndarray x, bool normalize=False)</td></tr>
 <tr class="separator:a1467292292fb037a7b879c3a66700499"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebff1af496b1545f67e9b7a9253f2226"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#aebff1af496b1545f67e9b7a9253f2226">discontinuous_idx</a> (np.ndarray x, int std_width=1)</td></tr>
-<tr class="memdesc:aebff1af496b1545f67e9b7a9253f2226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the number of roots (zeros) for derivative of x.  <a href="namespaceanko_1_1stats__util.html#aebff1af496b1545f67e9b7a9253f2226">More...</a><br /></td></tr>
+<tr class="memdesc:aebff1af496b1545f67e9b7a9253f2226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute derivative of input array x, and organize the result into z-score standardized formulation.  <a href="namespaceanko_1_1stats__util.html#aebff1af496b1545f67e9b7a9253f2226">More...</a><br /></td></tr>
 <tr class="separator:aebff1af496b1545f67e9b7a9253f2226"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f75e0a66974df60bf657d244f516619"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanko_1_1stats__util.html#a0f75e0a66974df60bf657d244f516619">is_oscillating</a> (np.ndarray x, float osci_freq_th=0.3)</td></tr>
 <tr class="memdesc:a0f75e0a66974df60bf657d244f516619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether the input array x is oscillating over its mean with frequency larger than osci_freq_th.  <a href="namespaceanko_1_1stats__util.html#a0f75e0a66974df60bf657d244f516619">More...</a><br /></td></tr>
@@ -337,20 +337,16 @@ This will perform a linear regression fitting.</p>
       </table>
 </div><div class="memdoc">
 
-<p>Compute the number of roots (zeros) for derivative of x. </p>
-<p>This is equivalent to find the number of solutions of the following equation</p>
-<p class="formulaDsp">
-<img class="formulaDsp" alt="\begin{equation*} f(x) = \frac{df}{dx} = 0. \end{equation*}" src="form_26.png"/>
-</p>
-<p> Once this analysis is done,</p>
+<p>Compute derivative of input array x, and organize the result into z-score standardized formulation. </p>
+<p>Once this analysis is done, normalized results are masked for those magnitudes that are smaller than std_width, in order to ignore noises.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>(numpy.ndarray): </td></tr>
-    <tr><td class="paramname">std_width</td><td>(int):</td></tr>
+    <tr><td class="paramname">x</td><td>(numpy.ndarray): Input Values. </td></tr>
+    <tr><td class="paramname">std_width</td><td>(int): Threshold values for masking noises.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>idx (numpy.ndarray): </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>idx (numpy.ndarray): Indices of discontinuous points in input array x. </dd></dl>
 
 </div>
 </div>
@@ -552,8 +548,9 @@ perr (numpy.ndarray): </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Manually assign parameters of Gaussian distrinution if the given histogram is too flat. </p>
+<p>Deprecating... </p>
 <p><br  />
+Manually assign parameters of Gaussian distrinution if the given histogram is too flat. <br  />
 In this senario the histogram of data is regarded as a local segment of a larger normal-distribution-like histogram, <br  />
 with standard deviation which exceeds the current consideration of domain.</p>
 <p>Parameters of Gaussian distribution are assigned as following:</p><ol type="1">
@@ -819,6 +816,10 @@ vals: Number of appearance for each key in keys. </dd></dl>
 </div><div class="memdoc">
 
 <p>Determine whether the input array x is oscillating over its mean with frequency larger than osci_freq_th. </p>
+<p>This is equivalent to find the number of solutions of the following equation</p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\begin{equation*} x - \mu = 0. \end{equation*}" src="form_30.png"/>
+</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>(numpy.ndarray): </td></tr>

@@ -26,3 +26,6 @@
 \form#25:\begin{equation*} \mathcal{BIC} = n \log(\mathcal{RSS}/n) + p \log(n), \end{equation*}
 \form#26:\begin{equation*} f(x) = \frac{df}{dx} = 0. \end{equation*}
 \form#27:$ n $
+\form#28:\begin{equation*} \frac{dx}{dt} = 0. \end{equation*}
+\form#29:\begin{equation*} y = x - \mu = 0. \end{equation*}
+\form#30:\begin{equation*} x - \mu = 0. \end{equation*}

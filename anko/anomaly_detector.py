@@ -12,9 +12,9 @@ class AnomalyDetector:
         ## Policies for AnomalyDetector to follow with. 
         ## @param scaleless_t (bool):
         ## @param boxcox (bool):
-        ## @param z_normalization (bool):
-        ## @param info_criterion (str):
-        ## @param min_sample_size (int):
+        ## @param z_normalization (bool): If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values AnomalyDetector.thres_params scalelessly.
+        ## @param info_criterion (str): Information criterion for selecting fitting ansatzs, allowed fields are 'AIC' or 'BIC'.
+        ## @param min_sample_size (int): 
         self.apply_policies = {
                 "scaleless_t": True,
                 "boxcox": False,
