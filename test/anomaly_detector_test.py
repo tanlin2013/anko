@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import numpy as np
+import os
 import unittest
 from anko.anomaly_detector import AnomalyDetector
 # =============================================================================
@@ -49,7 +50,8 @@ class TestAnomalyDetector(unittest.TestCase):
     
     @staticmethod
     def read_from_file():
-        npzfile = np.load('./test_series.npz')
+        dir_path = os.path.dirname(os.path.realpath(__file__))  
+        npzfile = np.load(dir_path+'/test_series.npz')
         series_data = [npzfile['arr_%i'%i] for i in range(len(npzfile.files))]
         npzfile.close()
         return np.array(series_data)

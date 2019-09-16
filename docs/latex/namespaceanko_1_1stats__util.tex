@@ -22,7 +22,7 @@ bool \mbox{\hyperlink{namespaceanko_1_1stats__util_ad350eac604ebf2d6d3c42f4753d8
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a9e0f971311c5d1013a90795d2427091c}{general\+\_\+erf}} (np.\+ndarray x, float a, float b, float x0)
 \begin{DoxyCompactList}\small\item\em Calculate the generalize error function of input array x. \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a2efdfc173ad6b38025bfd48da53f160a}{three\+\_\+stair\+\_\+erf}} (np.\+ndarray x, float c0, float c1, float c2, float x1, float x2)
-\item 
+\begin{DoxyCompactList}\small\item\em Calculate the generalize error function with three stairs for input array x. \end{DoxyCompactList}\item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a4f434d24322b90d1d03cf689847ea76a}{general\+\_\+erf\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, bool three\+\_\+stair=False, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
 \begin{DoxyCompactList}\small\item\em Fitting generalize error function for input data (x, y). \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_aa196811391f6401b6fec78c1fd7054ed}{exp\+\_\+decay}} (np.\+ndarray x, float a, float alpha)
@@ -32,7 +32,7 @@ def \mbox{\hyperlink{namespaceanko_1_1stats__util_a4ae884cfdb74b45070f1c07b2f952
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a1467292292fb037a7b879c3a66700499}{smoothness}} (np.\+ndarray x, bool normalize=False)
 \item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_aebff1af496b1545f67e9b7a9253f2226}{discontinuous\+\_\+idx}} (np.\+ndarray x, int std\+\_\+width=1)
-\item 
+\begin{DoxyCompactList}\small\item\em Compute the number of roots (zeros) for derivative of x. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{namespaceanko_1_1stats__util_a0f75e0a66974df60bf657d244f516619}{is\+\_\+oscillating}} (np.\+ndarray x, float osci\+\_\+freq\+\_\+th=0.\+3)
 \begin{DoxyCompactList}\small\item\em Determine whether the input array x is oscillating over its mean with frequency larger than osci\+\_\+freq\+\_\+th. \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a6f905598561c0f8c6e31dfb0b0e2d5e5}{fitting\+\_\+residual}} (np.\+ndarray x, np.\+ndarray y, func, args, float mask\+\_\+min=None, bool absolute\+\_\+value=True, bool standardized=False)
@@ -56,6 +56,8 @@ np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a9b2e2041bcd620bb46b8
 
 Compute Akaike information criterion for model selection. 
 
+\begin{equation*} \mathcal{AIC} = n \log(\mathcal{RSS}/n) + 2p, \end{equation*} where $ \mathcal{RSS} $ is the residual sum of squares.
+
 
 \begin{DoxyParams}{Parameters}
 {\em y} & (numpy.\+ndarray)\+: Data samples. \\
@@ -77,6 +79,8 @@ aic\+\_\+score (float)\+:
 
 
 Compute Bayesian information criterion for model selection. 
+
+\begin{equation*} \mathcal{BIC} = n \log(\mathcal{RSS}/n) + p \log(n), \end{equation*} where $ \mathcal{RSS} $ is the residual sum of squares.
 
 
 \begin{DoxyParams}{Parameters}
@@ -122,6 +126,14 @@ out (bool)\+: Return Ture if data is flat, else return False.
 {\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+discontinuous\+\_\+idx (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{int}]{std\+\_\+width = {\ttfamily 1} }\end{DoxyParamCaption})}
 
 
+
+Compute the number of roots (zeros) for derivative of x. 
+
+This is equivalent to solve
+
+\begin{equation*} f(x) = \frac{df}{dx} = 0. \end{equation*}
+
+
 \begin{DoxyParams}{Parameters}
 {\em x} & (numpy.\+ndarray)\+: \\
 \hline
@@ -143,17 +155,19 @@ Calculate the exponential function of input array x.
 
 Note that Domain of x $>$= 0.
 
+\begin{equation*} f(x) = a\exp\left(-\alpha x\right). \end{equation*}
+
 
 \begin{DoxyParams}{Parameters}
-{\em x} & (numpy.\+ndarray)\+: \\
+{\em x} & (numpy.\+ndarray)\+: Input values. \\
 \hline
-{\em a} & (float)\+: \\
+{\em a} & (float)\+: Overall normalized constant. \\
 \hline
-{\em alpha} & (float)\+:\\
+{\em alpha} & (float)\+: Decay rate of exponential function. Please note that $ \alpha $ can be negative, and should be carefully utilized.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-out\+: 
+out\+: Output array. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{namespaceanko_1_1stats__util_a4ae884cfdb74b45070f1c07b2f9527b1}\label{namespaceanko_1_1stats__util_a4ae884cfdb74b45070f1c07b2f9527b1}} 
 \index{anko.stats\_util@{anko.stats\_util}!exp\_decay\_fit@{exp\_decay\_fit}}
@@ -163,11 +177,11 @@ out\+:
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & (numpy.\+ndarray)\+: \\
+{\em x} & (numpy.\+ndarray)\+: x coordinate of input data points. \\
 \hline
-{\em y} & (numpy.\+ndarray)\+: \\
+{\em y} & (numpy.\+ndarray)\+: y coordinate of input data points. \\
 \hline
-{\em mode} & (str)\+: \\
+{\em mode} & (str, optional)\+: If mode is \textquotesingle{}log-\/linregress\textquotesingle{}, underlying algorithm will perform linear regression in $ \log(x)-\log(y) $ scale, else brutal force \\
 \hline
 {\em maxfev} & (int)\+: ~\newline
  \\
@@ -258,7 +272,12 @@ Fitting the Gaussian (normal) distribution for input data x.
 \hline
 {\em sort\+\_\+histo} & (bool, optional)\+: If True use the sorted histogram. \\
 \hline
-{\em maxfev} & (int, optional)\+: Maximum step of fitting iteration.\\
+{\em half} & (str, optional)\+: ~\newline
+ \\
+\hline
+{\em maxfev} & (int, optional)\+: Maximum step of fitting iteration. \\
+\hline
+{\em bounds} & (list\mbox{[}float, float\mbox{]}, optional)\+:\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -276,7 +295,7 @@ perr (numpy.\+ndarray)\+: Error of popt. Defined by the square of diagonal eleme
 
 Calculate the generalize error function of input array x. 
 
-f(x) = a; x $<$ x0, (a+b)/2; x = x0, b; x $>$ x0
+\begin{equation*} f(x) = \begin{cases} a, & x < x_0, \\ \frac{a+b}{2}, & x = x_0, \\ b, & x > x_0. \end{cases} \end{equation*}
 
 
 \begin{DoxyParams}{Parameters}
@@ -304,13 +323,13 @@ Fitting generalize error function for input data (x, y).
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & (numpy.\+ndarray)\+: \\
+{\em x} & (numpy.\+ndarray)\+: x coordinate of input data points. \\
 \hline
-{\em y} & (numpy.\+ndarray)\+: \\
+{\em y} & (numpy.\+ndarray)\+: y coordinate of input data points. \\
 \hline
-{\em three\+\_\+stair} & (bool)\+: \\
+{\em three\+\_\+stair} & (bool)\+: If True, employing three stair error function for fitting. \\
 \hline
-{\em maxfev} & (int)\+: \\
+{\em maxfev} & (int)\+: Maximum step of fitting iteration. \\
 \hline
 {\em bounds} & (list\mbox{[}float\mbox{]})\+:\\
 \hline
@@ -396,7 +415,7 @@ out (numpy.\+ndarray)\+: Output array.
 
 Fitting linear ansatz for input data (x, y). 
 
-y = intercept + slope $\ast$ x.
+\begin{equation*} y = intercept + slope \times x. \end{equation*}
 
 
 \begin{DoxyParams}{Parameters}
@@ -488,18 +507,24 @@ sm (numpy.\+ndarray)\+:
 {\footnotesize\ttfamily  np.\+ndarray anko.\+stats\+\_\+util.\+three\+\_\+stair\+\_\+erf (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{float}]{c0,  }\item[{float}]{c1,  }\item[{float}]{c2,  }\item[{float}]{x1,  }\item[{float}]{x2 }\end{DoxyParamCaption})}
 
 
+
+Calculate the generalize error function with three stairs for input array x. 
+
+\begin{equation*} f(x) = \begin{cases} c_0, & x < x_1, \\ \frac{c_0+c_1}{2}, & x = x_1, \\ c_1, & x_1< x < x_2, \\ \frac{c_1+c_2}{2}, & x = x_2, \\ c_2, & x > x_2. \end{cases} \end{equation*}
+
+
 \begin{DoxyParams}{Parameters}
 {\em x} & (numpy.\+ndarray)\+: Input values. \\
 \hline
-{\em c0} & (float)\+: \\
+{\em c0} & (float)\+: Value of first stair. \\
 \hline
-{\em c1} & (float)\+: \\
+{\em c1} & (float)\+: Value of second stair. \\
 \hline
-{\em c2} & (float)\+: \\
+{\em c2} & (float)\+: Value of third stair. \\
 \hline
-{\em x1} & (float)\+: \\
+{\em x1} & (float)\+: Location of the first cliff. \\
 \hline
-{\em x2} & (float)\+:\\
+{\em x2} & (float)\+: Location of the second cliff.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -515,11 +540,13 @@ out (numpy.\+ndarray)\+: Output array.
 
 Perform z-\/score normalizaion on input array x. 
 
+\begin{equation*} z = \frac{x-\mu}{\sigma}. \end{equation*}
+
 
 \begin{DoxyParams}{Parameters}
 {\em x} & (numpy.\+ndarray)\+: Input values.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-normalized\+\_\+x (numpy.\+ndarray)\+: 
+normalized\+\_\+x (numpy.\+ndarray)\+: Output array. 
 \end{DoxyReturn}

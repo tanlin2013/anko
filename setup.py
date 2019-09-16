@@ -1,6 +1,10 @@
-from distutils.core import setup
-
+from setuptools import setup
+#from distutils.core import setup
+        
 ver = '0.2.6'
+
+with open("README.md", "r") as f:
+    long_description = f.read()
 
 setup(
   name = 'anko',
@@ -8,6 +12,8 @@ setup(
   version = ver,
   license='MIT',
   description = 'Toolkit for performing anomaly detection algorithm on time series.',
+  long_description=long_description,
+  long_description_content_type="text/markdown",
   author = 'tao-lin',
   author_email = 'tanlin2013@gmail.com', 
   url = 'https://github.com/tanlin2013/anko',

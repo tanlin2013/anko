@@ -1,0 +1,27 @@
+\form#0:\begin{eqnarray*} f(x) = \begin{cases} c0, & x < x1 \\ c1, & x1< x < x2 \end{cases} \end{eqnarray*}
+\form#1:\begin{equation*} f(x) = \begin{cases} c0, & x < x1 \\ c1, & x1< x < x2 \end{cases} \end{equation*}
+\form#2:\[ f(x) = \begin{cases} c0, & x < x1 \\ c1, & x1< x < x2 \end{cases} \]
+\form#3:\[ f(x) = \begin{cases} c_0, & x < x_1 \\ c_1, & x_1< x < x_2 \end{cases} \]
+\form#4:\[ f(x) = \begin{cases} c_0, & x < x_1 &\\ c_1, & x_1< x < x_2 \end{cases} \]
+\form#5:\begin{equation*} f(x) = \begin{cases} c_0, & x < x_1 \\ c_1, & x_1< x < x_2 \end{cases} \end{equation*}
+\form#6:\begin{equation*} f(x) = \begin{cases} c_0, & x < x_1, \\ c_1, & x_1< x < x_2, \\ c_2, & x > x_2. \end{cases} \end{equation*}
+\form#7:\begin{equation*} f(x) = \begin{cases} c_0, & x < x_1, \\ \frac{c_0+c_1}{2}, & x = x_1, \\ c_1, & x_1< x < x_2, \\ \frac{c_1+c_2}{2}, & x = x_2, \\ c_2, & x > x_2. \end{cases} \end{equation*}
+\form#8:\begin{equation*} y = intercept + slope \times x. \end{equation*}
+\form#9:\begin{equation*} f(x) = \begin{cases} a, & x < x_0, \\ \frac{a+b}{2}, & x = x_0, \\ b, & x > x_0. \end{cases} \end{equation*}
+\form#10:\begin{equation*} f(x) = \exp{-ax}. \end{equation*}
+\form#11:\begin{equation*} f(x) = \exp\(-ax\). \end{equation*}
+\form#12:\begin{equation*} f(x) = \exp\left(-ax\right). \end{equation*}
+\form#13:\begin{equation*} f(x) = a\exp\left(-\alpha x\right). \end{equation*}
+\form#14:\[ a \]
+\form#15:$ a $
+\form#16:$ \alpha $
+\form#17:$ \log(x)-\log(y) $
+\form#18:\begin{equation*} z(x) = \frac{x-\mu}{\sigma}. \end{equation*}
+\form#19:\begin{equation*} \mathcal{AIC} = \end{equation*}
+\form#20:\begin{equation*} z = \frac{x-\mu}{\sigma}. \end{equation*}
+\form#21:\begin{equation*} \mathcal{AIC} = n \log(\mathcal{RSS}/n) + 2p \end{equation*}
+\form#22:\begin{equation*} \mathcal{BIC} = n \log(\mathcal{RSS}/n) + p \log(n) \end{equation*}
+\form#23:\begin{equation*} \mathcal{AIC} = n \log(\mathcal{RSS}/n) + 2p, \end{equation*}
+\form#24:$ \mathcal{RSS} $
+\form#25:\begin{equation*} \mathcal{BIC} = n \log(\mathcal{RSS}/n) + p \log(n), \end{equation*}
+\form#26:\begin{equation*} f(x) = \frac{df}{dx} = 0. \end{equation*}

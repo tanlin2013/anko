@@ -40,9 +40,11 @@ def gaussian_fit(x: np.ndarray, sort_histo: bool=False, half: str=None, maxfev: 
     """!
     Fitting the Gaussian (normal) distribution for input data x.
     
-    @param x (numpy.ndarray): Input values.    
+    @param x (numpy.ndarray): Input values.   
     @param sort_histo (bool, optional): If True use the sorted histogram.
+    @param half (str, optional):  
     @param maxfev (int, optional): Maximum step of fitting iteration.
+    @param bounds (list[float, float], optional): 
     
     @returns popt (numpy.ndarray): Estimate value of a, x0 and sigma of Gaussian distribution.
     @returns perr (numpy.ndarray): Error of popt. Defined by the square of diagonal element of covariance matrix.
@@ -112,7 +114,9 @@ def linear_regression(x: np.ndarray, y: np.ndarray):
     """!
     Fitting linear ansatz for input data (x, y). 
     
-    y = intercept + slope * x.
+    \f{equation*}{
+            y = intercept + slope \times x.
+    \f}
     
     @param x (numpy.ndarray): x coordinate of input data points. 
     @param y (numpy.ndarray): y coordinate of input data points.
@@ -149,9 +153,14 @@ def general_erf(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
     """!
     Calculate the generalize error function of input array x.
     
-    f(x) = a; x < x0,
-           (a+b)/2; x = x0,
-           b; x > x0
+    \f{equation*}{
+           f(x) = 
+               \begin{cases}
+                   a, & x < x_0, \\
+                   \frac{a+b}{2}, & x = x_0, \\
+                   b, & x > x_0.
+               \end{cases}
+    \f}
     
     @param x (numpy.ndarray): Input values.
     @param a (float): Value of first stair. 
@@ -164,13 +173,25 @@ def general_erf(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
 
 def three_stair_erf(x: np.ndarray, c0: float, c1: float, c2: float, x1: float, x2: float) -> np.ndarray:
     """!
+    Calculate the generalize error function with three stairs for input array x.
+    
+    \f{equation*}{
+           f(x) = 
+               \begin{cases}
+                   c_0, & x < x_1, \\
+                   \frac{c_0+c_1}{2}, & x = x_1, \\
+                   c_1, & x_1< x < x_2, \\
+                   \frac{c_1+c_2}{2}, & x = x_2, \\
+                   c_2, & x > x_2.
+               \end{cases}
+    \f}
     
     @param x (numpy.ndarray): Input values.
-    @param c0 (float): 
-    @param c1 (float): 
-    @param c2 (float): 
-    @param x1 (float): 
-    @param x2 (float): 
+    @param c0 (float): Value of first stair. 
+    @param c1 (float): Value of second stair. 
+    @param c2 (float): Value of third stair. 
+    @param x1 (float): Location of the first cliff.
+    @param x2 (float): Location of the second cliff.
     
     @returns out (numpy.ndarray): Output array.
     """
@@ -180,11 +201,11 @@ def general_erf_fit(x: np.ndarray, y: np.ndarray, three_stair: bool=False, maxfe
     """!
     Fitting generalize error function for input data (x, y).
     
-    @param x (numpy.ndarray):
-    @param y (numpy.ndarray):
-    @param three_stair (bool):
-    @param maxfev (int):
-    @param bounds (list[float]):
+    @param x (numpy.ndarray): x coordinate of input data points. 
+    @param y (numpy.ndarray): y coordinate of input data points. 
+    @param three_stair (bool): If True, employing three stair error function for fitting.
+    @param maxfev (int): Maximum step of fitting iteration.
+    @param bounds (list[float]): 
     
     @returns popt (numpy.ndarray):
     @returns perr (numpy.ndarray):
@@ -199,6 +220,7 @@ def general_erf_fit(x: np.ndarray, y: np.ndarray, three_stair: bool=False, maxfe
         a_sg = y[0]; b_sg = y[-1]; x0_sg = x[np.argmax(np.diff(y))]
         popt, pcov = curve_fit(general_erf,x,y,p0=[a_sg,b_sg,x0_sg],maxfev=maxfev,bounds=bounds)
         perr = np.sqrt(np.diag(pcov))
+# TODO: consider to use scipy.optimize.differential_evolution
 # =============================================================================
 #         a_sg = y[0]; b_sg = y[-1]; x0_sg = x[np.argmax(np.diff(y))]
 #         width = (max(y)-min(y))/10
@@ -212,11 +234,16 @@ def exp_decay(x: np.ndarray, a: float, alpha: float) -> np.ndarray:
     """!
     Calculate the exponential function of input array x. Note that Domain of x >= 0.
     
-    @param x (numpy.ndarray):
-    @param a (float):
-    @param alpha (float):
+    \f{equation*}{
+           f(x) = a\exp\left(-\alpha x\right). 
+    \f}
+    
+    @param x (numpy.ndarray): Input values.
+    @param a (float): Overall normalized constant.
+    @param alpha (float): Decay rate of exponential function. Please note that \f$ \alpha \f$ can be negative,
+        and should be carefully utilized. 
         
-    @returns out: 
+    @returns out: Output array.
     """
     if len(np.where(np.array(x) < 0)[0]) != 0:
         raise ValueError("Domain of exp(-x) is restricted in x > 0.")
@@ -225,9 +252,10 @@ def exp_decay(x: np.ndarray, a: float, alpha: float) -> np.ndarray:
 def exp_decay_fit(x: np.ndarray, y: np.ndarray, mode: str='log-linregress', maxfev: int=2000, bounds=[-1e-6,1e+6]):
     """!
     
-    @param x (numpy.ndarray):
-    @param y (numpy.ndarray):
-    @param mode (str):
+    @param x (numpy.ndarray): x coordinate of input data points.
+    @param y (numpy.ndarray): y coordinate of input data points.
+    @param mode (str, optional): If mode is 'log-linregress', underlying algorithm will perform linear regression in \f$ \log(x)-\log(y) \f$ scale,
+        else brutal force 
     @param maxfev (int):    
     @param bounds (list[float,float]):
         
@@ -258,7 +286,12 @@ def smoothness(x: np.ndarray, normalize: bool=False):
     
 def discontinuous_idx(x: np.ndarray, std_width: int=1):
     """!
+    Compute the number of roots (zeros) for derivative of x. This is equivalent to solve
     
+    \f{equation*}{
+           f(x) = \frac{df}{dx} = 0. 
+    \f}
+       
     @param x (numpy.ndarray):
     @param std_width (int):
         
@@ -315,6 +348,11 @@ def AIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:
     """!
     Compute Akaike information criterion for model selection.
     
+    \f{equation*}{
+           \mathcal{AIC} = n \log(\mathcal{RSS}/n) + 2p, 
+    \f}
+    where \f$ \mathcal{RSS} \f$ is the residual sum of squares.
+    
     @param y (numpy.ndarray): Data samples.
     @param y_predict (numpy.ndarray): Prediction by fitting.
     @param p (int): Fitting degrees of freedom, i.e. the number of parameters to fit with.
@@ -330,6 +368,11 @@ def AIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:
 def BIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:
     """!
     Compute Bayesian information criterion for model selection.
+    
+    \f{equation*}{
+           \mathcal{BIC} = n \log(\mathcal{RSS}/n) + p \log(n), 
+    \f}
+    where \f$ \mathcal{RSS} \f$ is the residual sum of squares.
     
     @param y (numpy.ndarray): Data samples.
     @param y_predict (numpy.ndarray): Prediction by fitting.
@@ -347,9 +390,13 @@ def z_normalization(x: np.ndarray) -> np.ndarray:
     """!
     Perform z-score normalizaion on input array x. 
     
+    \f{equation*}{
+           z = \frac{x-\mu}{\sigma}. 
+    \f}
+    
     @param x (numpy.ndarray): Input values.
         
-    @returns normalized_x (numpy.ndarray):
+    @returns normalized_x (numpy.ndarray): Output array.
     """
     return (x-np.mean(x))/np.std(x)
 
