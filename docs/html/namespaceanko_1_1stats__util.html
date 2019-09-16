@@ -202,7 +202,7 @@ Functions</h2></td></tr>
 <p class="formulaDsp">
 <img class="formulaDsp" alt="\begin{equation*} \mathcal{AIC} = n \log(\mathcal{RSS}/n) + 2p, \end{equation*}" src="form_23.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$ \mathcal{RSS} $" src="form_24.png"/> is the residual sum of squares.</p>
+<p> where <img class="formulaInl" alt="$ \mathcal{RSS} $" src="form_24.png"/> is the residual sum of squares, and <img class="formulaInl" alt="$ n $" src="form_27.png"/> is the number of data samples.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">y</td><td>(numpy.ndarray): Data samples. </td></tr>
@@ -251,7 +251,7 @@ Functions</h2></td></tr>
 <p class="formulaDsp">
 <img class="formulaDsp" alt="\begin{equation*} \mathcal{BIC} = n \log(\mathcal{RSS}/n) + p \log(n), \end{equation*}" src="form_25.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$ \mathcal{RSS} $" src="form_24.png"/> is the residual sum of squares.</p>
+<p> where <img class="formulaInl" alt="$ \mathcal{RSS} $" src="form_24.png"/> is the residual sum of squares, and <img class="formulaInl" alt="$ n $" src="form_27.png"/> is the number of data samples.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">y</td><td>(numpy.ndarray): Data samples. </td></tr>
@@ -338,10 +338,11 @@ This will perform a linear regression fitting.</p>
 </div><div class="memdoc">
 
 <p>Compute the number of roots (zeros) for derivative of x. </p>
-<p>This is equivalent to solve</p>
+<p>This is equivalent to find the number of solutions of the following equation</p>
 <p class="formulaDsp">
 <img class="formulaDsp" alt="\begin{equation*} f(x) = \frac{df}{dx} = 0. \end{equation*}" src="form_26.png"/>
 </p>
+<p> Once this analysis is done,</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>(numpy.ndarray): </td></tr>

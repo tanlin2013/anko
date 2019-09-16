@@ -56,7 +56,7 @@ np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a9b2e2041bcd620bb46b8
 
 Compute Akaike information criterion for model selection. 
 
-\begin{equation*} \mathcal{AIC} = n \log(\mathcal{RSS}/n) + 2p, \end{equation*} where $ \mathcal{RSS} $ is the residual sum of squares.
+\begin{equation*} \mathcal{AIC} = n \log(\mathcal{RSS}/n) + 2p, \end{equation*} where $ \mathcal{RSS} $ is the residual sum of squares, and $ n $ is the number of data samples.
 
 
 \begin{DoxyParams}{Parameters}
@@ -80,7 +80,7 @@ aic\+\_\+score (float)\+:
 
 Compute Bayesian information criterion for model selection. 
 
-\begin{equation*} \mathcal{BIC} = n \log(\mathcal{RSS}/n) + p \log(n), \end{equation*} where $ \mathcal{RSS} $ is the residual sum of squares.
+\begin{equation*} \mathcal{BIC} = n \log(\mathcal{RSS}/n) + p \log(n), \end{equation*} where $ \mathcal{RSS} $ is the residual sum of squares, and $ n $ is the number of data samples.
 
 
 \begin{DoxyParams}{Parameters}
@@ -129,9 +129,9 @@ out (bool)\+: Return Ture if data is flat, else return False.
 
 Compute the number of roots (zeros) for derivative of x. 
 
-This is equivalent to solve
+This is equivalent to find the number of solutions of the following equation
 
-\begin{equation*} f(x) = \frac{df}{dx} = 0. \end{equation*}
+\begin{equation*} f(x) = \frac{df}{dx} = 0. \end{equation*} Once this analysis is done,
 
 
 \begin{DoxyParams}{Parameters}

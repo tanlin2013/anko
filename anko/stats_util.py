@@ -286,12 +286,13 @@ def smoothness(x: np.ndarray, normalize: bool=False):
     
 def discontinuous_idx(x: np.ndarray, std_width: int=1):
     """!
-    Compute the number of roots (zeros) for derivative of x. This is equivalent to solve
+    Compute the number of roots (zeros) for derivative of x. This is equivalent to find the number of solutions of the following equation
     
     \f{equation*}{
            f(x) = \frac{df}{dx} = 0. 
     \f}
-       
+    Once this analysis is done, 
+    
     @param x (numpy.ndarray):
     @param std_width (int):
         
@@ -351,7 +352,7 @@ def AIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:
     \f{equation*}{
            \mathcal{AIC} = n \log(\mathcal{RSS}/n) + 2p, 
     \f}
-    where \f$ \mathcal{RSS} \f$ is the residual sum of squares.
+    where \f$ \mathcal{RSS} \f$ is the residual sum of squares, and \f$ n \f$ is the number of data samples.
     
     @param y (numpy.ndarray): Data samples.
     @param y_predict (numpy.ndarray): Prediction by fitting.
@@ -372,7 +373,7 @@ def BIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:
     \f{equation*}{
            \mathcal{BIC} = n \log(\mathcal{RSS}/n) + p \log(n), 
     \f}
-    where \f$ \mathcal{RSS} \f$ is the residual sum of squares.
+    where \f$ \mathcal{RSS} \f$ is the residual sum of squares, and \f$ n \f$ is the number of data samples.
     
     @param y (numpy.ndarray): Data samples.
     @param y_predict (numpy.ndarray): Prediction by fitting.
