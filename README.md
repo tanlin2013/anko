@@ -1,3 +1,4 @@
+![anko](docs/anko_logo.png)
 # anko
 Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.
 
@@ -56,13 +57,21 @@ please refer to the documentation.
 check_result = agent.check()
 ```
 
-The type of output **check_result** is [**CheckResult**](classanko_1_1anomaly__detector_1_1_check_result.html), which is basically a dictionary.
+The type of output **check_result** is [**CheckResult**](classanko_1_1anomaly__detector_1_1_check_result.html), which is basically a dictionary that contains the following attributes:
 > model: 'increase_step_func'  
 > popt: [220.3243250055105, 249.03846355234577, 74.00000107457113]  
 > perr: [0.4247789247961187, 0.7166253174634686, 0.0]  
 > anomalous_data: [(59, 209)]  
 > residual: [10.050378152592119]  
 > extra_info: ['Info: AnomalyDetector is using z normalization.', 'Info: There are more than 1 discontinuous points detected.']        
+
+* model (str): The best fit model been selected by algorithm.
+* popt (list): Estimated fitting parameters. 
+* perr (list): Corresponding errors of popt.
+* anomalous_data (list\[tuple(float, float)\]): Return a list of anomalous data points (t, series(t)), or an empty list if all data points are in order. 
+* residual (list): Residual of anomalous data.
+* extra_info (list): All convergence errors, warnings, informations during the execution are stored here.
+
 
 ## Run Test (in dev)
 ```
