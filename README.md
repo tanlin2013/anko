@@ -1,4 +1,4 @@
-![anko](../anko_logo.png)
+![](docs/anko_logo.png)
 # anko
 Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.
 
