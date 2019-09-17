@@ -23,12 +23,14 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "anko", "index.html", [
-    [ "Requirements", "index.html#autotoc_md1", null ],
-    [ "Installation", "index.html#autotoc_md2", null ],
-    [ "Documentation", "index.html#autotoc_md3", null ],
-    [ "Jupyter Notebook Tutorial (in dev)", "index.html#autotoc_md4", null ],
-    [ "Basic Usage", "index.html#autotoc_md5", null ],
-    [ "Run Test (in dev)", "index.html#autotoc_md6", null ],
+    [ "anko あんこ", "index.html", [
+      [ "Requirements", "index.html#autotoc_md1", null ],
+      [ "Installation", "index.html#autotoc_md2", null ],
+      [ "Documentation", "index.html#autotoc_md3", null ],
+      [ "Jupyter Notebook Tutorial (in dev)", "index.html#autotoc_md4", null ],
+      [ "Basic Usage", "index.html#autotoc_md5", null ],
+      [ "Run Test (in dev)", "index.html#autotoc_md6", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [

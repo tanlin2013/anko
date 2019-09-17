@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['anko_85',['anko',['../index.html',1,'']]]
+  ['anko_20あんこ_85',['anko あんこ',['../index.html',1,'']]]
 ];

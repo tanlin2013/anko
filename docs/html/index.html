@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>anko: anko</title>
+<title>anko: anko あんこ</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,6 +33,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="anko_logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">anko
    &#160;<span id="projectnumber">0.2.6</span>
@@ -98,7 +99,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">anko </div>  </div>
+<div class="title">anko あんこ </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>Toolkit for performing anomaly detection algorithm on 1D time series based on numpy, scipy.</p>
@@ -109,7 +110,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>Fitting Ansatz <br  />
  Data samples are fitted by several ansatzs, and in accordance with the residual, anomalous data points can be selected.</li>
 </ol>
-<p>Regarding model selections, models are adopted dynamically by performing normal test and by computing the (Akaike/Bayesian) information criterion. By default, the algorithm will first try to fit in the data into normal distribution, if it passed <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html">normal test</a>. If this attempt suffers from the loss convergence or it did not pass <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html">normal test</a> from begining, then the algorithm will pass data into the second methods and try to execute all the available fitting ansatzs simultaneously. The best fitting ansatz will be selected by information criterion, and finally the algorithm will pick up anomalous points in accordance with the residual. <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a019359334795d2f05a730ab00085e5e9">click here to see all available methods.</a> <br  />
+<p>Regarding model selections, models are adopted dynamically by performing normal test and by computing the (Akaike/Bayesian) information criterion. By default, the algorithm will first try to fit in the data into normal distribution, if it passed <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html">normal test</a>. If this attempt suffers from the loss of convergence or it did not pass <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html">normal test</a> from begining, then the algorithm will pass data into the second methods and try to execute all the available fitting ansatzs simultaneously. The best fitting ansatz will be selected by information criterion, and finally the algorithm will pick up anomalous points in accordance with the residual. <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a019359334795d2f05a730ab00085e5e9">click here to see all available methods.</a> <br  />
 </p>
 <p>Future development will also include methods that are based on deep learning techniques, such as isolation forest, support vector machine, etc.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>

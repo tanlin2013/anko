@@ -10,7 +10,7 @@ Data samples are fitted by several ansatzs, and in accordance with the residual,
 
 Regarding model selections, models are adopted dynamically by performing normal test and by computing the (Akaike/Bayesian) information criterion.
 By default, the algorithm will first try to fit in the data into normal distribution, if it passed [normal test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html).
-If this attempt suffers from the loss convergence or it did not pass [normal test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html) from begining, 
+If this attempt suffers from the loss of convergence or it did not pass [normal test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html) from begining, 
 then the algorithm will pass data into the second methods and try to execute all the available fitting ansatzs simultaneously. 
 The best fitting ansatz will be selected by information criterion, and finally the algorithm will pick up anomalous points in accordance with the residual.
 [click here to see all available methods.](classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a019359334795d2f05a730ab00085e5e9)   
