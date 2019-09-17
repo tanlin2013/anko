@@ -109,8 +109,9 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>Fitting Ansatz <br  />
  Data samples are fitted by several ansatzs, and in accordance with the residual, anomalous data points can be selected.</li>
 </ol>
-<p>Regarding model selections, models are adopted dynamically by performing normal test and by computing the (Akaike/Bayesian) information criterion.</p>
-<p>Future development will also include methods that based on density analysis such as k-nearest neighbor and other powerful techniques.</p>
+<p>Regarding model selections, models are adopted dynamically by performing normal test and by computing the (Akaike/Bayesian) information criterion. By default, the algorithm will first try to fit in the data into normal distribution, if it passed <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html">normal test</a>. If this attempt suffers from the loss convergence or it did not pass <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html">normal test</a> from begining, then the algorithm will pass data into the second methods and try to execute all the available fitting ansatzs simultaneously. The best fitting ansatz will be selected by information criterion, and finally the algorithm will pick up anomalous points in accordance with the residual. <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a019359334795d2f05a730ab00085e5e9">click here to see all available methods.</a> <br  />
+</p>
+<p>Future development will also include methods that are based on deep learning techniques, such as isolation forest, support vector machine, etc.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Requirements</h1>
 <ul>
@@ -121,7 +122,8 @@ Requirements</h1>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Installation</h1>
 <div class="fragment"><div class="line">pip install anko</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
+</div><!-- fragment --><p> <a href="https://pypi.org/project/anko/">anko on PyPI</a></p>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Documentation</h1>
 <p><a href="https://tanlin2013.github.io/anko/html/index.html">anko documentation</a></p>
 <h1><a class="anchor" id="autotoc_md4"></a>
@@ -136,11 +138,11 @@ Basic Usage</h1>
 <li>Define policies and threshold values (optional) <div class="fragment"><div class="line">agent.thres_params[&quot;linregress_res&quot;] = 1.5  </div>
 <div class="line">agent.apply_policies[&quot;z_normalization&quot;] = True  </div>
 <div class="line">agent.apply_policies[&quot;info_criterion&quot;] = &#39;AIC&#39;</div>
-</div><!-- fragment --></li>
+</div><!-- fragment --> for the use of <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59"><b>AnomalyDetector.thres_params</b></a> and <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af58531e67a2d33977a1bdc142b3f0561"><b>AnomalyDetector.apply_policies</b></a>, please refer to the documentation.</li>
 <li>Run check <div class="fragment"><div class="line">check_result = agent.check()</div>
 </div><!-- fragment --></li>
 </ol>
-<p>The type of output <b>check_result</b> is <b><a class="el" href="classanko_1_1anomaly__detector_1_1_check_result.html">anko.anomaly_detector.CheckResult</a></b>, which is basically a dictionary. </p><blockquote class="doxtable">
+<p>The type of output <b>check_result</b> is <a href="classanko_1_1anomaly__detector_1_1_check_result.html"><b>CheckResult</b></a>, which is basically a dictionary. </p><blockquote class="doxtable">
 <p>model: 'increase_step_func' <br  />
  popt: [220.3243250055105, 249.03846355234577, 74.00000107457113] <br  />
  perr: [0.4247789247961187, 0.7166253174634686, 0.0] <br  />
@@ -152,6 +154,7 @@ Basic Usage</h1>
 <h1><a class="anchor" id="autotoc_md6"></a>
 Run Test (in dev)</h1>
 <div class="fragment"><div class="line">python -m unittest discover -s test -p &#39;*_test.py&#39;</div>
+</div><!-- fragment --><p> or simply </p><div class="fragment"><div class="line">make test</div>
 </div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

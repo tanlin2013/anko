@@ -17,7 +17,7 @@ object \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a014
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}{series}}
 \item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a6387e571cbc3139be0c81c9e450bee1e}{check\+\_\+failed}}
-\item 
+\begin{DoxyCompactList}\small\item\em Boolean value if check failed. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_af31bfbbef59010642ad8a33785504c59}{thres\+\_\+params}}
 \begin{DoxyCompactList}\small\item\em Threshold values for selecting anomalous data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a3ebb5963fc7bf1eeb1425e195473922e}{error\+\_\+code}}
@@ -53,7 +53,7 @@ object \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a014
 {\footnotesize\ttfamily  object anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+check (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-statsdata (dict)\+: 
+check\+\_\+result (\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_check_result}{Check\+Result}})\+: 
 \end{DoxyReturn}
 
 
@@ -70,15 +70,15 @@ Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detecto
 
 
 \begin{DoxyParams}{Parameters}
-{\em scaleless\+\_\+t} & (bool)\+: \\
+{\em scaleless\+\_\+t} & (bool, default True)\+: If True, use np.\+arange(1, len(t)+1) for the fitting. \\
 \hline
-{\em boxcox} & (bool)\+: \\
+{\em boxcox} & (bool, default False)\+: If True, perform log-\/boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method. \\
 \hline
-{\em z\+\_\+normalization} & (bool)\+: If True, apply z-\/score normalization to fitting residual. This parameter is stringly advised to define threshold values \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_af31bfbbef59010642ad8a33785504c59}{Anomaly\+Detector.\+thres\+\_\+params}} scalelessly. \\
+{\em z\+\_\+normalization} & (bool, default True)\+: If True, apply z-\/score normalization to fitting residual. This parameter is stringly advised to define threshold values in \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_af31bfbbef59010642ad8a33785504c59}{Anomaly\+Detector.\+thres\+\_\+params}} scalelessly. \\
 \hline
-{\em info\+\_\+criterion} & (str)\+: Information criterion for selecting fitting ansatzs, allowed fields are \textquotesingle{}A\+IC\textquotesingle{} or \textquotesingle{}B\+IC\textquotesingle{}. \\
+{\em info\+\_\+criterion} & (str, default \textquotesingle{}A\+IC\textquotesingle{})\+: Information criterion for selecting fitting ansatzs, allowed fields are \textquotesingle{}A\+IC\textquotesingle{} or \textquotesingle{}B\+IC\textquotesingle{}. \\
 \hline
-{\em min\+\_\+sample\+\_\+size} & (int)\+: \\
+{\em min\+\_\+sample\+\_\+size} & (int, default 10)\+: Minimum number of data samples to execute \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}}. If provided number of samples is less than this attribute, raise Value\+Error. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_a6387e571cbc3139be0c81c9e450bee1e}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_a6387e571cbc3139be0c81c9e450bee1e}} 
@@ -86,6 +86,10 @@ Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detecto
 \index{check\_failed@{check\_failed}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
 \doxysubsubsection{\texorpdfstring{check\_failed}{check\_failed}}
 {\footnotesize\ttfamily anko.\+anomaly\+\_\+detector.\+Anomaly\+Detector.\+check\+\_\+failed}
+
+
+
+Boolean value if check failed. 
 
 \mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_a3ebb5963fc7bf1eeb1425e195473922e}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_a3ebb5963fc7bf1eeb1425e195473922e}} 
 \index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!error\_code@{error\_code}}
@@ -105,15 +109,15 @@ Models that can be considered by \mbox{\hyperlink{classanko_1_1anomaly__detector
 
 
 \begin{DoxyParams}{Parameters}
-{\em gaussian} & (bool)\+: \\
+{\em gaussian} & (bool, default True)\+: Gaussian (normal) distribution. \\
 \hline
-{\em half\+\_\+gaussian} & (bool)\+: \\
+{\em half\+\_\+gaussian} & (bool, default False)\+: In development, unavailable for now. \\
 \hline
-{\em linear\+\_\+regression} & (bool)\+: \\
+{\em linear\+\_\+regression} & (bool, default True)\+: Linear ansatz. \\
 \hline
-{\em step\+\_\+func} & (bool)\+: \\
+{\em step\+\_\+func} & (bool, default True)\+: Generalize Heaviside step function. \\
 \hline
-{\em exp\+\_\+decay} & (bool)\+: \\
+{\em exp\+\_\+decay} & (bool, default True)\+: Exponential function. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}} 
@@ -140,29 +144,31 @@ Threshold values for selecting anomalous data.
 
 
 \begin{DoxyParams}{Parameters}
-{\em p\+\_\+normality} & (float)\+: default is 1e-\/3 \\
+{\em p\+\_\+normality} & (float, default 5e-\/3)\+: Threshold value for selecting normal distribution, in accordance with the p value of normal test. ~\newline
+ \\
 \hline
-{\em skewness} & (float)\+: default is 20 \\
+{\em normal\+\_\+err} & (float, default 75)\+: Threshold value for selecting normal distribution, in case that fitting towards normal distribution failed and unconverged. \\
 \hline
-{\em normal\+\_\+std\+\_\+width} & (float)\+: default is 3 \\
+{\em normal\+\_\+std\+\_\+width} & (float, default 1.\+5)\+: Threshold width of standard deviation, data points exceed this param will be regarded as anomalous. ~\newline
+ \\
 \hline
-{\em normal\+\_\+std\+\_\+err} & (float)\+: default is 1 \\
+{\em normal\+\_\+std\+\_\+err} & (float, default 1e+1)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em normal\+\_\+err} & (float)\+: default is 1e+1 \\
+{\em linregress\+\_\+std\+\_\+err} & (float, default 1e+1)\+: Threshold value of residual, data points exceed this param will be regarded as anomalous. \\
 \hline
-{\em linregress\+\_\+std\+\_\+err} & (float)\+: default is 1e+1 \\
+{\em linregress\+\_\+res} & (float, default 2)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em linregress\+\_\+res} & (float)\+: default is 1 \\
+{\em step\+\_\+func\+\_\+err} & (float, default 1e+1)\+: Threshold value of residual, data points exceed this param will be regarded as anomalous. \\
 \hline
-{\em step\+\_\+func\+\_\+err} & (float)\+: default is 1e+1 \\
+{\em step\+\_\+func\+\_\+res} & (float, default 2.\+5)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em step\+\_\+func\+\_\+res} & (float)\+: default is 3 \\
+{\em exp\+\_\+decay\+\_\+err} & (float, default 1e+1)\+: Threshold value of residual, data points exceed this param will be regarded as anomalous. \\
 \hline
-{\em exp\+\_\+decay\+\_\+err} & (float)\+: default is 1e+1 \\
+{\em exp\+\_\+decay\+\_\+res} & (float, default 2)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em exp\+\_\+decay\+\_\+res} & (float)\+: default is 3 \\
+{\em skewness} & (float, default 20)\+: Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em min\+\_\+res} & (float)\+: default is 10 \\
+{\em min\+\_\+res} & (float, default 10)\+: Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-\/score normalization towards residual. \\
 \hline
 \end{DoxyParams}
 

@@ -9,9 +9,10 @@ Conventional approaches that based on statistical analysis have been implemented
  Data samples are fitted by several ansatzs, and in accordance with the residual, anomalous data points can be selected.
 \end{DoxyEnumerate}
 
-Regarding model selections, models are adopted dynamically by performing normal test and by computing the (Akaike/\+Bayesian) information criterion.
+Regarding model selections, models are adopted dynamically by performing normal test and by computing the (Akaike/\+Bayesian) information criterion. By default, the algorithm will first try to fit in the data into normal distribution, if it passed \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html}{\texttt{ normal test}}. If this attempt suffers from the loss convergence or it did not pass \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html}{\texttt{ normal test}} from begining, then the algorithm will pass data into the second methods and try to execute all the available fitting ansatzs simultaneously. The best fitting ansatz will be selected by information criterion, and finally the algorithm will pick up anomalous points in accordance with the residual. \href{classanko_1_1anomaly__detector_1_1_anomaly_detector.html\#a019359334795d2f05a730ab00085e5e9}{\texttt{ click here to see all available methods.}} ~\newline
 
-Future development will also include methods that based on density analysis such as k-\/nearest neighbor and other powerful techniques.\hypertarget{index_autotoc_md1}{}\doxysection{Requirements}\label{index_autotoc_md1}
+
+Future development will also include methods that are based on deep learning techniques, such as isolation forest, support vector machine, etc.\hypertarget{index_autotoc_md1}{}\doxysection{Requirements}\label{index_autotoc_md1}
 
 \begin{DoxyItemize}
 \item python $>$= 3.\+6.\+0
@@ -22,7 +23,7 @@ Future development will also include methods that based on density analysis such
 \begin{DoxyCode}{0}
 \DoxyCodeLine{pip install anko}
 \end{DoxyCode}
-\hypertarget{index_autotoc_md3}{}\doxysection{Documentation}\label{index_autotoc_md3}
+ \href{https://pypi.org/project/anko/}{\texttt{ anko on Py\+PI}}\hypertarget{index_autotoc_md3}{}\doxysection{Documentation}\label{index_autotoc_md3}
 \href{https://tanlin2013.github.io/anko/html/index.html}{\texttt{ anko documentation}}\hypertarget{index_autotoc_md4}{}\doxysection{Jupyter Notebook Tutorial (in dev)}\label{index_autotoc_md4}
 \href{https://mybinder.org/v2/gh/tanlin2013/anko/master?filepath=anko_tutorial.ipynb}{\texttt{ Host on mybinder}}\hypertarget{index_autotoc_md5}{}\doxysection{Basic Usage}\label{index_autotoc_md5}
 
@@ -39,7 +40,7 @@ Future development will also include methods that based on density analysis such
 \DoxyCodeLine{agent.apply\_policies["z\_normalization"] = True  }
 \DoxyCodeLine{agent.apply\_policies["info\_criterion"] = 'AIC'}
 \end{DoxyCode}
-
+ for the use of \href{classanko_1_1anomaly__detector_1_1_anomaly_detector.html\#af31bfbbef59010642ad8a33785504c59}{\texttt{ {\bfseries{Anomaly\+Detector.\+thres\+\_\+params}}}} and \href{classanko_1_1anomaly__detector_1_1_anomaly_detector.html\#af58531e67a2d33977a1bdc142b3f0561}{\texttt{ {\bfseries{Anomaly\+Detector.\+apply\+\_\+policies}}}}, please refer to the documentation.
 \item Run check 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{check\_result = agent.check()}
@@ -47,7 +48,7 @@ Future development will also include methods that based on density analysis such
 
 \end{DoxyEnumerate}
 
-The type of output {\bfseries{check\+\_\+result}} is {\bfseries{\mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_check_result}{anko.\+anomaly\+\_\+detector.\+Check\+Result}}}}, which is basically a dictionary. \begin{quote}
+The type of output {\bfseries{check\+\_\+result}} is \href{classanko_1_1anomaly__detector_1_1_check_result.html}{\texttt{ {\bfseries{Check\+Result}}}}, which is basically a dictionary. \begin{quote}
 model\+: \textquotesingle{}increase\+\_\+step\+\_\+func\textquotesingle{} ~\newline
  popt\+: \mbox{[}220.\+3243250055105, 249.\+03846355234577, 74.\+00000107457113\mbox{]} ~\newline
  perr\+: \mbox{[}0.\+4247789247961187, 0.\+7166253174634686, 0.\+0\mbox{]} ~\newline
@@ -59,5 +60,9 @@ model\+: \textquotesingle{}increase\+\_\+step\+\_\+func\textquotesingle{} ~\newl
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{python -\/m unittest discover -\/s test -\/p '*\_test.py'}
+\end{DoxyCode}
+ or simply 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make test}
 \end{DoxyCode}
  

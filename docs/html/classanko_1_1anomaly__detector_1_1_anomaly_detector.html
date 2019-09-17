@@ -123,6 +123,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ac5fd8b681c1a662614281bbd76d5e037"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#ac5fd8b681c1a662614281bbd76d5e037">series</a></td></tr>
 <tr class="separator:ac5fd8b681c1a662614281bbd76d5e037"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6387e571cbc3139be0c81c9e450bee1e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a6387e571cbc3139be0c81c9e450bee1e">check_failed</a></td></tr>
+<tr class="memdesc:a6387e571cbc3139be0c81c9e450bee1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boolean value if check failed.  <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a6387e571cbc3139be0c81c9e450bee1e">More...</a><br /></td></tr>
 <tr class="separator:a6387e571cbc3139be0c81c9e450bee1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af31bfbbef59010642ad8a33785504c59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59">thres_params</a></td></tr>
 <tr class="memdesc:af31bfbbef59010642ad8a33785504c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Threshold values for selecting anomalous data.  <a href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59">More...</a><br /></td></tr>
@@ -192,7 +193,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>statsdata (dict): </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>check_result (<a class="el" href="classanko_1_1anomaly__detector_1_1_check_result.html">CheckResult</a>): </dd></dl>
 
 </div>
 </div>
@@ -212,11 +213,11 @@ Public Attributes</h2></td></tr>
 <p>Policies for <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a> to follow with. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">scaleless_t</td><td>(bool): </td></tr>
-    <tr><td class="paramname">boxcox</td><td>(bool): </td></tr>
-    <tr><td class="paramname">z_normalization</td><td>(bool): If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59" title="Threshold values for selecting anomalous data.">AnomalyDetector.thres_params</a> scalelessly. </td></tr>
-    <tr><td class="paramname">info_criterion</td><td>(str): Information criterion for selecting fitting ansatzs, allowed fields are 'AIC' or 'BIC'. </td></tr>
-    <tr><td class="paramname">min_sample_size</td><td>(int): </td></tr>
+    <tr><td class="paramname">scaleless_t</td><td>(bool, default True): If True, use np.arange(1, len(t)+1) for the fitting. </td></tr>
+    <tr><td class="paramname">boxcox</td><td>(bool, default False): If True, perform log-boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method. </td></tr>
+    <tr><td class="paramname">z_normalization</td><td>(bool, default True): If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values in <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59" title="Threshold values for selecting anomalous data.">AnomalyDetector.thres_params</a> scalelessly. </td></tr>
+    <tr><td class="paramname">info_criterion</td><td>(str, default 'AIC'): Information criterion for selecting fitting ansatzs, allowed fields are 'AIC' or 'BIC'. </td></tr>
+    <tr><td class="paramname">min_sample_size</td><td>(int, default 10): Minimum number of data samples to execute <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a>. If provided number of samples is less than this attribute, raise ValueError. </td></tr>
   </table>
   </dd>
 </dl>
@@ -234,6 +235,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Boolean value if check failed. </p>
 
 </div>
 </div>
@@ -266,11 +269,11 @@ Public Attributes</h2></td></tr>
 <p>Models that can be considered by <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gaussian</td><td>(bool): </td></tr>
-    <tr><td class="paramname">half_gaussian</td><td>(bool): </td></tr>
-    <tr><td class="paramname">linear_regression</td><td>(bool): </td></tr>
-    <tr><td class="paramname">step_func</td><td>(bool): </td></tr>
-    <tr><td class="paramname">exp_decay</td><td>(bool): </td></tr>
+    <tr><td class="paramname">gaussian</td><td>(bool, default True): Gaussian (normal) distribution. </td></tr>
+    <tr><td class="paramname">half_gaussian</td><td>(bool, default False): In development, unavailable for now. </td></tr>
+    <tr><td class="paramname">linear_regression</td><td>(bool, default True): Linear ansatz. </td></tr>
+    <tr><td class="paramname">step_func</td><td>(bool, default True): Generalize Heaviside step function. </td></tr>
+    <tr><td class="paramname">exp_decay</td><td>(bool, default True): Exponential function. </td></tr>
   </table>
   </dd>
 </dl>
@@ -320,18 +323,20 @@ Public Attributes</h2></td></tr>
 <p>Threshold values for selecting anomalous data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p_normality</td><td>(float): default is 1e-3 </td></tr>
-    <tr><td class="paramname">skewness</td><td>(float): default is 20 </td></tr>
-    <tr><td class="paramname">normal_std_width</td><td>(float): default is 3 </td></tr>
-    <tr><td class="paramname">normal_std_err</td><td>(float): default is 1 </td></tr>
-    <tr><td class="paramname">normal_err</td><td>(float): default is 1e+1 </td></tr>
-    <tr><td class="paramname">linregress_std_err</td><td>(float): default is 1e+1 </td></tr>
-    <tr><td class="paramname">linregress_res</td><td>(float): default is 1 </td></tr>
-    <tr><td class="paramname">step_func_err</td><td>(float): default is 1e+1 </td></tr>
-    <tr><td class="paramname">step_func_res</td><td>(float): default is 3 </td></tr>
-    <tr><td class="paramname">exp_decay_err</td><td>(float): default is 1e+1 </td></tr>
-    <tr><td class="paramname">exp_decay_res</td><td>(float): default is 3 </td></tr>
-    <tr><td class="paramname">min_res</td><td>(float): default is 10 </td></tr>
+    <tr><td class="paramname">p_normality</td><td>(float, default 5e-3): Threshold value for selecting normal distribution, in accordance with the p value of normal test. <br  />
+ </td></tr>
+    <tr><td class="paramname">normal_err</td><td>(float, default 75): Threshold value for selecting normal distribution, in case that fitting towards normal distribution failed and unconverged. </td></tr>
+    <tr><td class="paramname">normal_std_width</td><td>(float, default 1.5): Threshold width of standard deviation, data points exceed this param will be regarded as anomalous. <br  />
+ </td></tr>
+    <tr><td class="paramname">normal_std_err</td><td>(float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
+    <tr><td class="paramname">linregress_std_err</td><td>(float, default 1e+1): Threshold value of residual, data points exceed this param will be regarded as anomalous. </td></tr>
+    <tr><td class="paramname">linregress_res</td><td>(float, default 2): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
+    <tr><td class="paramname">step_func_err</td><td>(float, default 1e+1): Threshold value of residual, data points exceed this param will be regarded as anomalous. </td></tr>
+    <tr><td class="paramname">step_func_res</td><td>(float, default 2.5): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
+    <tr><td class="paramname">exp_decay_err</td><td>(float, default 1e+1): Threshold value of residual, data points exceed this param will be regarded as anomalous. </td></tr>
+    <tr><td class="paramname">exp_decay_res</td><td>(float, default 2): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
+    <tr><td class="paramname">skewness</td><td>(float, default 20): Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info. </td></tr>
+    <tr><td class="paramname">min_res</td><td>(float, default 10): Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalization towards residual. </td></tr>
   </table>
   </dd>
 </dl>
