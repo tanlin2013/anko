@@ -147,28 +147,28 @@ Threshold values for selecting anomalous data.
 {\em p\+\_\+normality} & (float, default 5e-\/3)\+: Threshold value for selecting normal distribution, in accordance with the p value of normal test. ~\newline
  \\
 \hline
-{\em normal\+\_\+err} & (float, default 75)\+: Threshold value for selecting normal distribution, in case that fitting towards normal distribution failed and unconverged. \\
+{\em normal\+\_\+err} & (float, default 75)\+: Threshold value for selecting normal distribution, in case that fitting on normal distribution failed and unconverged. \\
 \hline
 {\em normal\+\_\+std\+\_\+width} & (float, default 1.\+5)\+: Threshold width of standard deviation, data points exceed this param will be regarded as anomalous. ~\newline
  \\
 \hline
 {\em normal\+\_\+std\+\_\+err} & (float, default 1e+1)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em linregress\+\_\+std\+\_\+err} & (float, default 1e+1)\+: Threshold value of residual, data points exceed this param will be regarded as anomalous. \\
+{\em linregress\+\_\+std\+\_\+err} & (float, default 1e+1)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em linregress\+\_\+res} & (float, default 2)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
+{\em linregress\+\_\+res} & (float, default 2)\+: Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous. \\
 \hline
-{\em step\+\_\+func\+\_\+err} & (float, default 1e+1)\+: Threshold value of residual, data points exceed this param will be regarded as anomalous. \\
+{\em step\+\_\+func\+\_\+err} & (float, default 1e+1)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em step\+\_\+func\+\_\+res} & (float, default 2.\+5)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
+{\em step\+\_\+func\+\_\+res} & (float, default 2.\+5)\+: Threshold value of residual for general step function, data points exceed this param will be regarded as anomalous. \\
 \hline
-{\em exp\+\_\+decay\+\_\+err} & (float, default 1e+1)\+: Threshold value of residual, data points exceed this param will be regarded as anomalous. \\
+{\em exp\+\_\+decay\+\_\+err} & (float, default 1e+1)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em exp\+\_\+decay\+\_\+res} & (float, default 2)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
+{\em exp\+\_\+decay\+\_\+res} & (float, default 2)\+: Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous. \\
 \hline
 {\em skewness} & (float, default 20)\+: Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em min\+\_\+res} & (float, default 10)\+: Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-\/score normalization towards residual. \\
+{\em min\+\_\+res} & (float, default 10)\+: Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-\/score normalizing the residual. \\
 \hline
 \end{DoxyParams}
 

@@ -36,17 +36,17 @@ class AnomalyDetector:
         self.check_failed = True   
         ## Threshold values for selecting anomalous data.
         ## @param p_normality (float, default 5e-3): Threshold value for selecting normal distribution, in accordance with the p value of normal test.  
-        ## @param normal_err (float, default 75): Threshold value for selecting normal distribution, in case that fitting towards normal distribution failed and unconverged.
+        ## @param normal_err (float, default 75): Threshold value for selecting normal distribution, in case that fitting on normal distribution failed and unconverged.
         ## @param normal_std_width (float, default 1.5): Threshold width of standard deviation, data points exceed this param will be regarded as anomalous.  
         ## @param normal_std_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
-        ## @param linregress_std_err (float, default 1e+1): Threshold value of residual, data points exceed this param will be regarded as anomalous.
-        ## @param linregress_res (float, default 2): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
-        ## @param step_func_err (float, default 1e+1): Threshold value of residual, data points exceed this param will be regarded as anomalous.
-        ## @param step_func_res (float, default 2.5): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
-        ## @param exp_decay_err (float, default 1e+1): Threshold value of residual, data points exceed this param will be regarded as anomalous.
-        ## @param exp_decay_res (float, default 2): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
+        ## @param linregress_std_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
+        ## @param linregress_res (float, default 2): Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous.
+        ## @param step_func_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
+        ## @param step_func_res (float, default 2.5): Threshold value of residual for general step function, data points exceed this param will be regarded as anomalous.
+        ## @param exp_decay_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
+        ## @param exp_decay_res (float, default 2): Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous.
         ## @param skewness (float, default 20): Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info.
-        ## @param min_res (float, default 10): Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalization towards residual.
+        ## @param min_res (float, default 10): Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalizing the residual.
         self.thres_params = {
                 "p_normality": 5e-3,
                 "normal_err": 75,

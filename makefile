@@ -6,7 +6,7 @@ install: clean-build
 	python setup.py install
 
 test:
-	python -m unittest discover -s ./test -p '*_test.py'
+	python -m unittest discover -s test -p '*_test.py'
 
 doc:
 	doxygen Doxyfile

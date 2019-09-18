@@ -326,18 +326,18 @@ Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">p_normality</td><td>(float, default 5e-3): Threshold value for selecting normal distribution, in accordance with the p value of normal test. <br  />
  </td></tr>
-    <tr><td class="paramname">normal_err</td><td>(float, default 75): Threshold value for selecting normal distribution, in case that fitting towards normal distribution failed and unconverged. </td></tr>
+    <tr><td class="paramname">normal_err</td><td>(float, default 75): Threshold value for selecting normal distribution, in case that fitting on normal distribution failed and unconverged. </td></tr>
     <tr><td class="paramname">normal_std_width</td><td>(float, default 1.5): Threshold width of standard deviation, data points exceed this param will be regarded as anomalous. <br  />
  </td></tr>
     <tr><td class="paramname">normal_std_err</td><td>(float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
-    <tr><td class="paramname">linregress_std_err</td><td>(float, default 1e+1): Threshold value of residual, data points exceed this param will be regarded as anomalous. </td></tr>
-    <tr><td class="paramname">linregress_res</td><td>(float, default 2): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
-    <tr><td class="paramname">step_func_err</td><td>(float, default 1e+1): Threshold value of residual, data points exceed this param will be regarded as anomalous. </td></tr>
-    <tr><td class="paramname">step_func_res</td><td>(float, default 2.5): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
-    <tr><td class="paramname">exp_decay_err</td><td>(float, default 1e+1): Threshold value of residual, data points exceed this param will be regarded as anomalous. </td></tr>
-    <tr><td class="paramname">exp_decay_res</td><td>(float, default 2): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
+    <tr><td class="paramname">linregress_std_err</td><td>(float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
+    <tr><td class="paramname">linregress_res</td><td>(float, default 2): Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous. </td></tr>
+    <tr><td class="paramname">step_func_err</td><td>(float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
+    <tr><td class="paramname">step_func_res</td><td>(float, default 2.5): Threshold value of residual for general step function, data points exceed this param will be regarded as anomalous. </td></tr>
+    <tr><td class="paramname">exp_decay_err</td><td>(float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
+    <tr><td class="paramname">exp_decay_res</td><td>(float, default 2): Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous. </td></tr>
     <tr><td class="paramname">skewness</td><td>(float, default 20): Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info. </td></tr>
-    <tr><td class="paramname">min_res</td><td>(float, default 10): Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalization towards residual. </td></tr>
+    <tr><td class="paramname">min_res</td><td>(float, default 10): Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalizing the residual. </td></tr>
   </table>
   </dd>
 </dl>
