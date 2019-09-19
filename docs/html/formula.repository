@@ -29,3 +29,9 @@
 \form#28:\begin{equation*} \frac{dx}{dt} = 0. \end{equation*}
 \form#29:\begin{equation*} y = x - \mu = 0. \end{equation*}
 \form#30:\begin{equation*} x - \mu = 0. \end{equation*}
+\form#31:$ x >= 0 $
+\form#32:\begin{equation*} y = a \exp\left(\frac{-\left(x-x_0\right)^2}{2\sigma^2}\right) \end{equation*}
+\form#33:\begin{equation*} y = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right) \end{equation*}
+\form#34:\begin{equation*} y = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right). \end{equation*}
+\form#35:\begin{equation*} f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right). \end{equation*}
+\form#36:\begin{equation*} f(x) = intercept + slope \times x. \end{equation*}

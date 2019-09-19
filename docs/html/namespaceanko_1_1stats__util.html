@@ -384,7 +384,7 @@ This will perform a linear regression fitting.</p>
 </div><div class="memdoc">
 
 <p>Calculate the exponential function of input array x. </p>
-<p>Note that Domain of x &gt;= 0.</p>
+<p>Note that domain of x &gt;= 0.</p>
 <p class="formulaDsp">
 <img class="formulaDsp" alt="\begin{equation*} f(x) = a\exp\left(-\alpha x\right). \end{equation*}" src="form_13.png"/>
 </p>
@@ -912,7 +912,7 @@ vals: Number of appearance for each key in keys. </dd></dl>
 
 <p>Fitting linear ansatz for input data (x, y). </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\begin{equation*} y = intercept + slope \times x. \end{equation*}" src="form_8.png"/>
+<img class="formulaDsp" alt="\begin{equation*} f(x) = intercept + slope \times x. \end{equation*}" src="form_36.png"/>
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -973,6 +973,9 @@ std_err (float): Standard error of the estimated gradient. </dd></dl>
 </div><div class="memdoc">
 
 <p>Calculate normal distribution of input array x. </p>
+<p class="formulaDsp">
+<img class="formulaDsp" alt="\begin{equation*} f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right). \end{equation*}" src="form_35.png"/>
+</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>(numpy.ndarray): Input values. </td></tr>

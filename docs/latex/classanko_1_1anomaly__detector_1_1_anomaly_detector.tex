@@ -108,19 +108,25 @@ Boolean value if check failed.
 Models that can be considered by \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}}. 
 
 
+\begin{DoxyItemize}
+\item Gaussian (Normal) Distribution \begin{equation*} f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right). \end{equation*}
+\item Linear Regression \begin{equation*} f(x) = intercept + slope \times x. \end{equation*}
+\item Step Function \begin{equation*} f(x) = \begin{cases} a, & x < x_0, \\ \frac{a+b}{2}, & x = x_0, \\ b, & x > x_0. \end{cases} \end{equation*}
+\item Exponential Decay \begin{equation*} f(x) = a\exp\left(-\alpha x\right). \end{equation*} 
 \begin{DoxyParams}{Parameters}
-{\em gaussian} & (bool, default True)\+: Gaussian (normal) distribution. \\
+{\em gaussian} & (bool, default True)\+: Gaussian (normal) distribution. Define in \mbox{\hyperlink{namespaceanko_1_1stats__util_a043c3334f258dda9e528ab8a51ea053b}{stats\+\_\+util.\+normal\+\_\+distr}}. \\
 \hline
 {\em half\+\_\+gaussian} & (bool, default False)\+: In development, unavailable for now. \\
 \hline
 {\em linear\+\_\+regression} & (bool, default True)\+: Linear ansatz. \\
 \hline
-{\em step\+\_\+func} & (bool, default True)\+: Generalize Heaviside step function. \\
+{\em step\+\_\+func} & (bool, default True)\+: Generalize Heaviside step function. Define in \mbox{\hyperlink{namespaceanko_1_1stats__util_a9e0f971311c5d1013a90795d2427091c}{stats\+\_\+util.\+general\+\_\+erf}}. \\
 \hline
-{\em exp\+\_\+decay} & (bool, default True)\+: Exponential function. \\
+{\em exp\+\_\+decay} & (bool, default True)\+: Exponential function. Define in \mbox{\hyperlink{namespaceanko_1_1stats__util_aa196811391f6401b6fec78c1fd7054ed}{stats\+\_\+util.\+exp\+\_\+decay}}. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}} 
+
+\end{DoxyItemize}\mbox{\Hypertarget{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}\label{classanko_1_1anomaly__detector_1_1_anomaly_detector_ac5fd8b681c1a662614281bbd76d5e037}} 
 \index{anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}!series@{series}}
 \index{series@{series}!anko.anomaly\_detector.AnomalyDetector@{anko.anomaly\_detector.AnomalyDetector}}
 \doxysubsubsection{\texorpdfstring{series}{series}}

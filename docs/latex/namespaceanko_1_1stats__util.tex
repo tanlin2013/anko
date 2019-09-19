@@ -151,7 +151,7 @@ idx (numpy.\+ndarray)\+: Indices of discontinuous points in input array x.
 
 Calculate the exponential function of input array x. 
 
-Note that Domain of x $>$= 0.
+Note that domain of x $>$= 0.
 
 \begin{equation*} f(x) = a\exp\left(-\alpha x\right). \end{equation*}
 
@@ -418,7 +418,7 @@ out (numpy.\+ndarray)\+: Output array.
 
 Fitting linear ansatz for input data (x, y). 
 
-\begin{equation*} y = intercept + slope \times x. \end{equation*}
+\begin{equation*} f(x) = intercept + slope \times x. \end{equation*}
 
 
 \begin{DoxyParams}{Parameters}
@@ -448,6 +448,8 @@ std\+\_\+err (float)\+: Standard error of the estimated gradient.
 
 
 Calculate normal distribution of input array x. 
+
+\begin{equation*} f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right). \end{equation*}
 
 
 \begin{DoxyParams}{Parameters}

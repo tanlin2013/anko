@@ -268,16 +268,34 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Models that can be considered by <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<ul>
+<li>Gaussian (Normal) Distribution <p class="formulaDsp">
+<img class="formulaDsp" alt="\begin{equation*} f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right). \end{equation*}" src="form_35.png"/>
+</p>
+</li>
+<li>Linear Regression <p class="formulaDsp">
+<img class="formulaDsp" alt="\begin{equation*} f(x) = intercept + slope \times x. \end{equation*}" src="form_36.png"/>
+</p>
+</li>
+<li>Step Function <p class="formulaDsp">
+<img class="formulaDsp" alt="\begin{equation*} f(x) = \begin{cases} a, &amp; x &lt; x_0, \\ \frac{a+b}{2}, &amp; x = x_0, \\ b, &amp; x &gt; x_0. \end{cases} \end{equation*}" src="form_9.png"/>
+</p>
+</li>
+<li>Exponential Decay <p class="formulaDsp">
+<img class="formulaDsp" alt="\begin{equation*} f(x) = a\exp\left(-\alpha x\right). \end{equation*}" src="form_13.png"/>
+</p>
+ <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gaussian</td><td>(bool, default True): Gaussian (normal) distribution. </td></tr>
+    <tr><td class="paramname">gaussian</td><td>(bool, default True): Gaussian (normal) distribution. Define in <a class="el" href="namespaceanko_1_1stats__util.html#a043c3334f258dda9e528ab8a51ea053b" title="Calculate normal distribution of input array x.">stats_util.normal_distr</a>. </td></tr>
     <tr><td class="paramname">half_gaussian</td><td>(bool, default False): In development, unavailable for now. </td></tr>
     <tr><td class="paramname">linear_regression</td><td>(bool, default True): Linear ansatz. </td></tr>
-    <tr><td class="paramname">step_func</td><td>(bool, default True): Generalize Heaviside step function. </td></tr>
-    <tr><td class="paramname">exp_decay</td><td>(bool, default True): Exponential function. </td></tr>
+    <tr><td class="paramname">step_func</td><td>(bool, default True): Generalize Heaviside step function. Define in <a class="el" href="namespaceanko_1_1stats__util.html#a9e0f971311c5d1013a90795d2427091c" title="Calculate the generalize error function of input array x.">stats_util.general_erf</a>. </td></tr>
+    <tr><td class="paramname">exp_decay</td><td>(bool, default True): Exponential function. Define in <a class="el" href="namespaceanko_1_1stats__util.html#aa196811391f6401b6fec78c1fd7054ed" title="Calculate the exponential function of input array x.">stats_util.exp_decay</a>. </td></tr>
   </table>
   </dd>
 </dl>
+</li>
+</ul>
 
 </div>
 </div>

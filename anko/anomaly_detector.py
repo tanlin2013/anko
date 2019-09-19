@@ -74,11 +74,32 @@ class AnomalyDetector:
                 "-9": "Info: There are more than %d discontinuous points detected."
         }
         ## Models that can be considered by AnomalyDetector.
-        ## @param gaussian (bool, default True): Gaussian (normal) distribution.
+        ## - Gaussian (Normal) Distribution
+        ##      \f{equation*}{
+        ##          f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right).
+        ##      \f}
+        ## - Linear Regression
+        ##      \f{equation*}{
+        ##          f(x) = intercept + slope \times x.
+        ##      \f}
+        ## - Step Function
+        ##      \f{equation*}{
+        ##           f(x) = 
+        ##           \begin{cases}
+        ##               a, & x < x_0, \\
+        ##               \frac{a+b}{2}, & x = x_0, \\
+        ##               b, & x > x_0.
+        ##           \end{cases}
+        ##      \f}
+        ## - Exponential Decay
+        ##      \f{equation*}{
+        ##            f(x) = a\exp\left(-\alpha x\right). 
+        ##      \f}
+        ## @param gaussian (bool, default True): Gaussian (normal) distribution. Define in stats_util.normal_distr.
         ## @param half_gaussian (bool, default False): In development, unavailable for now.
         ## @param linear_regression (bool, default True): Linear ansatz.
-        ## @param step_func (bool, default True): Generalize Heaviside step function.
-        ## @param exp_decay (bool, default True): Exponential function.
+        ## @param step_func (bool, default True): Generalize Heaviside step function. Define in stats_util.general_erf.
+        ## @param exp_decay (bool, default True): Exponential function. Define in stats_util.exp_decay.
         self.models = {
                 "gaussian": True, 
                 "half_gaussian": False, 
@@ -290,6 +311,18 @@ class AnomalyDetector:
                 extra_info=msgs
         )
         return check_result
+
+    def _popt_dictionize(self, model_id, popt):
+        if model_id == 'gaussian':
+            popt_type = np.dtype([('a',float), ('mean',float), ('std',float)])
+        elif model_id == 'linear_regression':
+            popt_type = np.dtype([('intercept',float), ('slope',float)])
+        elif model_id == 'step_func':
+            popt_type = np.dtype([('a',float), ('b',float), ('x0',float)])
+        elif model_id == 'exp_decay':
+            popt_type = np.dtype([('a',float), ('alpha',float)])
+        struc_popt = popt.view(dtype=popt_type)
+        return [dict(zip(struc_popt.dtype.names,i)) for i in struc_popt][0]
 
 class CheckResult(dict):
     

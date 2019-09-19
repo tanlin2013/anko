@@ -27,6 +27,10 @@ def normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray
     """!
     Calculate normal distribution of input array x.
     
+    \f{equation*}{
+            f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right).
+    \f}
+    
     @param x (numpy.ndarray): Input values.
     @param a (float): Overall normalization constant.
     @param x0 (float): Mean.
@@ -116,7 +120,7 @@ def linear_regression(x: np.ndarray, y: np.ndarray):
     Fitting linear ansatz for input data (x, y). 
     
     \f{equation*}{
-            y = intercept + slope \times x.
+            f(x) = intercept + slope \times x.
     \f}
     
     @param x (numpy.ndarray): x coordinate of input data points. 
@@ -150,6 +154,7 @@ def data_is_linear(x: np.ndarray, y: np.ndarray, std_err_th: float=1e-2) -> bool
     else:
         return False
 
+# TODO: rename to sgn
 def general_erf(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
     """!
     Calculate the generalize error function of input array x.
@@ -233,7 +238,7 @@ def general_erf_fit(x: np.ndarray, y: np.ndarray, three_stair: bool=False, maxfe
 
 def exp_decay(x: np.ndarray, a: float, alpha: float) -> np.ndarray:
     """!
-    Calculate the exponential function of input array x. Note that Domain of x >= 0.
+    Calculate the exponential function of input array x. Note that domain of x >= 0.
     
     \f{equation*}{
            f(x) = a\exp\left(-\alpha x\right). 
