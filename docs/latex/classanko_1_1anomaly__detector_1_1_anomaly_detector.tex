@@ -78,6 +78,8 @@ Policies for \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detecto
 \hline
 {\em info\+\_\+criterion} & (str, default \textquotesingle{}A\+IC\textquotesingle{})\+: Information criterion for selecting fitting ansatzs, allowed fields are \textquotesingle{}A\+IC\textquotesingle{} or \textquotesingle{}B\+IC\textquotesingle{}. \\
 \hline
+{\em full\+\_\+return} & (bool, default True)\+: If True, return named dictionary for fitting parameters, eilse return list of fitting parameters in the order that can be found in \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector_a019359334795d2f05a730ab00085e5e9}{Anomaly\+Detector.\+models}}. \\
+\hline
 {\em min\+\_\+sample\+\_\+size} & (int, default 10)\+: Minimum number of data samples to execute \mbox{\hyperlink{classanko_1_1anomaly__detector_1_1_anomaly_detector}{Anomaly\+Detector}}. If provided number of samples is less than this attribute, raise Value\+Error. \\
 \hline
 \end{DoxyParams}
@@ -120,7 +122,7 @@ Models that can be considered by \mbox{\hyperlink{classanko_1_1anomaly__detector
 \hline
 {\em linear\+\_\+regression} & (bool, default True)\+: Linear ansatz. \\
 \hline
-{\em step\+\_\+func} & (bool, default True)\+: Generalize Heaviside step function. Define in \mbox{\hyperlink{namespaceanko_1_1stats__util_a9e0f971311c5d1013a90795d2427091c}{stats\+\_\+util.\+general\+\_\+erf}}. \\
+{\em step\+\_\+func} & (bool, default True)\+: Generalize Heaviside step function. Define in \mbox{\hyperlink{namespaceanko_1_1stats__util_ac87998526bab447820838b2e92055519}{stats\+\_\+util.\+general\+\_\+sgn}}. \\
 \hline
 {\em exp\+\_\+decay} & (bool, default True)\+: Exponential function. Define in \mbox{\hyperlink{namespaceanko_1_1stats__util_aa196811391f6401b6fec78c1fd7054ed}{stats\+\_\+util.\+exp\+\_\+decay}}. \\
 \hline
@@ -166,7 +168,7 @@ Threshold values for selecting anomalous data.
 \hline
 {\em step\+\_\+func\+\_\+err} & (float, default 1e+1)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline
-{\em step\+\_\+func\+\_\+res} & (float, default 2.\+5)\+: Threshold value of residual for general step function, data points exceed this param will be regarded as anomalous. \\
+{\em step\+\_\+func\+\_\+res} & (float, default 2.\+5)\+: Threshold value of residual for general sign function, data points exceed this param will be regarded as anomalous. \\
 \hline
 {\em exp\+\_\+decay\+\_\+err} & (float, default 1e+1)\+: Maximum tolerence of convergence. If fitting error is larger than this param, pass Convergence\+Error to Check\+Result.\+extra\+\_\+info. \\
 \hline

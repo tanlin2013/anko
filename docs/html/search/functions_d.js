@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['three_5fstair_5ferf_75',['three_stair_erf',['../namespaceanko_1_1stats__util.html#a2efdfc173ad6b38025bfd48da53f160a',1,'anko::stats_util']]]
+  ['three_5fstair_5fsgn_75',['three_stair_sgn',['../namespaceanko_1_1stats__util.html#a9faedc02c2cb8460f34c743951e716aa',1,'anko::stats_util']]]
 ];

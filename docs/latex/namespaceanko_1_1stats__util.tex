@@ -19,12 +19,12 @@ def \mbox{\hyperlink{namespaceanko_1_1stats__util_a15eb3a4bb50aa7e2825e03c741684
 \begin{DoxyCompactList}\small\item\em Fitting linear ansatz for input data (x, y). \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{namespaceanko_1_1stats__util_ad350eac604ebf2d6d3c42f4753d882de}{data\+\_\+is\+\_\+linear}} (np.\+ndarray x, np.\+ndarray y, float std\+\_\+err\+\_\+th=1e-\/2)
 \begin{DoxyCompactList}\small\item\em Check whether the data (x, y) is linear under the given tolerance. \end{DoxyCompactList}\item 
-np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a9e0f971311c5d1013a90795d2427091c}{general\+\_\+erf}} (np.\+ndarray x, float a, float b, float x0)
-\begin{DoxyCompactList}\small\item\em Calculate the generalize error function of input array x. \end{DoxyCompactList}\item 
-np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a2efdfc173ad6b38025bfd48da53f160a}{three\+\_\+stair\+\_\+erf}} (np.\+ndarray x, float c0, float c1, float c2, float x1, float x2)
-\begin{DoxyCompactList}\small\item\em Calculate the generalize error function with three stairs for input array x. \end{DoxyCompactList}\item 
-def \mbox{\hyperlink{namespaceanko_1_1stats__util_a4f434d24322b90d1d03cf689847ea76a}{general\+\_\+erf\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, bool three\+\_\+stair=False, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
-\begin{DoxyCompactList}\small\item\em Fitting generalize error function for input data (x, y). \end{DoxyCompactList}\item 
+np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_ac87998526bab447820838b2e92055519}{general\+\_\+sgn}} (np.\+ndarray x, float a, float b, float x0)
+\begin{DoxyCompactList}\small\item\em Calculate the generalize sign function of input array x. \end{DoxyCompactList}\item 
+np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_a9faedc02c2cb8460f34c743951e716aa}{three\+\_\+stair\+\_\+sgn}} (np.\+ndarray x, float c0, float c1, float c2, float x1, float x2)
+\begin{DoxyCompactList}\small\item\em Calculate the generalize sign function with three stairs for input array x. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceanko_1_1stats__util_a7206dfe47b2b5b3f9ce180f2fa2a20c1}{general\+\_\+sgn\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, bool three\+\_\+stair=False, int maxfev=2000, bounds=\mbox{[}0, 1e+6\mbox{]})
+\begin{DoxyCompactList}\small\item\em Fitting generalize sign function for input data (x, y). \end{DoxyCompactList}\item 
 np.\+ndarray \mbox{\hyperlink{namespaceanko_1_1stats__util_aa196811391f6401b6fec78c1fd7054ed}{exp\+\_\+decay}} (np.\+ndarray x, float a, float alpha)
 \begin{DoxyCompactList}\small\item\em Calculate the exponential function of input array x. \end{DoxyCompactList}\item 
 def \mbox{\hyperlink{namespaceanko_1_1stats__util_a4ae884cfdb74b45070f1c07b2f9527b1}{exp\+\_\+decay\+\_\+fit}} (np.\+ndarray x, np.\+ndarray y, str mode=\textquotesingle{}log-\/linregress\textquotesingle{}, int maxfev=2000, bounds=\mbox{[}-\/1e-\/6, 1e+6\mbox{]})
@@ -284,15 +284,15 @@ popt (numpy.\+ndarray)\+: Estimate value of a, x0 and sigma of Gaussian distribu
 
 perr (numpy.\+ndarray)\+: Error of popt. Defined by the square of diagonal element of covariance matrix. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_a9e0f971311c5d1013a90795d2427091c}\label{namespaceanko_1_1stats__util_a9e0f971311c5d1013a90795d2427091c}} 
-\index{anko.stats\_util@{anko.stats\_util}!general\_erf@{general\_erf}}
-\index{general\_erf@{general\_erf}!anko.stats\_util@{anko.stats\_util}}
-\doxysubsubsection{\texorpdfstring{general\_erf()}{general\_erf()}}
-{\footnotesize\ttfamily  np.\+ndarray anko.\+stats\+\_\+util.\+general\+\_\+erf (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{float}]{a,  }\item[{float}]{b,  }\item[{float}]{x0 }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_ac87998526bab447820838b2e92055519}\label{namespaceanko_1_1stats__util_ac87998526bab447820838b2e92055519}} 
+\index{anko.stats\_util@{anko.stats\_util}!general\_sgn@{general\_sgn}}
+\index{general\_sgn@{general\_sgn}!anko.stats\_util@{anko.stats\_util}}
+\doxysubsubsection{\texorpdfstring{general\_sgn()}{general\_sgn()}}
+{\footnotesize\ttfamily  np.\+ndarray anko.\+stats\+\_\+util.\+general\+\_\+sgn (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{float}]{a,  }\item[{float}]{b,  }\item[{float}]{x0 }\end{DoxyParamCaption})}
 
 
 
-Calculate the generalize error function of input array x. 
+Calculate the generalize sign function of input array x. 
 
 \begin{equation*} f(x) = \begin{cases} a, & x < x_0, \\ \frac{a+b}{2}, & x = x_0, \\ b, & x > x_0. \end{cases} \end{equation*}
 
@@ -310,15 +310,15 @@ Calculate the generalize error function of input array x.
 \begin{DoxyReturn}{Returns}
 out (numpy.\+ndarray)\+: Output array. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_a4f434d24322b90d1d03cf689847ea76a}\label{namespaceanko_1_1stats__util_a4f434d24322b90d1d03cf689847ea76a}} 
-\index{anko.stats\_util@{anko.stats\_util}!general\_erf\_fit@{general\_erf\_fit}}
-\index{general\_erf\_fit@{general\_erf\_fit}!anko.stats\_util@{anko.stats\_util}}
-\doxysubsubsection{\texorpdfstring{general\_erf\_fit()}{general\_erf\_fit()}}
-{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+general\+\_\+erf\+\_\+fit (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{np.\+ndarray}]{y,  }\item[{bool}]{three\+\_\+stair = {\ttfamily False},  }\item[{int}]{maxfev = {\ttfamily 2000},  }\item[{}]{bounds = {\ttfamily \mbox{[}0,1e+6\mbox{]}} }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_a7206dfe47b2b5b3f9ce180f2fa2a20c1}\label{namespaceanko_1_1stats__util_a7206dfe47b2b5b3f9ce180f2fa2a20c1}} 
+\index{anko.stats\_util@{anko.stats\_util}!general\_sgn\_fit@{general\_sgn\_fit}}
+\index{general\_sgn\_fit@{general\_sgn\_fit}!anko.stats\_util@{anko.stats\_util}}
+\doxysubsubsection{\texorpdfstring{general\_sgn\_fit()}{general\_sgn\_fit()}}
+{\footnotesize\ttfamily def anko.\+stats\+\_\+util.\+general\+\_\+sgn\+\_\+fit (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{np.\+ndarray}]{y,  }\item[{bool}]{three\+\_\+stair = {\ttfamily False},  }\item[{int}]{maxfev = {\ttfamily 2000},  }\item[{}]{bounds = {\ttfamily \mbox{[}0,1e+6\mbox{]}} }\end{DoxyParamCaption})}
 
 
 
-Fitting generalize error function for input data (x, y). 
+Fitting generalize sign function for input data (x, y). 
 
 
 \begin{DoxyParams}{Parameters}
@@ -505,15 +505,15 @@ out (numpy.\+ndarray)\+: Output array.
 \begin{DoxyReturn}{Returns}
 sm (numpy.\+ndarray)\+: 
 \end{DoxyReturn}
-\mbox{\Hypertarget{namespaceanko_1_1stats__util_a2efdfc173ad6b38025bfd48da53f160a}\label{namespaceanko_1_1stats__util_a2efdfc173ad6b38025bfd48da53f160a}} 
-\index{anko.stats\_util@{anko.stats\_util}!three\_stair\_erf@{three\_stair\_erf}}
-\index{three\_stair\_erf@{three\_stair\_erf}!anko.stats\_util@{anko.stats\_util}}
-\doxysubsubsection{\texorpdfstring{three\_stair\_erf()}{three\_stair\_erf()}}
-{\footnotesize\ttfamily  np.\+ndarray anko.\+stats\+\_\+util.\+three\+\_\+stair\+\_\+erf (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{float}]{c0,  }\item[{float}]{c1,  }\item[{float}]{c2,  }\item[{float}]{x1,  }\item[{float}]{x2 }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{namespaceanko_1_1stats__util_a9faedc02c2cb8460f34c743951e716aa}\label{namespaceanko_1_1stats__util_a9faedc02c2cb8460f34c743951e716aa}} 
+\index{anko.stats\_util@{anko.stats\_util}!three\_stair\_sgn@{three\_stair\_sgn}}
+\index{three\_stair\_sgn@{three\_stair\_sgn}!anko.stats\_util@{anko.stats\_util}}
+\doxysubsubsection{\texorpdfstring{three\_stair\_sgn()}{three\_stair\_sgn()}}
+{\footnotesize\ttfamily  np.\+ndarray anko.\+stats\+\_\+util.\+three\+\_\+stair\+\_\+sgn (\begin{DoxyParamCaption}\item[{np.\+ndarray}]{x,  }\item[{float}]{c0,  }\item[{float}]{c1,  }\item[{float}]{c2,  }\item[{float}]{x1,  }\item[{float}]{x2 }\end{DoxyParamCaption})}
 
 
 
-Calculate the generalize error function with three stairs for input array x. 
+Calculate the generalize sign function with three stairs for input array x. 
 
 \begin{equation*} f(x) = \begin{cases} c_0, & x < x_1, \\ \frac{c_0+c_1}{2}, & x = x_1, \\ c_1, & x_1< x < x_2, \\ \frac{c_1+c_2}{2}, & x = x_2, \\ c_2, & x > x_2. \end{cases} \end{equation*}
 

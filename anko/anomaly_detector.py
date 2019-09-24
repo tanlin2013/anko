@@ -14,12 +14,14 @@ class AnomalyDetector:
         ## @param boxcox (bool, default False): If True, perform log-boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method. 
         ## @param z_normalization (bool, default True): If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values in AnomalyDetector.thres_params scalelessly.
         ## @param info_criterion (str, default 'AIC'): Information criterion for selecting fitting ansatzs, allowed fields are 'AIC' or 'BIC'.
+        ## @param full_return (bool, default True): If True, return named dictionary for fitting parameters, eilse return list of fitting parameters in the order that can be found in AnomalyDetector.models.
         ## @param min_sample_size (int, default 10): Minimum number of data samples to execute AnomalyDetector. If provided number of samples is less than this attribute, raise ValueError.
         self.apply_policies = {
                 "scaleless_t": True,
                 "boxcox": False,
                 "z_normalization": True,
                 "info_criterion": 'AIC',
+                "full_return": False,
                 "min_sample_size": 10
         }
         if isinstance(t, list): t = np.array(t)
@@ -42,7 +44,7 @@ class AnomalyDetector:
         ## @param linregress_std_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
         ## @param linregress_res (float, default 2): Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous.
         ## @param step_func_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
-        ## @param step_func_res (float, default 2.5): Threshold value of residual for general step function, data points exceed this param will be regarded as anomalous.
+        ## @param step_func_res (float, default 2.5): Threshold value of residual for general sign function, data points exceed this param will be regarded as anomalous.
         ## @param exp_decay_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
         ## @param exp_decay_res (float, default 2): Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous.
         ## @param skewness (float, default 20): Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info.
@@ -65,7 +67,7 @@ class AnomalyDetector:
                 "0": "Check passed.",
                 "-1": "ConvergenceError: Gaussian fitting may not converge, std_err > std_err_th.",
                 "-2": "Warning: Normal distribution may have skewed, skewness > skewness_th.",
-                "-3": "ConvergenceError: General erf fitting may not converge, perr > perr_th.",
+                "-3": "ConvergenceError: General sign function fitting may not converge, perr > perr_th.",
                 "-4": "ConvergenceError: Exponential fitting may not converge, perr > perr_th.",
                 "-5": "ConvergenceError: Linear ansatz fitting may not converge, perr > perr_th.",
                 "-6": "Warning: Rawdata might be oscillating, data flips sign repeatedly over mean.",
@@ -98,7 +100,7 @@ class AnomalyDetector:
         ## @param gaussian (bool, default True): Gaussian (normal) distribution. Define in stats_util.normal_distr.
         ## @param half_gaussian (bool, default False): In development, unavailable for now.
         ## @param linear_regression (bool, default True): Linear ansatz.
-        ## @param step_func (bool, default True): Generalize Heaviside step function. Define in stats_util.general_erf.
+        ## @param step_func (bool, default True): Generalize Heaviside step function. Define in stats_util.general_sgn.
         ## @param exp_decay (bool, default True): Exponential function. Define in stats_util.exp_decay.
         self.models = {
                 "gaussian": True, 
@@ -177,8 +179,8 @@ class AnomalyDetector:
         
         elif model_id == 'step_func':
             try:
-                popt, perr = stats_util.general_erf_fit(self.t, self.series)
-                y_pred = stats_util.general_erf(self.t, *popt.tolist())
+                popt, perr = stats_util.general_sgn_fit(self.t, self.series)
+                y_pred = stats_util.general_sgn(self.t, *popt.tolist())
             except RuntimeError:
                 popt = perr = np.inf * np.ones(3)
                 y_pred = np.inf * np.ones(len(self.series))
@@ -231,7 +233,7 @@ class AnomalyDetector:
             err_score = np.sum(np.square(statsdata["perr"]))
             if err_score > self.thres_params["step_func_err"]:
                 msgs.append(self.error_code["-3"]) 
-            res = stats_util.fitting_residual(self.t, self.series, stats_util.general_erf, statsdata["popt"],
+            res = stats_util.fitting_residual(self.t, self.series, stats_util.general_sgn, statsdata["popt"],
                                               mask_min=self.thres_params["min_res"],
                                               standardized=self.apply_policies["z_normalization"])
             anomalous_t = self._clone_t[res > self.thres_params["step_func_res"]]
@@ -241,7 +243,7 @@ class AnomalyDetector:
         elif model_id == "decrease_step_func":
             err_score = np.sum(np.square(statsdata["perr"]))
             if err_score > self.thres_params["step_func_err"]:    
-                res = stats_util.fitting_residual(self.t, self.series, stats_util.general_erf, statsdata["popt"],
+                res = stats_util.fitting_residual(self.t, self.series, stats_util.general_sgn, statsdata["popt"],
                                                   mask_min=self.thres_params["min_res"],
                                                   standardized=self.apply_policies["z_normalization"])
                 anomalous_t = self._clone_t[res > self.thres_params["step_func_res"]]
@@ -260,7 +262,7 @@ class AnomalyDetector:
 #             if err_score > self.thres_params["step_func_err"]:
 #                 msgs.append(self.dyError.getErrorText(16))
 #             t = np.arange(1, len(statsdata[key]["series"])+1) 
-#             res = stats_util.fitting_residual(t, statsdata[key]["series"], stats_util.three_stair_erf, statsdata[key]["popt"])
+#             res = stats_util.fitting_residual(t, statsdata[key]["series"], stats_util.three_stair_sgn, statsdata[key]["popt"])
 #             anomalous_data = statsdata[key]["series"][res > self.thres_params["step_func_res"]]                  
 # =============================================================================
             
@@ -301,11 +303,14 @@ class AnomalyDetector:
             self.check_failed = False
             msgs.append(self.error_code["0"])
         
-        if isinstance(res, np.ndarray): res = res.tolist()
+        if self.apply_policies["full_return"]:
+            statsdata["popt"] = self._popt_dictionize(model_id, statsdata["popt"])
+        for key, value in statsdata.items():
+            if isinstance(value, np.ndarray): statsdata[key] = value.tolist()
         check_result = CheckResult(
                 model=statsdata["model"],
-                popt=statsdata["popt"].tolist(),
-                perr=statsdata["perr"].tolist(),
+                popt=statsdata["popt"],
+                perr=statsdata["perr"],
                 anomalous_data=list(zip(anomalous_t, anomalous_data)),
                 residual=res,
                 extra_info=msgs

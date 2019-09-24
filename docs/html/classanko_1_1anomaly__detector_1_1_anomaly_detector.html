@@ -218,6 +218,7 @@ Public Attributes</h2></td></tr>
     <tr><td class="paramname">boxcox</td><td>(bool, default False): If True, perform log-boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method. </td></tr>
     <tr><td class="paramname">z_normalization</td><td>(bool, default True): If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values in <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59" title="Threshold values for selecting anomalous data.">AnomalyDetector.thres_params</a> scalelessly. </td></tr>
     <tr><td class="paramname">info_criterion</td><td>(str, default 'AIC'): Information criterion for selecting fitting ansatzs, allowed fields are 'AIC' or 'BIC'. </td></tr>
+    <tr><td class="paramname">full_return</td><td>(bool, default True): If True, return named dictionary for fitting parameters, eilse return list of fitting parameters in the order that can be found in <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a019359334795d2f05a730ab00085e5e9" title="Models that can be considered by AnomalyDetector.">AnomalyDetector.models</a>. </td></tr>
     <tr><td class="paramname">min_sample_size</td><td>(int, default 10): Minimum number of data samples to execute <a class="el" href="classanko_1_1anomaly__detector_1_1_anomaly_detector.html">AnomalyDetector</a>. If provided number of samples is less than this attribute, raise ValueError. </td></tr>
   </table>
   </dd>
@@ -289,7 +290,7 @@ Public Attributes</h2></td></tr>
     <tr><td class="paramname">gaussian</td><td>(bool, default True): Gaussian (normal) distribution. Define in <a class="el" href="namespaceanko_1_1stats__util.html#a043c3334f258dda9e528ab8a51ea053b" title="Calculate normal distribution of input array x.">stats_util.normal_distr</a>. </td></tr>
     <tr><td class="paramname">half_gaussian</td><td>(bool, default False): In development, unavailable for now. </td></tr>
     <tr><td class="paramname">linear_regression</td><td>(bool, default True): Linear ansatz. </td></tr>
-    <tr><td class="paramname">step_func</td><td>(bool, default True): Generalize Heaviside step function. Define in <a class="el" href="namespaceanko_1_1stats__util.html#a9e0f971311c5d1013a90795d2427091c" title="Calculate the generalize error function of input array x.">stats_util.general_erf</a>. </td></tr>
+    <tr><td class="paramname">step_func</td><td>(bool, default True): Generalize Heaviside step function. Define in <a class="el" href="namespaceanko_1_1stats__util.html#ac87998526bab447820838b2e92055519" title="Calculate the generalize sign function of input array x.">stats_util.general_sgn</a>. </td></tr>
     <tr><td class="paramname">exp_decay</td><td>(bool, default True): Exponential function. Define in <a class="el" href="namespaceanko_1_1stats__util.html#aa196811391f6401b6fec78c1fd7054ed" title="Calculate the exponential function of input array x.">stats_util.exp_decay</a>. </td></tr>
   </table>
   </dd>
@@ -351,7 +352,7 @@ Public Attributes</h2></td></tr>
     <tr><td class="paramname">linregress_std_err</td><td>(float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
     <tr><td class="paramname">linregress_res</td><td>(float, default 2): Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous. </td></tr>
     <tr><td class="paramname">step_func_err</td><td>(float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
-    <tr><td class="paramname">step_func_res</td><td>(float, default 2.5): Threshold value of residual for general step function, data points exceed this param will be regarded as anomalous. </td></tr>
+    <tr><td class="paramname">step_func_res</td><td>(float, default 2.5): Threshold value of residual for general sign function, data points exceed this param will be regarded as anomalous. </td></tr>
     <tr><td class="paramname">exp_decay_err</td><td>(float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info. </td></tr>
     <tr><td class="paramname">exp_decay_res</td><td>(float, default 2): Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous. </td></tr>
     <tr><td class="paramname">skewness</td><td>(float, default 20): Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info. </td></tr>

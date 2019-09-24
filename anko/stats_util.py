@@ -155,9 +155,9 @@ def data_is_linear(x: np.ndarray, y: np.ndarray, std_err_th: float=1e-2) -> bool
         return False
 
 # TODO: rename to sgn
-def general_erf(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
+def general_sgn(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
     """!
-    Calculate the generalize error function of input array x.
+    Calculate the generalize sign function of input array x.
     
     \f{equation*}{
            f(x) = 
@@ -177,9 +177,9 @@ def general_erf(x: np.ndarray, a: float, b: float, x0: float) -> np.ndarray:
     """
     return (b-a)/2 * np.sign(x-x0) + (a+b)/2
 
-def three_stair_erf(x: np.ndarray, c0: float, c1: float, c2: float, x1: float, x2: float) -> np.ndarray:
+def three_stair_sgn(x: np.ndarray, c0: float, c1: float, c2: float, x1: float, x2: float) -> np.ndarray:
     """!
-    Calculate the generalize error function with three stairs for input array x.
+    Calculate the generalize sign function with three stairs for input array x.
     
     \f{equation*}{
            f(x) = 
@@ -203,9 +203,9 @@ def three_stair_erf(x: np.ndarray, c0: float, c1: float, c2: float, x1: float, x
     """
     return c0*np.sign(x-x1) + c1*np.sign(x-x2) + c2
     
-def general_erf_fit(x: np.ndarray, y: np.ndarray, three_stair: bool=False, maxfev: int=2000, bounds=[0,1e+6]):
+def general_sgn_fit(x: np.ndarray, y: np.ndarray, three_stair: bool=False, maxfev: int=2000, bounds=[0,1e+6]):
     """!
-    Fitting generalize error function for input data (x, y).
+    Fitting generalize sign function for input data (x, y).
     
     @param x (numpy.ndarray): x coordinate of input data points. 
     @param y (numpy.ndarray): y coordinate of input data points. 
@@ -220,17 +220,17 @@ def general_erf_fit(x: np.ndarray, y: np.ndarray, three_stair: bool=False, maxfe
         a_sg = y[0]; b_sg = y[int(len(y)/2)]; c_sg = y[-1]
         c0_sg = (b_sg-a_sg)/2; c1_sg = (c_sg-b_sg)/2; c2_sg = (a_sg + c_sg)/2
         x1_sg, x2_sg = np.sort(np.diff(y))[::-1][:2]     
-        popt, pcov = curve_fit(three_stair_erf,x,y,p0=[c0_sg,c1_sg,c2_sg,x1_sg,x2_sg],maxfev=maxfev,bounds=bounds)
+        popt, pcov = curve_fit(three_stair_sgn,x,y,p0=[c0_sg,c1_sg,c2_sg,x1_sg,x2_sg],maxfev=maxfev,bounds=bounds)
         perr = np.sqrt(np.diag(pcov))
     else:
         a_sg = y[0]; b_sg = y[-1]; x0_sg = x[np.argmax(np.diff(y))]
-        popt, pcov = curve_fit(general_erf,x,y,p0=[a_sg,b_sg,x0_sg],maxfev=maxfev,bounds=bounds)
+        popt, pcov = curve_fit(general_sgn,x,y,p0=[a_sg,b_sg,x0_sg],maxfev=maxfev,bounds=bounds)
         perr = np.sqrt(np.diag(pcov))
 # TODO: consider to use scipy.optimize.differential_evolution
 # =============================================================================
 #         a_sg = y[0]; b_sg = y[-1]; x0_sg = x[np.argmax(np.diff(y))]
 #         width = (max(y)-min(y))/10
-#         optimize_result = differential_evolution(lambda p: np.sum((general_erf(x, *p) - y)**2), [[a_sg-width,a_sg+width], [b_sg-width,b_sg+width], [x0_sg-5,x0_sg+5]], tol=1e-6)
+#         optimize_result = differential_evolution(lambda p: np.sum((general_sgn(x, *p) - y)**2), [[a_sg-width,a_sg+width], [b_sg-width,b_sg+width], [x0_sg-5,x0_sg+5]], tol=1e-6)
 #         popt, perr = optimize_result.x, optimize_result.fun
 #         print(optimize_result.x, optimize_result.fun)
 # =============================================================================

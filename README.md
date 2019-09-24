@@ -27,13 +27,13 @@ Future development will also include methods that are based on deep learning tec
 ```
 pip install anko
 ```
-[anko on PyPI](https://pypi.org/project/anko/)
+For current release version please refer on [PyPI - anko homepage](https://pypi.org/project/anko/).
 
 ## Documentation
-[anko documentation](https://tanlin2013.github.io/anko/html/index.html)
+For details about anko API, see the [reference documentation](https://tanlin2013.github.io/anko/html/index.html).
 
 ## Jupyter Notebook Tutorial (in dev)
-[Host on mybinder](https://mybinder.org/v2/gh/tanlin2013/anko/master?filepath=anko_tutorial.ipynb)
+Run **anko_tutorial.ipynb** on your local Jupyter Notebook or host on [mybinder could service](https://mybinder.org/v2/gh/tanlin2013/anko/master?filepath=anko_tutorial.ipynb).
 
 ## Basic Usage
 1. Call AnomalyDetector
@@ -73,7 +73,7 @@ The type of output **check_result** is [**CheckResult**](https://tanlin2013.gith
 * extra_info (list): All convergence errors, warnings, informations during the execution are stored here.
 
 
-## Run Test (in dev)
+## Run Test
 ```
 python -m unittest discover -s test -p '*_test.py'
 ```

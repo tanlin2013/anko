@@ -9,8 +9,8 @@ var stats__util_8py =
     [ "fitting_residual", "stats__util_8py.html#a6f905598561c0f8c6e31dfb0b0e2d5e5", null ],
     [ "flat_histogram", "stats__util_8py.html#a592ce686a07fad2982a1e051b8e751da", null ],
     [ "gaussian_fit", "stats__util_8py.html#aa482297a54c4bcc67af00b259c3b03ce", null ],
-    [ "general_erf", "stats__util_8py.html#a9e0f971311c5d1013a90795d2427091c", null ],
-    [ "general_erf_fit", "stats__util_8py.html#a4f434d24322b90d1d03cf689847ea76a", null ],
+    [ "general_sgn", "stats__util_8py.html#ac87998526bab447820838b2e92055519", null ],
+    [ "general_sgn_fit", "stats__util_8py.html#a7206dfe47b2b5b3f9ce180f2fa2a20c1", null ],
     [ "get_histogram", "stats__util_8py.html#ae5da820a4ff2ba172cc895f7aed1a7c6", null ],
     [ "is_oscillating", "stats__util_8py.html#a0f75e0a66974df60bf657d244f516619", null ],
     [ "left_half_normal_distr", "stats__util_8py.html#afe9294ceb5073c65f77b6c7894349ef7", null ],
@@ -18,6 +18,6 @@ var stats__util_8py =
     [ "normal_distr", "stats__util_8py.html#a043c3334f258dda9e528ab8a51ea053b", null ],
     [ "right_half_normal_distr", "stats__util_8py.html#ad0683a7fc4d68fa7937dbe214d554997", null ],
     [ "smoothness", "stats__util_8py.html#a1467292292fb037a7b879c3a66700499", null ],
-    [ "three_stair_erf", "stats__util_8py.html#a2efdfc173ad6b38025bfd48da53f160a", null ],
+    [ "three_stair_sgn", "stats__util_8py.html#a9faedc02c2cb8460f34c743951e716aa", null ],
     [ "z_normalization", "stats__util_8py.html#a9b2e2041bcd620bb46b85e933fe45697", null ]
 ];

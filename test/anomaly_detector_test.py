@@ -71,7 +71,7 @@ class TestAnomalyDetector(unittest.TestCase):
             agent.apply_policies["min_sample_size"] = min_sample_size
             statsdata = agent.check()
             statsdata["series"] = series[i]
-            #print(statsdata)
+            print(statsdata)
       
 if __name__ == '__main__':
     unittest.main()
