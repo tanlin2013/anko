@@ -326,7 +326,7 @@ def is_oscillating(x: np.ndarray, osci_freq_th: float=0.3) -> bool:
     else:
         return False
    
-def fitting_residual(x: np.ndarray, y: np.ndarray, func, args, mask_min: float=None, absolute_value: bool=True, standardized: bool=False) -> np.ndarray:
+def fitting_residual(x: np.ndarray, y: np.ndarray, func, args, mask_min: float=None, standardized: bool=False) -> np.ndarray:
     """!
     Compute the fitting residual.
     
@@ -335,7 +335,6 @@ def fitting_residual(x: np.ndarray, y: np.ndarray, func, args, mask_min: float=N
     @param func (callable): Fitting function.
     @param args (numpy.ndarray): Best estimated arguments of fitting function. 
     @param mask_min (float, optional): If not None, mask resuduals that are smaller than mask_min to zero. This is always performed before standardization.
-    @param absolute_value (bool, optional): If True, return absolute value of residual.
     @param standardized (bool, optional): Standardize residual to z-score formalism.
         
     @returns res (numpy.ndarray): Residual of each corresponding data points (x, y).
@@ -347,8 +346,6 @@ def fitting_residual(x: np.ndarray, y: np.ndarray, func, args, mask_min: float=N
         res[np.where(abs(res) < mask_min)] = 0
     if standardized and norm != 0:
         res /= norm
-    if absolute_value:
-        res = abs(res)
     return res
     
 def AIC_score(y: np.ndarray, y_predict: np.ndarray, p: int) -> float:

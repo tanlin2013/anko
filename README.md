@@ -27,7 +27,7 @@ Future development will also include methods that are based on deep learning tec
 ```
 pip install anko
 ```
-For current release version please refer on [PyPI - anko homepage](https://pypi.org/project/anko/).
+For current release version please refer to [PyPI - anko homepage](https://pypi.org/project/anko/).
 
 ## Documentation
 For details about anko API, see the [reference documentation](https://tanlin2013.github.io/anko/html/index.html).
