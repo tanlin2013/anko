@@ -14,7 +14,7 @@ class AnomalyDetector:
         ## @param boxcox (bool, default False): If True, perform log-boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method. 
         ## @param z_normalization (bool, default True): If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values in AnomalyDetector.thres_params scalelessly.
         ## @param info_criterion (str, default 'AIC'): Information criterion for selecting fitting ansatzs, allowed fields are 'AIC' or 'BIC'.
-        ## @param abs_residual (bool, default False): If True, return the absolute magnitude of residuals only.
+        ## @param abs_residual (bool, default False): If True, return absolute value of residual.
         ## @param full_return (bool, default True): If True, return named dictionary for fitting parameters, eilse return list of fitting parameters in the order that can be found in AnomalyDetector.models.
         ## @param min_sample_size (int, default 10): Minimum number of data samples to execute AnomalyDetector. If provided number of samples is less than this attribute, raise ValueError.
         self.apply_policies = {

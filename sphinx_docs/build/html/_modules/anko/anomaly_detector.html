@@ -1,0 +1,546 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>anko.anomaly_detector &mdash; anko 0.2.6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> anko
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">anko</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>anko.anomaly_detector</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anko.anomaly_detector</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">stats_util</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="c1"># TODO: add params and returns type in func entry</span>
+
+<div class="viewcode-block" id="AnomalyDetector"><a class="viewcode-back" href="../../anko.html#anko.anomaly_detector.AnomalyDetector">[docs]</a><span class="k">class</span> <span class="nc">AnomalyDetector</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;!</span>
+<span class="sd">    @param t (array_like):</span>
+<span class="sd">    @param series (array_like):</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">series</span><span class="p">):</span>
+        <span class="c1">## Policies for AnomalyDetector to follow with. </span>
+        <span class="c1">## @param scaleless_t (bool, default True): If True, use np.arange(1, len(t)+1) for the fitting. </span>
+        <span class="c1">## @param boxcox (bool, default False): If True, perform log-boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method. </span>
+        <span class="c1">## @param z_normalization (bool, default True): If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values in AnomalyDetector.thres_params scalelessly.</span>
+        <span class="c1">## @param info_criterion (str, default &#39;AIC&#39;): Information criterion for selecting fitting ansatzs, allowed fields are &#39;AIC&#39; or &#39;BIC&#39;.</span>
+        <span class="c1">## @param abs_residual (bool, default False): If True, return absolute value of residual.</span>
+        <span class="c1">## @param full_return (bool, default True): If True, return named dictionary for fitting parameters, eilse return list of fitting parameters in the order that can be found in AnomalyDetector.models.</span>
+        <span class="c1">## @param min_sample_size (int, default 10): Minimum number of data samples to execute AnomalyDetector. If provided number of samples is less than this attribute, raise ValueError.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;scaleless_t&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;boxcox&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;z_normalization&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;info_criterion&quot;</span><span class="p">:</span> <span class="s1">&#39;AIC&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;abs_residual&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> 
+                <span class="s2">&quot;full_return&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;min_sample_size&quot;</span><span class="p">:</span> <span class="mi">10</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">series</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;scaleless_t&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;scaleless_t&quot;</span><span class="p">]:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">t</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">series</span> <span class="o">=</span> <span class="n">series</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clone_t</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clone_series</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+        <span class="c1">## Boolean value if check failed.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_failed</span> <span class="o">=</span> <span class="kc">True</span>   
+        <span class="c1">## Threshold values for selecting anomalous data.</span>
+        <span class="c1">## @param p_normality (float, default 5e-3): Threshold value for selecting normal distribution, in accordance with the p value of normal test.  </span>
+        <span class="c1">## @param normal_err (float, default 75): Threshold value for selecting normal distribution, in case that fitting on normal distribution failed and unconverged.</span>
+        <span class="c1">## @param normal_std_width (float, default 1.5): Threshold width of standard deviation, data points exceed this param will be regarded as anomalous.  </span>
+        <span class="c1">## @param normal_std_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</span>
+        <span class="c1">## @param linregress_std_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</span>
+        <span class="c1">## @param linregress_res (float, default 2): Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous.</span>
+        <span class="c1">## @param step_func_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</span>
+        <span class="c1">## @param step_func_res (float, default 2.5): Threshold value of residual for general sign function, data points exceed this param will be regarded as anomalous.</span>
+        <span class="c1">## @param exp_decay_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</span>
+        <span class="c1">## @param exp_decay_res (float, default 2): Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous.</span>
+        <span class="c1">## @param skewness (float, default 20): Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info.</span>
+        <span class="c1">## @param min_res (float, default 10): Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalizing the residual.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;p_normality&quot;</span><span class="p">:</span> <span class="mf">5e-3</span><span class="p">,</span>
+                <span class="s2">&quot;normal_err&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
+                <span class="s2">&quot;normal_std_width&quot;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+                <span class="s2">&quot;normal_std_err&quot;</span><span class="p">:</span> <span class="mf">1e+1</span><span class="p">,</span>            
+                <span class="s2">&quot;linregress_std_err&quot;</span><span class="p">:</span> <span class="mf">1e+1</span><span class="p">,</span>
+                <span class="s2">&quot;linregress_res&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s2">&quot;step_func_err&quot;</span><span class="p">:</span> <span class="mf">1e+1</span><span class="p">,</span>
+                <span class="s2">&quot;step_func_res&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span>
+                <span class="s2">&quot;exp_decay_err&quot;</span><span class="p">:</span> <span class="mf">1e+1</span><span class="p">,</span>
+                <span class="s2">&quot;exp_decay_res&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s2">&quot;skewness&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+                <span class="s2">&quot;min_res&quot;</span><span class="p">:</span> <span class="mi">10</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_code</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="s2">&quot;Check passed.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-1&quot;</span><span class="p">:</span> <span class="s2">&quot;ConvergenceError: Gaussian fitting may not converge, std_err &gt; std_err_th.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-2&quot;</span><span class="p">:</span> <span class="s2">&quot;Warning: Normal distribution may have skewed, skewness &gt; skewness_th.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-3&quot;</span><span class="p">:</span> <span class="s2">&quot;ConvergenceError: General sign function fitting may not converge, perr &gt; perr_th.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-4&quot;</span><span class="p">:</span> <span class="s2">&quot;ConvergenceError: Exponential fitting may not converge, perr &gt; perr_th.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-5&quot;</span><span class="p">:</span> <span class="s2">&quot;ConvergenceError: Linear ansatz fitting may not converge, perr &gt; perr_th.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-6&quot;</span><span class="p">:</span> <span class="s2">&quot;Warning: Rawdata might be oscillating, data flips sign repeatedly over mean.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-7&quot;</span><span class="p">:</span> <span class="s2">&quot;Info: AnomalyDetector is using boxcox method.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-8&quot;</span><span class="p">:</span> <span class="s2">&quot;Info: AnomalyDetector is using z normalization.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-9&quot;</span><span class="p">:</span> <span class="s2">&quot;Info: There are more than </span><span class="si">%d</span><span class="s2"> discontinuous points detected.&quot;</span>
+        <span class="p">}</span>
+        <span class="c1">## Models that can be considered by AnomalyDetector.</span>
+        <span class="c1">## - Gaussian (Normal) Distribution</span>
+        <span class="c1">##      \f{equation*}{</span>
+        <span class="c1">##          f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right).</span>
+        <span class="c1">##      \f}</span>
+        <span class="c1">## - Linear Regression</span>
+        <span class="c1">##      \f{equation*}{</span>
+        <span class="c1">##          f(x) = intercept + slope \times x.</span>
+        <span class="c1">##      \f}</span>
+        <span class="c1">## - Step Function</span>
+        <span class="c1">##      \f{equation*}{</span>
+        <span class="c1">##           f(x) = </span>
+        <span class="c1">##           \begin{cases}</span>
+        <span class="c1">##               a, &amp; x &lt; x_0, \\</span>
+        <span class="c1">##               \frac{a+b}{2}, &amp; x = x_0, \\</span>
+        <span class="c1">##               b, &amp; x &gt; x_0.</span>
+        <span class="c1">##           \end{cases}</span>
+        <span class="c1">##      \f}</span>
+        <span class="c1">## - Exponential Decay</span>
+        <span class="c1">##      \f{equation*}{</span>
+        <span class="c1">##            f(x) = a\exp\left(-\alpha x\right). </span>
+        <span class="c1">##      \f}</span>
+        <span class="c1">## @param gaussian (bool, default True): Gaussian (normal) distribution. Define in stats_util.normal_distr.</span>
+        <span class="c1">## @param half_gaussian (bool, default False): In development, unavailable for now.</span>
+        <span class="c1">## @param linear_regression (bool, default True): Linear ansatz.</span>
+        <span class="c1">## @param step_func (bool, default True): Generalize Heaviside step function. Define in stats_util.general_sgn.</span>
+        <span class="c1">## @param exp_decay (bool, default True): Exponential function. Define in stats_util.exp_decay.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;gaussian&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> 
+                <span class="s2">&quot;half_gaussian&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> 
+                <span class="s2">&quot;linear_regression&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> 
+                <span class="s2">&quot;step_func&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> 
+                <span class="s2">&quot;exp_decay&quot;</span><span class="p">:</span> <span class="kc">True</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;min_sample_size&quot;</span><span class="p">]:</span> 
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;number of samples </span><span class="si">{}</span><span class="s2"> are less than apply_policies[&#39;min_sample_size&#39;] = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;min_sample_size&quot;</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="p">):</span> 
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;shape </span><span class="si">{}</span><span class="s2"> does not match with shape </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;info_criterion&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;AIC&quot;</span><span class="p">,</span> <span class="s2">&quot;BIC&quot;</span><span class="p">]:</span> 
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Information criterion can only be &#39;AIC&#39; or &#39;BIC&#39;.&quot;</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_build_stats_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">statsdata</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">IC_score</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{},</span> <span class="p">{};</span> <span class="n">proceed</span> <span class="o">=</span> <span class="kc">False</span> 
+
+        <span class="k">try</span><span class="p">:</span>    
+            <span class="n">normality</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">normaltest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">normality</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span>     
+
+        <span class="k">if</span> <span class="n">normality</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;p_normality&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">normality</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;gaussian&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;boxcox&quot;</span><span class="p">]:</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">series</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">boxcox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">lmbda</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gaussian&#39;</span>
+                <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">],</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;perr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">gaussian_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+        
+        <span class="k">if</span> <span class="s2">&quot;popt&quot;</span> <span class="ow">in</span> <span class="n">statsdata</span><span class="p">:</span>
+            <span class="n">err_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;perr&quot;</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">err_score</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;normal_err&quot;</span><span class="p">]:</span> 
+                <span class="n">proceed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">proceed</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">proceed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;boxcox&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">series</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clone_series</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">run_token</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;gaussian&#39;</span> <span class="ow">or</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;half_gaussian&#39;</span><span class="p">:</span> <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">run_token</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">ref</span><span class="p">[</span><span class="n">model_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="n">IC_score</span><span class="p">[</span><span class="n">model_id</span><span class="p">],</span> <span class="n">ref</span><span class="p">[</span><span class="n">model_id</span><span class="p">][</span><span class="s2">&quot;popt&quot;</span><span class="p">],</span> <span class="n">ref</span><span class="p">[</span><span class="n">model_id</span><span class="p">][</span><span class="s2">&quot;perr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fitting_model</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+            
+            <span class="n">best_model</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">IC_score</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;linear_regression&quot;</span> <span class="ow">in</span> <span class="n">IC_score</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">best_model</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">IC_score</span><span class="p">[</span><span class="s2">&quot;linear_regression&quot;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">):</span>
+                    <span class="n">best_model</span> <span class="o">=</span> <span class="s2">&quot;linear_regression&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">best_model</span> <span class="o">=</span> <span class="n">best_model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">best_model</span> <span class="o">=</span> <span class="n">best_model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">],</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;perr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[</span><span class="n">best_model</span><span class="p">][</span><span class="s2">&quot;popt&quot;</span><span class="p">],</span> <span class="n">ref</span><span class="p">[</span><span class="n">best_model</span><span class="p">][</span><span class="s2">&quot;perr&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">best_model</span> <span class="o">==</span> <span class="s1">&#39;step_func&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ref</span><span class="p">[</span><span class="n">best_model</span><span class="p">][</span><span class="s2">&quot;popt&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">ref</span><span class="p">[</span><span class="n">best_model</span><span class="p">][</span><span class="s2">&quot;popt&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;increase_step_func&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;decrease_step_func&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_model</span>
+        <span class="k">return</span> <span class="n">statsdata</span>     
+        
+    <span class="k">def</span> <span class="nf">_fitting_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;linear_regression&#39;</span><span class="p">:</span>
+            <span class="n">r_sq</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">slope</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">linear_regression</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">)</span>
+            <span class="n">linregress_y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">([</span><span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;info_criterion&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;AIC&#39;</span><span class="p">:</span>
+                <span class="n">IC_score</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">AIC_score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">linregress_y_pred</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;info_criterion&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;BIC&#39;</span><span class="p">:</span>
+                <span class="n">IC_score</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">BIC_score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">linregress_y_pred</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">popt</span><span class="p">,</span> <span class="n">perr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">intercept</span><span class="p">,</span> <span class="n">slope</span><span class="p">]),</span> <span class="n">std_err</span>
+        
+        <span class="k">elif</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;step_func&#39;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">popt</span><span class="p">,</span> <span class="n">perr</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">general_sgn_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">)</span>
+                <span class="n">y_pred</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">general_sgn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="o">*</span><span class="n">popt</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+                <span class="n">popt</span> <span class="o">=</span> <span class="n">perr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;info_criterion&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;AIC&#39;</span><span class="p">:</span>
+                <span class="n">IC_score</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">AIC_score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">popt</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;info_criterion&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;BIC&#39;</span><span class="p">:</span>
+                <span class="n">IC_score</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">BIC_score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">popt</span><span class="p">))</span>    
+    
+        <span class="k">elif</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;exp_decay&#39;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">popt</span><span class="p">,</span> <span class="n">perr</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">exp_decay_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">)</span>
+                <span class="n">y_pred</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">exp_decay</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="o">*</span><span class="n">popt</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+                <span class="n">popt</span> <span class="o">=</span> <span class="n">perr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;info_criterion&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;AIC&#39;</span><span class="p">:</span>
+                <span class="n">IC_score</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">AIC_score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">popt</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;info_criterion&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;BIC&#39;</span><span class="p">:</span>
+                <span class="n">IC_score</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">BIC_score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">popt</span><span class="p">))</span>  
+                
+        <span class="k">return</span> <span class="n">IC_score</span><span class="p">,</span> <span class="n">popt</span><span class="p">,</span> <span class="n">perr</span>   
+    
+<div class="viewcode-block" id="AnomalyDetector.check"><a class="viewcode-back" href="../../anko.html#anko.anomaly_detector.AnomalyDetector.check">[docs]</a>    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;!</span>
+<span class="sd">        </span>
+<span class="sd">        @returns check_result (CheckResult): </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">statsdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_stats_data</span><span class="p">()</span>
+        <span class="n">model_id</span> <span class="o">=</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+        <span class="n">anomalous_t</span><span class="p">,</span> <span class="n">anomalous_data</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">msgs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+            
+        <span class="k">if</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;gaussian&#39;</span> <span class="ow">or</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;flat_histo&#39;</span><span class="p">:</span> 
+            <span class="k">if</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;perr&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;normal_std_err&quot;</span><span class="p">]:</span>
+                <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-1&quot;</span><span class="p">])</span>
+            <span class="c1"># Get anomalous data</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">)</span>
+            <span class="n">mean_centered_series</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">)</span>
+            <span class="n">mean_centered_series</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">mean_centered_series</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;min_res&quot;</span><span class="p">])]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">z_normalized_series</span> <span class="o">=</span> <span class="n">mean_centered_series</span> <span class="o">/</span> <span class="n">norm</span>
+            <span class="n">anomalous_idx</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z_normalized_series</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;normal_std_width&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">anomalous_idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">anomalous_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="n">anomalous_idx</span><span class="p">]</span>
+                <span class="n">anomalous_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone_t</span><span class="p">[</span><span class="n">anomalous_idx</span><span class="p">]</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">z_normalized_series</span><span class="p">[</span><span class="n">anomalous_idx</span><span class="p">]</span>
+            <span class="n">histo_x</span><span class="p">,</span> <span class="n">histo_y</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">stats_util</span><span class="o">.</span><span class="n">skew</span><span class="p">(</span><span class="n">histo_y</span><span class="p">))</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;skewness&quot;</span><span class="p">]:</span>
+                <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-2&quot;</span><span class="p">])</span>
+                    
+        <span class="k">elif</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s2">&quot;increase_step_func&quot;</span><span class="p">:</span>
+            <span class="n">err_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;perr&quot;</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">err_score</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;step_func_err&quot;</span><span class="p">]:</span>
+                <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-3&quot;</span><span class="p">])</span> 
+            <span class="n">res</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">fitting_residual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">general_sgn</span><span class="p">,</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">],</span>
+                                              <span class="n">mask_min</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;min_res&quot;</span><span class="p">],</span>
+                                              <span class="n">standardized</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;z_normalization&quot;</span><span class="p">])</span>
+            <span class="n">anomalous_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone_t</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;step_func_res&quot;</span><span class="p">]]</span>
+            <span class="n">anomalous_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;step_func_res&quot;</span><span class="p">]]</span>                                      
+            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;step_func_res&quot;</span><span class="p">]]</span>
+            
+        <span class="k">elif</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s2">&quot;decrease_step_func&quot;</span><span class="p">:</span>
+            <span class="n">err_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;perr&quot;</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">err_score</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;step_func_err&quot;</span><span class="p">]:</span>    
+                <span class="n">res</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">fitting_residual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">general_sgn</span><span class="p">,</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">],</span>
+                                                  <span class="n">mask_min</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;min_res&quot;</span><span class="p">],</span>
+                                                  <span class="n">standardized</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;z_normalization&quot;</span><span class="p">])</span>
+                <span class="n">anomalous_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone_t</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;step_func_res&quot;</span><span class="p">]]</span>
+                <span class="n">anomalous_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;step_func_res&quot;</span><span class="p">]]</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;step_func_res&quot;</span><span class="p">]]</span>
+                <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-3&quot;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>   
+                <span class="n">anomalous_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">anomalous_idx</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;min_res&quot;</span><span class="p">]:</span> 
+                    <span class="n">anomalous_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone_t</span><span class="p">[</span><span class="n">anomalous_idx</span><span class="p">]</span>
+                    <span class="n">anomalous_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="n">anomalous_idx</span><span class="p">]</span>
+                    <span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">anomalous_idx</span><span class="p">))</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1">#         elif model_id == &#39;three_stair&#39;:</span>
+<span class="c1">#             err_score = np.sum(np.square(statsdata[key][&quot;perr&quot;]))</span>
+<span class="c1">#             if err_score &gt; self.thres_params[&quot;step_func_err&quot;]:</span>
+<span class="c1">#                 msgs.append(self.dyError.getErrorText(16))</span>
+<span class="c1">#             t = np.arange(1, len(statsdata[key][&quot;series&quot;])+1) </span>
+<span class="c1">#             res = stats_util.fitting_residual(t, statsdata[key][&quot;series&quot;], stats_util.three_stair_sgn, statsdata[key][&quot;popt&quot;])</span>
+<span class="c1">#             anomalous_data = statsdata[key][&quot;series&quot;][res &gt; self.thres_params[&quot;step_func_res&quot;]]                  </span>
+<span class="c1"># =============================================================================</span>
+            
+        <span class="k">elif</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;exp_decay&#39;</span><span class="p">:</span>
+            <span class="n">err_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;perr&quot;</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">err_score</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;exp_decay_err&quot;</span><span class="p">]:</span>
+                <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-4&quot;</span><span class="p">])</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">fitting_residual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">exp_decay</span><span class="p">,</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">],</span>
+                                              <span class="n">mask_min</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;min_res&quot;</span><span class="p">],</span>
+                                              <span class="n">standardized</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;z_normalization&quot;</span><span class="p">])</span>
+            <span class="n">anomalous_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone_t</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;exp_decay_res&quot;</span><span class="p">]]</span>
+            <span class="n">anomalous_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;exp_decay_res&quot;</span><span class="p">]]</span> 
+            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;exp_decay_res&quot;</span><span class="p">]]</span>                   
+             
+        <span class="k">elif</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;linear_regression&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;perr&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;linregress_std_err&quot;</span><span class="p">]:</span>
+                <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-5&quot;</span><span class="p">])</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">x</span> 
+            <span class="n">res</span> <span class="o">=</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">fitting_residual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">],</span>
+                                              <span class="n">mask_min</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;min_res&quot;</span><span class="p">],</span>
+                                              <span class="n">standardized</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;z_normalization&quot;</span><span class="p">])</span>
+            <span class="n">anomalous_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clone_t</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;linregress_res&quot;</span><span class="p">]]</span>
+            <span class="n">anomalous_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;linregress_res&quot;</span><span class="p">]]</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">thres_params</span><span class="p">[</span><span class="s2">&quot;linregress_res&quot;</span><span class="p">]]</span>                    
+                
+        <span class="c1"># Extra info</span>
+        <span class="k">if</span> <span class="n">stats_util</span><span class="o">.</span><span class="n">is_oscillating</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">):</span> 
+            <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-6&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;boxcox&quot;</span><span class="p">]:</span> 
+            <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-7&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;z_normalization&quot;</span><span class="p">]:</span>
+            <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-8&quot;</span><span class="p">])</span>    
+        <span class="n">discontinuity</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stats_util</span><span class="o">.</span><span class="n">discontinuous_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">series</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">discontinuity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;-9&quot;</span><span class="p">]</span> <span class="o">%</span><span class="n">discontinuity</span><span class="p">)</span>
+                
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">anomalous_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_failed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_code</span><span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">])</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;abs_residual&quot;</span><span class="p">]:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="s2">&quot;full_return&quot;</span><span class="p">]:</span>
+            <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_popt_dictionize</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">statsdata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span> <span class="n">statsdata</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">check_result</span> <span class="o">=</span> <span class="n">CheckResult</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">],</span>
+                <span class="n">popt</span><span class="o">=</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;popt&quot;</span><span class="p">],</span>
+                <span class="n">perr</span><span class="o">=</span><span class="n">statsdata</span><span class="p">[</span><span class="s2">&quot;perr&quot;</span><span class="p">],</span>
+                <span class="n">anomalous_data</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">anomalous_t</span><span class="p">,</span> <span class="n">anomalous_data</span><span class="p">)),</span>
+                <span class="n">residual</span><span class="o">=</span><span class="n">res</span><span class="p">,</span>
+                <span class="n">extra_info</span><span class="o">=</span><span class="n">msgs</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">check_result</span></div>
+
+    <span class="k">def</span> <span class="nf">_popt_dictionize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">popt</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">:</span>
+            <span class="n">popt_type</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;std&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">)])</span>
+        <span class="k">elif</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;linear_regression&#39;</span><span class="p">:</span>
+            <span class="n">popt_type</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s1">&#39;intercept&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;slope&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">)])</span>
+        <span class="k">elif</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;step_func&#39;</span><span class="p">:</span>
+            <span class="n">popt_type</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;x0&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">)])</span>
+        <span class="k">elif</span> <span class="n">model_id</span> <span class="o">==</span> <span class="s1">&#39;exp_decay&#39;</span><span class="p">:</span>
+            <span class="n">popt_type</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span><span class="nb">float</span><span class="p">)])</span>
+        <span class="n">struc_popt</span> <span class="o">=</span> <span class="n">popt</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">popt_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">struc_popt</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">,</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">struc_popt</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CheckResult"><a class="viewcode-back" href="../../anko.html#anko.anomaly_detector.CheckResult">[docs]</a><span class="k">class</span> <span class="nc">CheckResult</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="fm">__setattr__</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span>
+    <span class="fm">__delattr__</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__delitem__</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">k</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                              <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;()&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__dir__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="AnomalousData"><a class="viewcode-back" href="../../anko.html#anko.anomaly_detector.AnomalousData">[docs]</a><span class="k">class</span> <span class="nc">AnomalousData</span><span class="p">(</span><span class="n">CheckResult</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AnomalousData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, TanTaoLin
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
