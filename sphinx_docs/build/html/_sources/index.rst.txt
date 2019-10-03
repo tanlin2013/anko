@@ -11,7 +11,6 @@ Welcome to anko's documentation!
    :caption: Contents:
 
 
-
 Indices and tables
 ==================
 

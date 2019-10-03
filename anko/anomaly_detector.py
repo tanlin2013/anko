@@ -4,19 +4,80 @@ import copy
 # TODO: add params and returns type in func entry
 
 class AnomalyDetector:
-    """!
-    @param t (array_like):
-    @param series (array_like):
+    r"""
+    
+    Attributes:
+        apply_policies (dict):
+            Policies for AnomalyDetector to follow with. 
+            
+            Args:
+                scaleless_t (bool, default True): If True, use numpy.arange(1, len(t)+1) for the fitting. 
+                boxcox (bool, default False): If True, perform log-boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method. 
+                z_normalization (bool, default True): If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values in AnomalyDetector.thres_params scalelessly.
+                info_criterion (str, default 'AIC'): Information criterion for selecting fitting ansatzs, allowed fields are 'AIC' or 'BIC'.
+                abs_residual (bool, default False): If True, return absolute value of residual.
+                full_return (bool, default True): If True, return named dictionary for fitting parameters, eilse return list of fitting parameters in the order that can be found in AnomalyDetector.models.
+                min_sample_size (int, default 10): Minimum number of data samples to execute AnomalyDetector. If provided number of samples is less than this attribute, raise ValueError.
+        
+        thres_params (dict):
+            Threshold values for selecting anomalous data.
+            
+            Args:
+                p_normality (float, default 5e-3): Threshold value for selecting normal distribution, in accordance with the p value of normal test.  
+                normal_err (float, default 75): Threshold value for selecting normal distribution, in case that fitting on normal distribution failed and unconverged.
+                normal_std_width (float, default 1.5): Threshold width of standard deviation, data points exceed this param will be regarded as anomalous.  
+                normal_std_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
+                linregress_std_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
+                linregress_res (float, default 2): Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous.
+                step_func_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
+                step_func_res (float, default 2.5): Threshold value of residual for general sign function, data points exceed this param will be regarded as anomalous.
+                exp_decay_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
+                exp_decay_res (float, default 2): Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous.
+                skewness (float, default 20): Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info.
+                min_res (float, default 10): Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalizing the residual.
+    
+        models (dict):
+            Models that can be considered by AnomalyDetector.
+                
+            Gaussian (Normal) Distribution
+                .. math::
+                    f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right).
+        
+            Linear Regression
+                .. math::
+                    f(x) = intercept + slope \times x.
+        
+            Step Function
+                .. math::
+                    f(x) = 
+                        \begin{cases}
+                            a, & x < x_0, \\
+                            \frac{a+b}{2}, & x = x_0, \\
+                            b, & x > x_0.
+                        \end{cases}
+
+            Exponential Decay
+                .. math::
+                    f(x) = a\exp\left(-\alpha x\right). 
+            
+            Args:
+                gaussian (bool, default True): Gaussian (normal) distribution. Define in stats_util.normal_distr.
+                half_gaussian (bool, default False): In development, unavailable for now.
+                linear_regression (bool, default True): Linear ansatz.
+                step_func (bool, default True): Generalize Heaviside step function. Define in stats_util.general_sgn.
+                exp_decay (bool, default True): Exponential function. Define in stats_util.exp_decay.
+        
+        check_failed (bool):
+            Boolean value if check failed.
+    
     """
     def __init__(self, t, series):
-        ## Policies for AnomalyDetector to follow with. 
-        ## @param scaleless_t (bool, default True): If True, use np.arange(1, len(t)+1) for the fitting. 
-        ## @param boxcox (bool, default False): If True, perform log-boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method. 
-        ## @param z_normalization (bool, default True): If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values in AnomalyDetector.thres_params scalelessly.
-        ## @param info_criterion (str, default 'AIC'): Information criterion for selecting fitting ansatzs, allowed fields are 'AIC' or 'BIC'.
-        ## @param abs_residual (bool, default False): If True, return absolute value of residual.
-        ## @param full_return (bool, default True): If True, return named dictionary for fitting parameters, eilse return list of fitting parameters in the order that can be found in AnomalyDetector.models.
-        ## @param min_sample_size (int, default 10): Minimum number of data samples to execute AnomalyDetector. If provided number of samples is less than this attribute, raise ValueError.
+        """
+        Args:
+            t (array_like):
+            series (array_like):
+        
+        """
         self.apply_policies = {
                 "scaleless_t": True,
                 "boxcox": False,
@@ -36,21 +97,7 @@ class AnomalyDetector:
         self.series = series
         self._clone_t = copy.deepcopy(t)
         self._clone_series = copy.deepcopy(series)
-        ## Boolean value if check failed.
         self.check_failed = True   
-        ## Threshold values for selecting anomalous data.
-        ## @param p_normality (float, default 5e-3): Threshold value for selecting normal distribution, in accordance with the p value of normal test.  
-        ## @param normal_err (float, default 75): Threshold value for selecting normal distribution, in case that fitting on normal distribution failed and unconverged.
-        ## @param normal_std_width (float, default 1.5): Threshold width of standard deviation, data points exceed this param will be regarded as anomalous.  
-        ## @param normal_std_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
-        ## @param linregress_std_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
-        ## @param linregress_res (float, default 2): Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous.
-        ## @param step_func_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
-        ## @param step_func_res (float, default 2.5): Threshold value of residual for general sign function, data points exceed this param will be regarded as anomalous.
-        ## @param exp_decay_err (float, default 1e+1): Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.
-        ## @param exp_decay_res (float, default 2): Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous.
-        ## @param skewness (float, default 20): Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info.
-        ## @param min_res (float, default 10): Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalizing the residual.
         self.thres_params = {
                 "p_normality": 5e-3,
                 "normal_err": 75,
@@ -77,33 +124,6 @@ class AnomalyDetector:
                 "-8": "Info: AnomalyDetector is using z normalization.",
                 "-9": "Info: There are more than %d discontinuous points detected."
         }
-        ## Models that can be considered by AnomalyDetector.
-        ## - Gaussian (Normal) Distribution
-        ##      \f{equation*}{
-        ##          f(x) = a \exp\left(-\frac{\left(x-x_0\right)^2}{2\sigma^2}\right).
-        ##      \f}
-        ## - Linear Regression
-        ##      \f{equation*}{
-        ##          f(x) = intercept + slope \times x.
-        ##      \f}
-        ## - Step Function
-        ##      \f{equation*}{
-        ##           f(x) = 
-        ##           \begin{cases}
-        ##               a, & x < x_0, \\
-        ##               \frac{a+b}{2}, & x = x_0, \\
-        ##               b, & x > x_0.
-        ##           \end{cases}
-        ##      \f}
-        ## - Exponential Decay
-        ##      \f{equation*}{
-        ##            f(x) = a\exp\left(-\alpha x\right). 
-        ##      \f}
-        ## @param gaussian (bool, default True): Gaussian (normal) distribution. Define in stats_util.normal_distr.
-        ## @param half_gaussian (bool, default False): In development, unavailable for now.
-        ## @param linear_regression (bool, default True): Linear ansatz.
-        ## @param step_func (bool, default True): Generalize Heaviside step function. Define in stats_util.general_sgn.
-        ## @param exp_decay (bool, default True): Exponential function. Define in stats_util.exp_decay.
         self.models = {
                 "gaussian": True, 
                 "half_gaussian": False, 
@@ -206,9 +226,12 @@ class AnomalyDetector:
         return IC_score, popt, perr   
     
     def check(self) -> object:
-        """!
+        """
         
-        @returns check_result (CheckResult): 
+        Returns:
+            CheckResult:
+                check_result (CheckResult): 
+        
         """
         statsdata = self._build_stats_data()
         model_id = statsdata["model"]

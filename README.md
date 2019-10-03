@@ -33,7 +33,7 @@ For current release version please refer to [PyPI - anko homepage](https://pypi.
 For details about anko API, see the [reference documentation](https://tanlin2013.github.io/anko/html/index.html).
 
 ## Jupyter Notebook Tutorial (in dev)
-Run **anko_tutorial.ipynb** on your local Jupyter Notebook or host on [mybinder could service](https://mybinder.org/v2/gh/tanlin2013/anko/master?filepath=anko_tutorial.ipynb).
+Run **anko_tutorial.ipynb** on your local Jupyter Notebook or host on [google colab](https://colab.research.google.com/github/tanlin2013/anko/blob/master/anko_tutorial.ipynb).
 
 ## Basic Usage
 1. Call AnomalyDetector
