@@ -11,6 +11,12 @@ test:
 doc:
 	doxygen Doxyfile
 
+sphinx-apidoc:
+	sphinx-apidoc -o sphinx_doc/source/ anko/
+
+sphinx-doc:
+	make -C sphinx_docs html
+
 publish: clean-dist
 	python setup.py sdist
 	echo 'Connecting to pip'

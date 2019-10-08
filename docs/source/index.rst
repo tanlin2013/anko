@@ -5,10 +5,13 @@
 
 Welcome to anko's documentation!
 ================================
+.. mdinclude:: ../../README.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 5
    :caption: Contents:
+   
+   anko.rst
 
 
 Indices and tables

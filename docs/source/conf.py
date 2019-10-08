@@ -20,8 +20,8 @@ sys.path.insert(0, os.path.abspath('../../anko'))
 # -- Project information -----------------------------------------------------
 
 project = 'anko'
-copyright = '2019, TanTaoLin'
-author = 'TanTaoLin'
+copyright = '2019, Tan Tao-Lin'
+author = 'Tan Tao-Lin'
 
 # The short X.Y version
 version = ''
@@ -50,6 +50,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.githubpages',
     'sphinx.ext.inheritance_diagram',
+    'm2r',
 ]
 
 # Mathjax
@@ -61,8 +62,8 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-#source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', '.md']
+#source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
