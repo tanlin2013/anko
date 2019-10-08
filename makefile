@@ -12,10 +12,10 @@ doc:
 	doxygen Doxyfile
 
 sphinx-apidoc:
-	sphinx-apidoc -o sphinx_doc/source/ anko/
+	sphinx-apidoc -o doc/source/ anko/
 
 sphinx-doc:
-	make -C sphinx_docs html
+	make -C docs html
 
 publish: clean-dist
 	python setup.py sdist
