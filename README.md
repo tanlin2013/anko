@@ -30,7 +30,7 @@ pip install anko
 For current release version please refer to [PyPI - anko homepage](https://pypi.org/project/anko/).
 
 ## Documentation
-For details about anko API, see the [reference documentation](https://tanlin2013.github.io/anko/html/index.html).
+For details about anko API, see the [reference documentation](https://tanlin2013.github.io/anko/index.html).
 
 ## Jupyter Notebook Tutorial (in dev)
 Run **anko_tutorial.ipynb** on your local Jupyter Notebook or host on [google colab](https://colab.research.google.com/github/tanlin2013/anko/blob/master/anko_tutorial.ipynb).
