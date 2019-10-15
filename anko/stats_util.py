@@ -19,6 +19,7 @@ def get_histogram(x: np.ndarray, sort_histo: bool=False):
                 Number of appearance for each key in keys.
     
     """
+    # TODO: switch to binning
     counter = collections.Counter(x)
     keys = np.fromiter(counter.keys(), dtype=float)
     vals = np.fromiter(counter.values(), dtype=float)
@@ -47,7 +48,7 @@ def normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray
     """
     return a * np.exp(-(x-x0)**2/(2*sigma**2))
 
-def gaussian_fit(x: np.ndarray, sort_histo: bool=False, half: str=None, maxfev: int=2000, bounds=[0,1e+6]):
+def gaussian_fit(x: np.ndarray, binning=True, sort_histo: bool=False, half: str=None, maxfev: int=2000, bounds=[0,1e+6]):
     """Fitting the Gaussian (normal) distribution for input data x.
     
     Args:
@@ -65,7 +66,11 @@ def gaussian_fit(x: np.ndarray, sort_histo: bool=False, half: str=None, maxfev: 
                 Error of popt. Defined by the square of diagonal element of covariance matrix.
     
     """
-    keys, vals = get_histogram(x, sort_histo)
+    if binning:
+        vals, bins = np.histogram(x, bins='auto')
+        keys = (0.5*(bins[1:]+bins[:-1]))
+    else:
+        keys, vals = get_histogram(x, sort_histo)
     a_sg = max(vals) * 0.9
     m_sg = np.mean(x)
     std_sg = np.std(x)
