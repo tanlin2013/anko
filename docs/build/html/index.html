@@ -166,7 +166,7 @@ By default, the algorithm will first try to fit in the data into normal distribu
 If this attempt suffers from the loss of convergence or it did not pass <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html">normal test</a> from begining,
 then the algorithm will pass data into the second methods and try to execute all the available fitting ansatzs simultaneously.
 The best fitting ansatz will be selected by information criterion, and finally the algorithm will pick up anomalous points in accordance with the residual.
-<a class="reference external" href="https://tanlin2013.github.io/anko/html/classanko_1_1anomaly__detector_1_1_anomaly_detector.html#a019359334795d2f05a730ab00085e5e9">click here to see all available methods.</a></p>
+<a class="reference external" href="https://tanlin2013.github.io/anko/build/html/anko.html#anko.anomaly_detector.AnomalyDetector.models">click here to see all available methods.</a></p>
 <p>Future development will also include methods that are based on deep learning techniques, such as isolation forest, support vector machine, etc.</p>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
@@ -185,7 +185,7 @@ The best fitting ansatz will be selected by information criterion, and finally t
 </div>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<p>For details about anko API, see the <a class="reference external" href="https://tanlin2013.github.io/anko/html/index.html">reference documentation</a>.</p>
+<p>For details about anko API, see the <a class="reference external" href="https://tanlin2013.github.io/anko/index.html">reference documentation</a>.</p>
 </div>
 <div class="section" id="jupyter-notebook-tutorial-in-dev">
 <h2>Jupyter Notebook Tutorial (in dev)<a class="headerlink" href="#jupyter-notebook-tutorial-in-dev" title="Permalink to this headline">¶</a></h2>
@@ -206,8 +206,8 @@ The best fitting ansatz will be selected by information criterion, and finally t
 <span class="n">agent</span><span class="p">.</span><span class="n">apply_policies</span><span class="p">[</span><span class="ss">&quot;info_criterion&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AIC&#39;</span>
 </pre></div>
 </div>
-<p>for the use of <a class="reference external" href="https://tanlin2013.github.io/anko/html/classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af31bfbbef59010642ad8a33785504c59">**AnomalyDetector.thres_params**</a>
-and <a class="reference external" href="https://tanlin2013.github.io/anko/html/classanko_1_1anomaly__detector_1_1_anomaly_detector.html#af58531e67a2d33977a1bdc142b3f0561">**AnomalyDetector.apply_policies**</a>,
+<p>for the use of <a class="reference external" href="https://tanlin2013.github.io/anko/build/html/anko.html#anko.anomaly_detector.AnomalyDetector.thres_params">**AnomalyDetector.thres_params**</a>
+and <a class="reference external" href="https://tanlin2013.github.io/anko/build/html/anko.html#anko.anomaly_detector.AnomalyDetector.apply_policies">**AnomalyDetector.apply_policies**</a>,
 please refer to the documentation.</p>
 </li>
 <li><p>Run check</p>
@@ -216,7 +216,7 @@ please refer to the documentation.</p>
 </div>
 </li>
 </ol>
-<p>The type of output <strong>check_result</strong> is <a class="reference external" href="https://tanlin2013.github.io/anko/html/classanko_1_1anomaly__detector_1_1_check_result.html">**CheckResult**</a>, which is basically a dictionary that contains the following attributes:</p>
+<p>The type of output <strong>check_result</strong> is <a class="reference external" href="https://tanlin2013.github.io/anko/build/html/anko.html#anko.anomaly_detector.CheckResult">**CheckResult**</a>, which is basically a dictionary that contains the following attributes:</p>
 <blockquote>
 <div><p>model: ‘increase_step_func’<span class="raw-html-m2r"><br></span>
 popt: [220.3243250055105, 249.03846355234577, 74.00000107457113]<span class="raw-html-m2r"><br></span>

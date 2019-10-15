@@ -169,7 +169,7 @@
 <dl class="class">
 <dt id="anko.anomaly_detector.AnomalyDetector">
 <em class="property">class </em><code class="sig-prename descclassname">anko.anomaly_detector.</code><code class="sig-name descname">AnomalyDetector</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">series</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anko/anomaly_detector.html#AnomalyDetector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.anomaly_detector.AnomalyDetector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="attribute">
 <dt id="anko.anomaly_detector.AnomalyDetector.apply_policies">
 <code class="sig-name descname">apply_policies</code><a class="headerlink" href="#anko.anomaly_detector.AnomalyDetector.apply_policies" title="Permalink to this definition">¶</a></dt>
@@ -177,17 +177,17 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scaleless_t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, use numpy.arange(1, len(t)+1) for the fitting.</p></li>
-<li><p><strong>boxcox</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, perform log-boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method.</p></li>
-<li><p><strong>z_normalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values in AnomalyDetector.thres_params scalelessly.</p></li>
-<li><p><strong>info_criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>default 'AIC'</em>) – Information criterion for selecting fitting ansatzs, allowed fields are ‘AIC’ or ‘BIC’.</p></li>
-<li><p><strong>abs_residual</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, return absolute value of residual.</p></li>
-<li><p><strong>full_return</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, return named dictionary for fitting parameters, eilse return list of fitting parameters in the order that can be found in AnomalyDetector.models.</p></li>
-<li><p><strong>min_sample_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>default 10</em>) – Minimum number of data samples to execute AnomalyDetector. If provided number of samples is less than this attribute, raise ValueError.</p></li>
+<li><p><strong>scaleless_t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, use numpy.arange(1, len(t)+1) for the fitting.</p></li>
+<li><p><strong>boxcox</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, perform log-boxcox transformation before carrying out normal test. This will result in higher chances on selecting normal distribution method.</p></li>
+<li><p><strong>z_normalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, apply z-score normalization to fitting residual. This parameter is stringly advised to define threshold values in AnomalyDetector.thres_params scalelessly.</p></li>
+<li><p><strong>info_criterion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>default 'AIC'</em>) – Information criterion for selecting fitting ansatzs, allowed fields are ‘AIC’ or ‘BIC’.</p></li>
+<li><p><strong>abs_residual</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – If True, return absolute value of residual.</p></li>
+<li><p><strong>full_return</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – If True, return named dictionary for fitting parameters, eilse return list of fitting parameters in the order that can be found in AnomalyDetector.models.</p></li>
+<li><p><strong>min_sample_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>default 10</em>) – Minimum number of data samples to execute AnomalyDetector. If provided number of samples is less than this attribute, raise ValueError.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -199,22 +199,22 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>p_normality</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 5e-3</em>) – Threshold value for selecting normal distribution, in accordance with the p value of normal test.</p></li>
-<li><p><strong>normal_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 75</em>) – Threshold value for selecting normal distribution, in case that fitting on normal distribution failed and unconverged.</p></li>
-<li><p><strong>normal_std_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 1.5</em>) – Threshold width of standard deviation, data points exceed this param will be regarded as anomalous.</p></li>
-<li><p><strong>normal_std_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 1e+1</em>) – Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</p></li>
-<li><p><strong>linregress_std_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 1e+1</em>) – Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</p></li>
-<li><p><strong>linregress_res</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 2</em>) – Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous.</p></li>
-<li><p><strong>step_func_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 1e+1</em>) – Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</p></li>
-<li><p><strong>step_func_res</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 2.5</em>) – Threshold value of residual for general sign function, data points exceed this param will be regarded as anomalous.</p></li>
-<li><p><strong>exp_decay_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 1e+1</em>) – Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</p></li>
-<li><p><strong>exp_decay_res</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 2</em>) – Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous.</p></li>
-<li><p><strong>skewness</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 20</em>) – Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info.</p></li>
-<li><p><strong>min_res</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>default 10</em>) – Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalizing the residual.</p></li>
+<li><p><strong>p_normality</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 5e-3</em>) – Threshold value for selecting normal distribution, in accordance with the p value of normal test.</p></li>
+<li><p><strong>normal_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 75</em>) – Threshold value for selecting normal distribution, in case that fitting on normal distribution failed and unconverged.</p></li>
+<li><p><strong>normal_std_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 1.5</em>) – Threshold width of standard deviation, data points exceed this param will be regarded as anomalous.</p></li>
+<li><p><strong>normal_std_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 1e+1</em>) – Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</p></li>
+<li><p><strong>linregress_std_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 1e+1</em>) – Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</p></li>
+<li><p><strong>linregress_res</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 2</em>) – Threshold value of residual for linear regression, data points exceed this param will be regarded as anomalous.</p></li>
+<li><p><strong>step_func_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 1e+1</em>) – Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</p></li>
+<li><p><strong>step_func_res</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 2.5</em>) – Threshold value of residual for general sign function, data points exceed this param will be regarded as anomalous.</p></li>
+<li><p><strong>exp_decay_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 1e+1</em>) – Maximum tolerence of convergence. If fitting error is larger than this param, pass ConvergenceError to CheckResult.extra_info.</p></li>
+<li><p><strong>exp_decay_res</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 2</em>) – Threshold value of residual for exponential function, data points exceed this param will be regarded as anomalous.</p></li>
+<li><p><strong>skewness</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 20</em>) – Threshold value of skewness. If skewness of data distribution is larger than this param, pass Warning to CheckResult.extra_info.</p></li>
+<li><p><strong>min_res</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>default 10</em>) – Absolute minimum value of residul, residuals that are smaller than this param will be masked into zero. This action is always performed before z-score normalizing the residual.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -245,15 +245,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>gaussian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default True</em>) – Gaussian (normal) distribution. Define in stats_util.normal_distr.</p></li>
-<li><p><strong>half_gaussian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default False</em>) – In development, unavailable for now.</p></li>
-<li><p><strong>linear_regression</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default True</em>) – Linear ansatz.</p></li>
-<li><p><strong>step_func</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default True</em>) – Generalize Heaviside step function. Define in stats_util.general_sgn.</p></li>
-<li><p><strong>exp_decay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default True</em>) – Exponential function. Define in stats_util.exp_decay.</p></li>
+<li><p><strong>gaussian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – Gaussian (normal) distribution. Define in stats_util.normal_distr.</p></li>
+<li><p><strong>half_gaussian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default False</em>) – In development, unavailable for now.</p></li>
+<li><p><strong>linear_regression</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – Linear ansatz.</p></li>
+<li><p><strong>step_func</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – Generalize Heaviside step function. Define in stats_util.general_sgn.</p></li>
+<li><p><strong>exp_decay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>default True</em>) – Exponential function. Define in stats_util.exp_decay.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -264,7 +264,7 @@
 <dd><p>Boolean value if check failed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -287,7 +287,7 @@
 <dl class="class">
 <dt id="anko.anomaly_detector.CheckResult">
 <em class="property">class </em><code class="sig-prename descclassname">anko.anomaly_detector.</code><code class="sig-name descname">CheckResult</code><a class="reference internal" href="_modules/anko/anomaly_detector.html#CheckResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.anomaly_detector.CheckResult" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
 </dd></dl>
 
 </div>
@@ -305,14 +305,14 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y</strong> (<em>numpy.ndarray</em>) – Data samples.</p></li>
 <li><p><strong>y_predict</strong> (<em>numpy.ndarray</em>) – Prediction by fitting.</p></li>
-<li><p><strong>p</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Fitting degrees of freedom, i.e. the number of parameters to fit with.</p></li>
+<li><p><strong>p</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Fitting degrees of freedom, i.e. the number of parameters to fit with.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>aic_score (float):</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -329,14 +329,14 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y</strong> (<em>numpy.ndarray</em>) – Data samples.</p></li>
 <li><p><strong>y_predict</strong> (<em>numpy.ndarray</em>) – Prediction by fitting.</p></li>
-<li><p><strong>p</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Fitting degrees of freedom, i.e. the number of parameters to fit with.</p></li>
+<li><p><strong>p</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Fitting degrees of freedom, i.e. the number of parameters to fit with.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>bic_score (float):</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -351,14 +351,14 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – x coordinate of input data points.</p></li>
 <li><p><strong>y</strong> (<em>numpy.ndarray</em>) – y coordinate of input data points.</p></li>
-<li><p><strong>std_err_th</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – Threshold value of std_err.</p></li>
+<li><p><strong>std_err_th</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – Threshold value of std_err.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>out (bool): Return Ture if data is flat, else return False.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -372,7 +372,7 @@ Once this analysis is done, normalized results are masked for those magnitudes t
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input Values.</p></li>
-<li><p><strong>std_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Threshold values for masking noises.</p></li>
+<li><p><strong>std_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Threshold values for masking noises.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -394,8 +394,8 @@ Once this analysis is done, normalized results are masked for those magnitudes t
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p></li>
-<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Overall normalized constant.</p></li>
-<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Decay rate of exponential function. Please note that f$ alpha f$ can be negative,
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Overall normalized constant.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Decay rate of exponential function. Please note that f$ alpha f$ can be negative,
 and should be carefully utilized.</p></li>
 </ul>
 </dd>
@@ -416,10 +416,10 @@ and should be carefully utilized.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – x coordinate of input data points.</p></li>
 <li><p><strong>y</strong> (<em>numpy.ndarray</em>) – y coordinate of input data points.</p></li>
-<li><p><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – If mode is ‘log-linregress’, underlying algorithm will perform linear regression in <img class="math" src="_images/math/c566ba148855f01cade9db672499dea6fb2b0d8d.png" alt="\log(x)-\log(y)"/> scale,
+<li><p><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – If mode is ‘log-linregress’, underlying algorithm will perform linear regression in <img class="math" src="_images/math/c566ba148855f01cade9db672499dea6fb2b0d8d.png" alt="\log(x)-\log(y)"/> scale,
 else brutal force</p></li>
-<li><p><strong>maxfev</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – </p></li>
-<li><p><strong>bounds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>,</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>]</em>) – </p></li>
+<li><p><strong>maxfev</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – </p></li>
+<li><p><strong>bounds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>,</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>]</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -427,7 +427,7 @@ else brutal force</p></li>
 perr (numpy.ndarray):</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -443,8 +443,8 @@ perr (numpy.ndarray):</p>
 <li><p><strong>y</strong> (<em>numpy.ndarray</em>) – y coordinate of input data points.</p></li>
 <li><p><strong>func</strong> (<em>callable</em>) – Fitting function.</p></li>
 <li><p><strong>args</strong> (<em>numpy.ndarray</em>) – Best estimated arguments of fitting function.</p></li>
-<li><p><strong>mask_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><em>optional</em>) – If not None, mask resuduals that are smaller than mask_min to zero. This is always performed before standardization.</p></li>
-<li><p><strong>standardized</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Standardize residual to z-score formalism.</p></li>
+<li><p><strong>mask_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – If not None, mask resuduals that are smaller than mask_min to zero. This is always performed before standardization.</p></li>
+<li><p><strong>standardized</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Standardize residual to z-score formalism.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -485,23 +485,23 @@ with standard deviation which exceeds the current consideration of domain.</p>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="anko.stats_util.gaussian_fit">
-<code class="sig-prename descclassname">anko.stats_util.</code><code class="sig-name descname">gaussian_fit</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray, sort_histo: bool = False, half: str = None, maxfev: int = 2000, bounds=[0, 1000000.0]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anko/stats_util.html#gaussian_fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.stats_util.gaussian_fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">anko.stats_util.</code><code class="sig-name descname">gaussian_fit</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray, binning=True, sort_histo: bool = False, half: str = None, maxfev: int = 2000, bounds=[0, 1000000.0]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anko/stats_util.html#gaussian_fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.stats_util.gaussian_fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fitting the Gaussian (normal) distribution for input data x.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p></li>
-<li><p><strong>sort_histo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – If True use the sorted histogram.</p></li>
-<li><p><strong>half</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – </p></li>
-<li><p><strong>maxfev</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Maximum step of fitting iteration.</p></li>
-<li><p><strong>bounds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>]</em><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>sort_histo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True use the sorted histogram.</p></li>
+<li><p><strong>half</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – </p></li>
+<li><p><strong>maxfev</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>optional</em>) – Maximum step of fitting iteration.</p></li>
+<li><p><strong>bounds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>]</em><em>, </em><em>optional</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -514,7 +514,7 @@ with standard deviation which exceeds the current consideration of domain.</p>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -534,9 +534,9 @@ with standard deviation which exceeds the current consideration of domain.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p></li>
-<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Value of first stair.</p></li>
-<li><p><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Value of second stair.</p></li>
-<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Location of the cliff.</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Value of first stair.</p></li>
+<li><p><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Value of second stair.</p></li>
+<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Location of the cliff.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -557,9 +557,9 @@ with standard deviation which exceeds the current consideration of domain.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – x coordinate of input data points.</p></li>
 <li><p><strong>y</strong> (<em>numpy.ndarray</em>) – y coordinate of input data points.</p></li>
-<li><p><strong>three_stair</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If True, employing three stair error function for fitting.</p></li>
-<li><p><strong>maxfev</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Maximum step of fitting iteration.</p></li>
-<li><p><strong>bounds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>]</em>) – </p></li>
+<li><p><strong>three_stair</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, employing three stair error function for fitting.</p></li>
+<li><p><strong>maxfev</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Maximum step of fitting iteration.</p></li>
+<li><p><strong>bounds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>]</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -567,7 +567,7 @@ with standard deviation which exceeds the current consideration of domain.</p>
 perr (numpy.ndarray):</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -580,7 +580,7 @@ perr (numpy.ndarray):</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – One-dimensional array of data.</p></li>
-<li><p><strong>sort_histo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – If True return the sorted histogram.</p></li>
+<li><p><strong>sort_histo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True return the sorted histogram.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -593,7 +593,7 @@ perr (numpy.ndarray):</p>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -609,14 +609,14 @@ perr (numpy.ndarray):</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – </p></li>
-<li><p><strong>osci_freq_th</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – </p></li>
+<li><p><strong>osci_freq_th</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>out (bool):</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -629,9 +629,9 @@ perr (numpy.ndarray):</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p></li>
-<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Overall normalization constant.</p></li>
-<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Mean.</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Standard deviation.</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Overall normalization constant.</p></li>
+<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Mean.</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Standard deviation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -673,7 +673,7 @@ using Wald Test with t-distribution of the test statistic.</p>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -688,9 +688,9 @@ using Wald Test with t-distribution of the test statistic.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p></li>
-<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Overall normalization constant.</p></li>
-<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Mean.</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Standard deviation.</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Overall normalization constant.</p></li>
+<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Mean.</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Standard deviation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -710,9 +710,9 @@ using Wald Test with t-distribution of the test statistic.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p></li>
-<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Overall normalization constant.</p></li>
-<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Mean.</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Standard deviation.</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Overall normalization constant.</p></li>
+<li><p><strong>x0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Mean.</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Standard deviation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -731,7 +731,7 @@ using Wald Test with t-distribution of the test statistic.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – </p></li>
-<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – </p></li>
+<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -760,11 +760,11 @@ using Wald Test with t-distribution of the test statistic.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p></li>
-<li><p><strong>c0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Value of first stair.</p></li>
-<li><p><strong>c1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Value of second stair.</p></li>
-<li><p><strong>c2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Value of third stair.</p></li>
-<li><p><strong>x1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Location of the first cliff.</p></li>
-<li><p><strong>x2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Location of the second cliff.</p></li>
+<li><p><strong>c0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Value of first stair.</p></li>
+<li><p><strong>c1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Value of second stair.</p></li>
+<li><p><strong>c2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Value of third stair.</p></li>
+<li><p><strong>x1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Location of the first cliff.</p></li>
+<li><p><strong>x2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Location of the second cliff.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
