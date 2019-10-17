@@ -8,14 +8,14 @@ install: clean-build
 test:
 	python -m unittest discover -s test -p '*_test.py'
 
-doc:
+doxy_doc:
 	doxygen Doxyfile
 
-sphinx-apidoc:
-	sphinx-apidoc -o sphinx_doc/source/ anko/
+doc_rst:
+	sphinx-apidoc -o docs/source/ anko/
 
-sphinx-doc:
-	make -C sphinx_docs html
+doc:
+	make -C docs html
 
 publish: clean-dist
 	python setup.py sdist

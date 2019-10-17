@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>anko.stats_util &mdash; anko 0.2.6 documentation</title>
+  <title>anko.stats_util &mdash; anko 0.2.8 documentation</title>
   
 
   
@@ -151,30 +151,35 @@
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="k">import</span> <span class="n">curve_fit</span><span class="p">,</span> <span class="n">differential_evolution</span>
 <span class="c1"># TODO: handle typing for returning tuple</span>
 
-<div class="viewcode-block" id="get_histogram"><a class="viewcode-back" href="../../anko.html#anko.stats_util.get_histogram">[docs]</a><span class="k">def</span> <span class="nf">get_histogram</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sort_histo</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="get_histogram"><a class="viewcode-back" href="../../anko.html#anko.stats_util.get_histogram">[docs]</a><span class="k">def</span> <span class="nf">get_histogram</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">binning</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return the corresponding histogram of the data x.</span>
+<span class="sd">    This will perform binning on data.</span>
 <span class="sd">    </span>
 <span class="sd">    Args:     </span>
 <span class="sd">        x (numpy.ndarray): One-dimensional array of data.          </span>
-<span class="sd">        sort_histo (bool, optional): If True return the sorted histogram.</span>
+<span class="sd">        binning (str, optional): Binning methods, default &#39;auto&#39;. </span>
+<span class="sd">            If None, return the naive counting number of appearence without binning as hist,</span>
+<span class="sd">            else please refer to numpy.histogram_bin_edges for further binning methods.</span>
 <span class="sd">        </span>
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple:          </span>
-<span class="sd">            keys (numpy.ndarray):</span>
-<span class="sd">                Set of data x (no duplicate).          </span>
-<span class="sd">            vals (numpy.ndarray):</span>
-<span class="sd">                Number of appearance for each key in keys.</span>
+<span class="sd">            bins (numpy.ndarray):</span>
+<span class="sd">                Center position of bins.</span>
+<span class="sd">            hist (numpy.ndarray):</span>
+<span class="sd">                Histogram of x, with same size as bins.</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># TODO: switch to binning</span>
-    <span class="n">counter</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">keys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">sort_histo</span><span class="p">:</span>
-        <span class="n">keys_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
-        <span class="n">keys</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="n">keys_idx</span><span class="p">]</span>
-        <span class="n">vals</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">keys_idx</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">keys</span><span class="p">,</span> <span class="n">vals</span></div>
+    <span class="k">if</span> <span class="n">binning</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">hist</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">binning</span><span class="p">)</span>
+        <span class="n">bins</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">bins_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
+        <span class="n">bins</span> <span class="o">=</span> <span class="n">bins</span><span class="p">[</span><span class="n">bins_idx</span><span class="p">]</span>
+        <span class="n">hist</span> <span class="o">=</span> <span class="n">hist</span><span class="p">[</span><span class="n">bins_idx</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">bins</span><span class="p">,</span> <span class="n">hist</span></div>
     
 <div class="viewcode-block" id="normal_distr"><a class="viewcode-back" href="../../anko.html#anko.stats_util.normal_distr">[docs]</a><span class="k">def</span> <span class="nf">normal_distr</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate normal distribution of input array x.</span>
@@ -195,12 +200,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="gaussian_fit"><a class="viewcode-back" href="../../anko.html#anko.stats_util.gaussian_fit">[docs]</a><span class="k">def</span> <span class="nf">gaussian_fit</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">binning</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort_histo</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">half</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxfev</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1e+6</span><span class="p">]):</span>
+<div class="viewcode-block" id="gaussian_fit"><a class="viewcode-back" href="../../anko.html#anko.stats_util.gaussian_fit">[docs]</a><span class="k">def</span> <span class="nf">gaussian_fit</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">binning</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">half</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxfev</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1e+6</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;Fitting the Gaussian (normal) distribution for input data x.</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
-<span class="sd">        x (numpy.ndarray): Input values.   </span>
-<span class="sd">        sort_histo (bool, optional): If True use the sorted histogram.</span>
+<span class="sd">        x (numpy.ndarray): Input values.</span>
+<span class="sd">        binning (str, optional): Binning methods. Please refer to stats_util.get_histogram.</span>
 <span class="sd">        half (str, optional):  </span>
 <span class="sd">        maxfev (int, optional): Maximum step of fitting iteration.</span>
 <span class="sd">        bounds (list[float, float], optional): </span>
@@ -213,20 +218,16 @@
 <span class="sd">                Error of popt. Defined by the square of diagonal element of covariance matrix.</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">binning</span><span class="p">:</span>
-        <span class="n">vals</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
-        <span class="n">keys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">keys</span><span class="p">,</span> <span class="n">vals</span> <span class="o">=</span> <span class="n">get_histogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sort_histo</span><span class="p">)</span>
-    <span class="n">a_sg</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.9</span>
+    <span class="n">bins</span><span class="p">,</span> <span class="n">hist</span> <span class="o">=</span> <span class="n">get_histogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">binning</span><span class="p">)</span>
+    <span class="n">a_sg</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.9</span>
     <span class="n">m_sg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">std_sg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">half</span> <span class="o">==</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span>
-        <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">left_half_normal_distr</span><span class="p">,</span><span class="n">keys</span><span class="p">,</span><span class="n">vals</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="n">a_sg</span><span class="p">,</span><span class="n">m_sg</span><span class="p">,</span><span class="n">std_sg</span><span class="p">],</span><span class="n">maxfev</span><span class="o">=</span><span class="n">maxfev</span><span class="p">,</span><span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+        <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">left_half_normal_distr</span><span class="p">,</span><span class="n">bins</span><span class="p">,</span><span class="n">hist</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="n">a_sg</span><span class="p">,</span><span class="n">m_sg</span><span class="p">,</span><span class="n">std_sg</span><span class="p">],</span><span class="n">maxfev</span><span class="o">=</span><span class="n">maxfev</span><span class="p">,</span><span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">half</span> <span class="o">==</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span>
-        <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">right_half_normal_distr</span><span class="p">,</span><span class="n">keys</span><span class="p">,</span><span class="n">vals</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="n">a_sg</span><span class="p">,</span><span class="n">m_sg</span><span class="p">,</span><span class="n">std_sg</span><span class="p">],</span><span class="n">maxfev</span><span class="o">=</span><span class="n">maxfev</span><span class="p">,</span><span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+        <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">right_half_normal_distr</span><span class="p">,</span><span class="n">bins</span><span class="p">,</span><span class="n">hist</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="n">a_sg</span><span class="p">,</span><span class="n">m_sg</span><span class="p">,</span><span class="n">std_sg</span><span class="p">],</span><span class="n">maxfev</span><span class="o">=</span><span class="n">maxfev</span><span class="p">,</span><span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">normal_distr</span><span class="p">,</span><span class="n">keys</span><span class="p">,</span><span class="n">vals</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="n">a_sg</span><span class="p">,</span><span class="n">m_sg</span><span class="p">,</span><span class="n">std_sg</span><span class="p">],</span><span class="n">maxfev</span><span class="o">=</span><span class="n">maxfev</span><span class="p">,</span><span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+        <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">normal_distr</span><span class="p">,</span><span class="n">bins</span><span class="p">,</span><span class="n">hist</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="n">a_sg</span><span class="p">,</span><span class="n">m_sg</span><span class="p">,</span><span class="n">std_sg</span><span class="p">],</span><span class="n">maxfev</span><span class="o">=</span><span class="n">maxfev</span><span class="p">,</span><span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
     <span class="n">perr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">pcov</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">popt</span><span class="p">,</span> <span class="n">perr</span></div>
 

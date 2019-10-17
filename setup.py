@@ -1,7 +1,7 @@
 from setuptools import setup
 #from distutils.core import setup
         
-ver = '0.2.7'
+ver = '0.2.8'
 
 with open("README.md", "r") as f:
     long_description = f.read()

@@ -4,30 +4,35 @@ from scipy.stats import boxcox, linregress, skew, normaltest
 from scipy.optimize import curve_fit, differential_evolution
 # TODO: handle typing for returning tuple
 
-def get_histogram(x: np.ndarray, sort_histo: bool=False):
+def get_histogram(x: np.ndarray, binning: str='auto'):
     """Return the corresponding histogram of the data x.
+    This will perform binning on data.
     
     Args:     
         x (numpy.ndarray): One-dimensional array of data.          
-        sort_histo (bool, optional): If True return the sorted histogram.
+        binning (str, optional): Binning methods, default 'auto'. 
+            If None, return the naive counting number of appearence without binning as hist,
+            else please refer to numpy.histogram_bin_edges for further binning methods.
         
     Returns:
         tuple:          
-            keys (numpy.ndarray):
-                Set of data x (no duplicate).          
-            vals (numpy.ndarray):
-                Number of appearance for each key in keys.
+            bins (numpy.ndarray):
+                Center position of bins.
+            hist (numpy.ndarray):
+                Histogram of x, with same size as bins.
     
     """
-    # TODO: switch to binning
-    counter = collections.Counter(x)
-    keys = np.fromiter(counter.keys(), dtype=float)
-    vals = np.fromiter(counter.values(), dtype=float)
-    if sort_histo:
-        keys_idx = np.argsort(keys)
-        keys = keys[keys_idx]
-        vals = vals[keys_idx]
-    return keys, vals
+    if binning is not None:
+        hist, bins = np.histogram(x, bins=binning)
+        bins = (0.5*(bins[1:]+bins[:-1]))
+    else:
+        counter = collections.Counter(x)
+        bins = np.fromiter(counter.keys(), dtype=float)
+        hist = np.fromiter(counter.values(), dtype=float)
+        bins_idx = np.argsort(bins)
+        bins = bins[bins_idx]
+        hist = hist[bins_idx]
+    return bins, hist
     
 def normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray:
     r"""Calculate normal distribution of input array x.
@@ -48,12 +53,12 @@ def normal_distr(x: np.ndarray, a: float, x0: float, sigma: float) -> np.ndarray
     """
     return a * np.exp(-(x-x0)**2/(2*sigma**2))
 
-def gaussian_fit(x: np.ndarray, binning=True, sort_histo: bool=False, half: str=None, maxfev: int=2000, bounds=[0,1e+6]):
+def gaussian_fit(x: np.ndarray, binning: str='auto', half: str=None, maxfev: int=2000, bounds=[0,1e+6]):
     """Fitting the Gaussian (normal) distribution for input data x.
     
     Args:
-        x (numpy.ndarray): Input values.   
-        sort_histo (bool, optional): If True use the sorted histogram.
+        x (numpy.ndarray): Input values.
+        binning (str, optional): Binning methods. Please refer to stats_util.get_histogram.
         half (str, optional):  
         maxfev (int, optional): Maximum step of fitting iteration.
         bounds (list[float, float], optional): 
@@ -66,20 +71,16 @@ def gaussian_fit(x: np.ndarray, binning=True, sort_histo: bool=False, half: str=
                 Error of popt. Defined by the square of diagonal element of covariance matrix.
     
     """
-    if binning:
-        vals, bins = np.histogram(x, bins='auto')
-        keys = (0.5*(bins[1:]+bins[:-1]))
-    else:
-        keys, vals = get_histogram(x, sort_histo)
-    a_sg = max(vals) * 0.9
+    bins, hist = get_histogram(x, binning)
+    a_sg = max(hist) * 0.9
     m_sg = np.mean(x)
     std_sg = np.std(x)
     if half == 'left':
-        popt, pcov = curve_fit(left_half_normal_distr,keys,vals,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
+        popt, pcov = curve_fit(left_half_normal_distr,bins,hist,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
     elif half == 'right':
-        popt, pcov = curve_fit(right_half_normal_distr,keys,vals,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
+        popt, pcov = curve_fit(right_half_normal_distr,bins,hist,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
     else:
-        popt, pcov = curve_fit(normal_distr,keys,vals,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
+        popt, pcov = curve_fit(normal_distr,bins,hist,p0=[a_sg,m_sg,std_sg],maxfev=maxfev,bounds=bounds)
     perr = np.sqrt(np.diag(pcov))
     return popt, perr
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>anko package &mdash; anko 0.2.6 documentation</title>
+  <title>anko package &mdash; anko 0.2.8 documentation</title>
   
 
   
@@ -492,13 +492,13 @@ with standard deviation which exceeds the current consideration of domain.</p>
 
 <dl class="function">
 <dt id="anko.stats_util.gaussian_fit">
-<code class="sig-prename descclassname">anko.stats_util.</code><code class="sig-name descname">gaussian_fit</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray, binning=True, sort_histo: bool = False, half: str = None, maxfev: int = 2000, bounds=[0, 1000000.0]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anko/stats_util.html#gaussian_fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.stats_util.gaussian_fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">anko.stats_util.</code><code class="sig-name descname">gaussian_fit</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray, binning: str = 'auto', half: str = None, maxfev: int = 2000, bounds=[0, 1000000.0]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anko/stats_util.html#gaussian_fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.stats_util.gaussian_fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fitting the Gaussian (normal) distribution for input data x.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p></li>
-<li><p><strong>sort_histo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True use the sorted histogram.</p></li>
+<li><p><strong>binning</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Binning methods. Please refer to stats_util.get_histogram.</p></li>
 <li><p><strong>half</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – </p></li>
 <li><p><strong>maxfev</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>optional</em>) – Maximum step of fitting iteration.</p></li>
 <li><p><strong>bounds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>]</em><em>, </em><em>optional</em>) – </p></li>
@@ -574,20 +574,23 @@ perr (numpy.ndarray):</p>
 
 <dl class="function">
 <dt id="anko.stats_util.get_histogram">
-<code class="sig-prename descclassname">anko.stats_util.</code><code class="sig-name descname">get_histogram</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em>, <em class="sig-param">sort_histo: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anko/stats_util.html#get_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.stats_util.get_histogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the corresponding histogram of the data x.</p>
+<code class="sig-prename descclassname">anko.stats_util.</code><code class="sig-name descname">get_histogram</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em>, <em class="sig-param">binning: str = 'auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anko/stats_util.html#get_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.stats_util.get_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the corresponding histogram of the data x.
+This will perform binning on data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – One-dimensional array of data.</p></li>
-<li><p><strong>sort_histo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – If True return the sorted histogram.</p></li>
+<li><p><strong>binning</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Binning methods, default ‘auto’.
+If None, return the naive counting number of appearence without binning as hist,
+else please refer to numpy.histogram_bin_edges for further binning methods.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>keys (numpy.ndarray):</dt><dd><p>Set of data x (no duplicate).</p>
+<dt>bins (numpy.ndarray):</dt><dd><p>Center position of bins.</p>
 </dd>
-<dt>vals (numpy.ndarray):</dt><dd><p>Number of appearance for each key in keys.</p>
+<dt>hist (numpy.ndarray):</dt><dd><p>Histogram of x, with same size as bins.</p>
 </dd>
 </dl>
 </p>
