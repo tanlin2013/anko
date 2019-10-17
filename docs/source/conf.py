@@ -24,7 +24,7 @@ copyright = '2019, Tan Tao-Lin'
 author = 'Tan Tao-Lin'
 
 # The short X.Y version
-version = ''
+version = '0.2.8'
 # The full version, including alpha/beta/rc tags
 release = '0.2.8'
 
