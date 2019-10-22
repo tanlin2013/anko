@@ -1,6 +1,6 @@
-.PHONY: clean-pyc clean-build all test clean
+.PHONY: test
 
-all: doc install publish
+all: doc install
 
 install: clean-build
 	python setup.py install
@@ -11,7 +11,7 @@ test:
 doxy_doc:
 	doxygen Doxyfile
 
-doc_rst:
+rstdoc:
 	sphinx-apidoc -o docs/source/ anko/
 
 doc:

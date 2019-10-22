@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 import numpy as np
 from . import stats_util
 import copy
@@ -156,7 +157,7 @@ class AnomalyDetector:
                 pass
         
         if "popt" in statsdata:
-            err_score = np.sum(np.square(statsdata["perr"]))
+            err_score = np.sum(np.square(statsdata["perr"][1:]))
             if err_score > self.thres_params["normal_err"]: 
                 proceed = True
         else:

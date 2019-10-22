@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 import numpy as np
 import collections, itertools
 from scipy.stats import boxcox, linregress, skew, normaltest
@@ -477,3 +478,31 @@ def z_normalization(x: np.ndarray) -> np.ndarray:
     """
     return (x-np.mean(x))/np.std(x)
 
+def local_outilier_factor():
+    """Perform Local Outilier Factor algorithm for anomaly detection. 
+    This function is a wrapper of scikit.neighbors.LocalOutlierFactor.
+    
+    Args:
+        
+    Returns:
+        
+    """
+    
+    return
+
+def median_absolute_deviation(x: np.ndarray) -> np.ndarray:
+    """Calculate the median absolute deviation. The is a robust statistical measurement defined by
+    
+    .. math::
+        mad = median(|x_i-median(x)|). 
+    
+    Args:
+        x (numpy.ndarray): Input values.
+            
+    Returns:
+        numpy.ndarray:
+            med (numpy.ndarray): Output array.
+    """
+    mad = np.median(abs(x-np.median(x)))
+    return mad
+      

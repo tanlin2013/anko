@@ -1,7 +1,6 @@
 from setuptools import setup
 #from distutils.core import setup
-        
-ver = '0.2.8'
+from anko import __version__
 
 with open("README.md", "r") as f:
     long_description = f.read()
@@ -9,7 +8,7 @@ with open("README.md", "r") as f:
 setup(
   name = 'anko',
   packages = ['anko'],
-  version = ver,
+  version = __version__,
   license='MIT',
   description = 'Toolkit for performing anomaly detection algorithm on time series.',
   long_description=long_description,
@@ -17,11 +16,11 @@ setup(
   author = 'tao-lin',
   author_email = 'tanlin2013@gmail.com', 
   url = 'https://github.com/tanlin2013/anko',
-  download_url = 'https://github.com/tanlin2013/anko/archive/v%s.tar.gz' %ver,
+  download_url = 'https://github.com/tanlin2013/anko/archive/v%s.tar.gz' %__version__,
   keywords = ['statistics', 'time series', 'anomaly detection'],
   install_requires=[
-          'numpy==1.16.4',
-          'scipy==1.2.1',
+          'numpy>=1.16.4',
+          'scipy>=1.2.1',
       ],
   classifiers=[
     'Development Status :: 3 - Alpha',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
@@ -32,6 +31,7 @@ setup(
     'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
   ],
 )
 

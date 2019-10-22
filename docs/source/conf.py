@@ -16,6 +16,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(0, os.path.abspath('../../anko'))
+from anko import __version__
 
 # -- Project information -----------------------------------------------------
 
@@ -24,9 +25,9 @@ copyright = '2019, Tan Tao-Lin'
 author = 'Tan Tao-Lin'
 
 # The short X.Y version
-version = '0.2.8'
+version = __version__
 # The full version, including alpha/beta/rc tags
-release = '0.2.8'
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------
