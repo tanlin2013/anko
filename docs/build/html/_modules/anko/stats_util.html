@@ -149,10 +149,12 @@
            <div itemprop="articleBody">
             
   <h1>Source code for anko.stats_util</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="c1"># -*- coding: utf-8 -*- </span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">collections</span><span class="o">,</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">boxcox</span><span class="p">,</span> <span class="n">linregress</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="n">normaltest</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="k">import</span> <span class="n">curve_fit</span><span class="p">,</span> <span class="n">differential_evolution</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="k">import</span> <span class="n">DBSCAN</span> <span class="k">as</span> <span class="n">scikit_DBSCAN</span>
 <span class="c1"># TODO: handle typing for returning tuple</span>
 
 <div class="viewcode-block" id="get_histogram"><a class="viewcode-back" href="../../anko.html#anko.stats_util.get_histogram">[docs]</a><span class="k">def</span> <span class="nf">get_histogram</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">binning</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
@@ -628,6 +630,55 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="DBSCAN"><a class="viewcode-back" href="../../anko.html#anko.stats_util.DBSCAN">[docs]</a><span class="k">def</span> <span class="nf">DBSCAN</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">min_samples</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Perform Density-Based Spatial Clustering of Applications with Noise algorithm for anomaly detection. </span>
+<span class="sd">    This function is a wrapper of scikit.cluster.DBSCAN.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        x (numpy.ndarray): Input values.</span>
+<span class="sd">        eps (float, oprtional): The maximum distance between two samples for one to be considered as in the neighborhood of the other. </span>
+<span class="sd">            Please also note that eps is defined in the unit of median absolute deviation, namely :math:`eps = max_distance/median_absolute_deviation`. </span>
+<span class="sd">            This is not a maximum bound on the distances of points within a cluster. </span>
+<span class="sd">            This is the most important DBSCAN parameter to choose appropriately for your data set and distance function.</span>
+<span class="sd">        min_samples (int, optional): The number of samples (or total weight) in a neighborhood for a point to be considered as a core point. This includes the point itself.</span>
+<span class="sd">            </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        dict:</span>
+<span class="sd">            out (dict): </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">eps</span> <span class="o">*=</span> <span class="n">median_absolute_deviation</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="n">db</span> <span class="o">=</span> <span class="n">scikit_DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="n">min_samples</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">,</span>
+                <span class="n">metric_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">leaf_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">labels_</span>
+
+    <span class="c1"># Number of clusters in labels, ignoring noise if present.</span>
+    <span class="n">n_clusters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">labels</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">n_noise</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;n_clusters&quot;</span><span class="p">:</span> <span class="n">n_clusters</span><span class="p">,</span>
+           <span class="s2">&quot;n_noise&quot;</span><span class="p">:</span> <span class="n">n_noise</span><span class="p">,</span>
+           <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="median_absolute_deviation"><a class="viewcode-back" href="../../anko.html#anko.stats_util.median_absolute_deviation">[docs]</a><span class="k">def</span> <span class="nf">median_absolute_deviation</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the median absolute deviation. The is a robust statistical measurement defined by</span>
+<span class="sd">    </span>
+<span class="sd">    .. math::</span>
+<span class="sd">        mad = median(|x_i-median(x)|). </span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        x (numpy.ndarray): Input values.</span>
+<span class="sd">            </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray:</span>
+<span class="sd">            med (numpy.ndarray): Output array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">mad</span></div>
+      
 </pre></div>
 
            </div>

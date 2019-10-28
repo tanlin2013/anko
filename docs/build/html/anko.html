@@ -346,6 +346,31 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="anko.stats_util.DBSCAN">
+<code class="sig-prename descclassname">anko.stats_util.</code><code class="sig-name descname">DBSCAN</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em>, <em class="sig-param">eps: float = 0.9</em>, <em class="sig-param">min_samples: int = 5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anko/stats_util.html#DBSCAN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.stats_util.DBSCAN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Density-Based Spatial Clustering of Applications with Noise algorithm for anomaly detection.
+This function is a wrapper of scikit.cluster.DBSCAN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p></li>
+<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>oprtional</em>) – The maximum distance between two samples for one to be considered as in the neighborhood of the other.
+Please also note that eps is defined in the unit of median absolute deviation, namely <img class="math" src="_images/math/d9a4b04ed5cd0be5e8047002ccea13e2bcea964d.png" alt="eps = max_distance/median_absolute_deviation"/>.
+This is not a maximum bound on the distances of points within a cluster.
+This is the most important DBSCAN parameter to choose appropriately for your data set and distance function.</p></li>
+<li><p><strong>min_samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>optional</em>) – The number of samples (or total weight) in a neighborhood for a point to be considered as a core point. This includes the point itself.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>out (dict):</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="anko.stats_util.data_is_linear">
 <code class="sig-prename descclassname">anko.stats_util.</code><code class="sig-name descname">data_is_linear</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em>, <em class="sig-param">y: numpy.ndarray</em>, <em class="sig-param">std_err_th: float = 0.01</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/anko/stats_util.html#data_is_linear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.stats_util.data_is_linear" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check whether the data (x, y) is linear under the given tolerance.</p>
@@ -681,6 +706,25 @@ using Wald Test with t-distribution of the test statistic.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="anko.stats_util.median_absolute_deviation">
+<code class="sig-prename descclassname">anko.stats_util.</code><code class="sig-name descname">median_absolute_deviation</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/anko/stats_util.html#median_absolute_deviation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#anko.stats_util.median_absolute_deviation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the median absolute deviation. The is a robust statistical measurement defined by</p>
+<div class="math">
+<p><img src="_images/math/c5da7b9e65fc2cb7cecf0ecceeaf5130b45ff457.png" alt="mad = median(|x_i-median(x)|)."/></p>
+</div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray</em>) – Input values.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>med (numpy.ndarray): Output array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>

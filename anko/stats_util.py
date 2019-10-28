@@ -3,6 +3,7 @@ import numpy as np
 import collections, itertools
 from scipy.stats import boxcox, linregress, skew, normaltest
 from scipy.optimize import curve_fit, differential_evolution
+from sklearn.cluster import DBSCAN as scikit_DBSCAN
 # TODO: handle typing for returning tuple
 
 def get_histogram(x: np.ndarray, binning: str='auto'):
@@ -478,17 +479,38 @@ def z_normalization(x: np.ndarray) -> np.ndarray:
     """
     return (x-np.mean(x))/np.std(x)
 
-def local_outilier_factor():
-    """Perform Local Outilier Factor algorithm for anomaly detection. 
-    This function is a wrapper of scikit.neighbors.LocalOutlierFactor.
+def DBSCAN(x: np.ndarray, eps: float=0.9, min_samples: int=5):
+    """Perform Density-Based Spatial Clustering of Applications with Noise algorithm for anomaly detection. 
+    This function is a wrapper of scikit.cluster.DBSCAN.
     
     Args:
-        
+        x (numpy.ndarray): Input values.
+        eps (float, oprtional): The maximum distance between two samples for one to be considered as in the neighborhood of the other. 
+            Please also note that eps is defined in the unit of median absolute deviation, namely :math:`eps = max_distance/median_absolute_deviation`. 
+            This is not a maximum bound on the distances of points within a cluster. 
+            This is the most important DBSCAN parameter to choose appropriately for your data set and distance function.
+        min_samples (int, optional): The number of samples (or total weight) in a neighborhood for a point to be considered as a core point. This includes the point itself.
+            
     Returns:
-        
+        dict:
+            out (dict): 
     """
+    n = x.size
+    X = np.concatenate((np.arange(1,n+1).reshape(n,1), x.reshape(n,1)), axis=1)
+    eps *= median_absolute_deviation(x)
     
-    return
+    db = scikit_DBSCAN(eps, min_samples, metric='euclidean',
+                metric_params=None, algorithm='auto', leaf_size=30, p=None,
+                n_jobs=None).fit(X)
+    labels = db.labels_
+
+    # Number of clusters in labels, ignoring noise if present.
+    n_clusters = len(set(labels)) - (1 if -1 in labels else 0)
+    n_noise = list(labels).count(-1)
+    out = {"n_clusters": n_clusters,
+           "n_noise": n_noise,
+           "labels": labels}
+    return out
 
 def median_absolute_deviation(x: np.ndarray) -> np.ndarray:
     """Calculate the median absolute deviation. The is a robust statistical measurement defined by
