@@ -1,8 +1,9 @@
 *DS_Store
 *.pyc
 MANIFEST
+setup.cfg
 
-**/__pycache__/
-**/.ipynb_checkpoints/
-dist/
-anko.egg-info/
+__pycache__
+.ipynb_checkpoints
+dist
+anko.egg-info

@@ -75,7 +75,7 @@ The type of output **check_result** is [**CheckResult**](https://tanlin2013.gith
 
 ## Run Test
 ```
-python -m unittest discover -s test -p '*_test.py'
+python -m unittest discover -s test -p 'test_*.py'
 ```
 or simply
 ```
